@@ -8,5 +8,5 @@ __Integrantes__
 - Levigna Franco
 
 __Contacto__  
-Teams: lepardo  
+Teams: Leonardo Pardo  
 mail: lepardo@uade.edu.ar  
