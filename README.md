@@ -3,6 +3,7 @@
 
 __Integrantes__
 - Leonardo Pardo
+- Levigna Franco
 
 __Contacto__
 Teams: lepardo  
