@@ -2,6 +2,8 @@
 1er Cuatrimestre 2021 - TPO
 
 __Integrantes__
+- Mora Stock
+- Tomás Orobio
 - Leonardo Pardo
 - Levigna Franco
 
