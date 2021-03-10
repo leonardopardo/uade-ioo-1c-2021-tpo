@@ -3,6 +3,7 @@
 
 __Integrantes__  
 - Mora Stock
+- Natalia Diaz
 - Tomás Orobio
 - Leonardo Pardo
 - Levigna Franco
