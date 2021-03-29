@@ -14,14 +14,14 @@ mail: lepardo@uade.edu.ar
 
 ## Antecedentes
 
-JMBSoft es una empresa experta en sistemas de facturación. Su sistema Factura 2000 tiene una amplia penetración en el mercado argentino y el grado de satisfacción de sus clientes es alto.
+**JMBSoft** es una empresa experta en sistemas de facturación. Su sistema **Factura 2000** tiene una amplia penetración en el mercado argentino y el grado de satisfacción de sus clientes es alto.
 El sistema se encarga de la administración de productos, clientes, emisión de remitos y facturas electrónica, cobros, cuenta corriente de clientes y presentación mensual del libro IVA ventas.
-La empresa recibe constantes solicitudes de sus clientes para incorporar un módulo para administrar proveedores. La gerencia decide iniciar el proyecto de desarrollo del módulo de proveedores para Factura 2000.
-Proveedores
+La empresa recibe constantes solicitudes de sus clientes para incorporar un módulo para administrar proveedores. La gerencia decide iniciar el proyecto de desarrollo del módulo de proveedores para **Factura 2000**.
 
+## Proveedores
 
-Cuando una empresa decide adquirir productos o servicios, la compra es formalizada por una factura donde consta el CUIT de la empresa proveedora, responsabilidad frente al IVA (responsable inscripto o monotributo), razón social, nombre de fantasía, dirección, teléfono, correo electrónico (puede no estar) y número de ingresos brutos e inicio de actividades.
-Cuando se recibe la primera factura del proveedor se debe poder cargar toda la información que consta en la cabecera de la factura para no volver a cargar los datos posteriormente y, a partir de ese momento, identificar al proveedor sólo por su CUIT.
+Cuando una empresa decide adquirir productos o servicios, la compra es formalizada por una factura donde consta el **CUIT** de la empresa proveedora, responsabilidad frente al IVA (responsable inscripto o monotributo), razón social, nombre de fantasía, dirección, teléfono, correo electrónico (puede no estar) y número de ingresos brutos e inicio de actividades.
+Cuando se recibe la primera factura del proveedor se debe poder cargar toda la información que consta en la cabecera de la factura para no volver a cargar los datos posteriormente y, a partir de ese momento, identificar al proveedor sólo por su **CUIT**.
 
 Los proveedores son agrupados por rubros. Cada rubro representa los tipos de productos y servicios que puede proveer el proveedor.
 
