@@ -2,7 +2,7 @@
 1er Cuatrimestre 2021 - TPO  
 
 __Integrantes__  
-- Mora Stock
+- Mora Stok
 - Natalia Diaz
 - Tomás Orobio
 - Leonardo Pardo
