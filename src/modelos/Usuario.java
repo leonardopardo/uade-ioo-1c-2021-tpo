@@ -1,5 +1,7 @@
 package modelos;
 
+import modelos.enums.Role;
+
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -14,6 +16,8 @@ public class Usuario {
     private String password;
 
     private LocalDate edad;
+
+    private Role role;
 
     public Integer getEdad() {
         return Period.between(edad, LocalDate.now()).getYears();
@@ -53,5 +57,13 @@ public class Usuario {
 
     public void setUsername(String username) {
         this.username = username.toLowerCase();
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

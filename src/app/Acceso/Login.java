@@ -1,5 +1,6 @@
 package app.Acceso;
 
+import modelos.Producto;
 import modelos.Usuario;
 import seeders.UsuarioSeeder;
 import servicios.UsuariosService;
@@ -8,9 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import java.io.IOException;
-import java.util.List;
 
 public class Login extends JFrame {
     private JPanel pnlMain;
@@ -45,16 +43,23 @@ public class Login extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                boolean usrIsValid = UsuariosService.getInstance()
+                UsuariosService service = UsuariosService.getInstance();
+
+                boolean usrIsValid = service
                         .validarCredenciales(txtUsername.getText(), txtPassword.getPassword());
 
                 if(usrIsValid){
+
+                    Usuario usuario = service
+                            .obtener(txtUsername.getText().trim());
+
                     JOptionPane.showMessageDialog(
                             pnlMain,
-                            "Credenciales Válidas",
+                            "Las credenciales son válidas y el role del usuario es \n" + usuario.getRole(),
                             "Excelente",
                             JOptionPane.INFORMATION_MESSAGE
                     );
+
                 } else {
                     String message = "Credenciales Inválidas";
 

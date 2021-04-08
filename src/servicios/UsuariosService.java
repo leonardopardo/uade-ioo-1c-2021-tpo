@@ -1,13 +1,14 @@
 package servicios;
 
 import modelos.Usuario;
+import modelos.enums.Role;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-public class UsuariosService implements IService<Usuario> {
+public class UsuariosService implements IABMService<Usuario> {
 
     private List<Usuario> usuarios;
 
@@ -24,13 +25,13 @@ public class UsuariosService implements IService<Usuario> {
     }
 
     @Override
-    public void agregar(Usuario modelo) throws Exception {
+    public void agregar(Usuario ... modelo) throws Exception {
         try {
 
             if(this.usuarios.contains(modelo))
                 throw new Exception(USUARIO_EXISTENTE_EXCEPTION);
 
-            this.usuarios.add(modelo);
+            Collections.addAll(this.usuarios, modelo);
 
         } catch (Exception e) {
             throw e;
@@ -65,9 +66,8 @@ public class UsuariosService implements IService<Usuario> {
         Usuario u = null;
 
         for (Usuario usuario : this.usuarios) {
-            if(usuario.getUsername() == valor){
+            if(usuario.getUsername().contentEquals(valor))
                 u = usuario;
-            }
         }
 
         return u;
@@ -91,6 +91,10 @@ public class UsuariosService implements IService<Usuario> {
         }
 
         return false;
+    }
+
+    public void destroy() {
+        instance = null;
     }
 
     public static UsuariosService getInstance() {
