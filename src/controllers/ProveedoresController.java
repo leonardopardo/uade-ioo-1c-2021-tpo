@@ -1,12 +1,12 @@
-package servicios;
+package controllers;
 
 import modelos.Proveedor;
 
 import java.util.List;
 
-public class ProveedoresService implements IABMService<Proveedor> {
+public class ProveedoresController implements IABM<Proveedor> {
 
-    private static ProveedoresService instance;
+    private static ProveedoresController instance;
 
     @Override
     public void agregar(Proveedor ... modelo) throws Exception {
@@ -37,9 +37,9 @@ public class ProveedoresService implements IABMService<Proveedor> {
         instance = null;
     }
 
-    public static ProveedoresService getInstance(){
+    public static ProveedoresController getInstance(){
         if(instance == null){
-            instance = new ProveedoresService();
+            instance = new ProveedoresController();
         }
 
         return instance;

@@ -1,7 +1,7 @@
 package factories;
 
 import modelos.Proveedor;
-import modelos.Rubro;
+import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
 
 import java.time.LocalDate;

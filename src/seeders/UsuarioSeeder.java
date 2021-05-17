@@ -3,7 +3,7 @@ package seeders;
 import factories.UsuariosFactory;
 import modelos.Usuario;
 import modelos.enums.Role;
-import servicios.UsuariosService;
+import controllers.UsuariosController;
 
 import java.time.LocalDate;
 
@@ -47,7 +47,7 @@ public class UsuarioSeeder {
                 Role.ADMINISTRADOR
         );
 
-        UsuariosService service = UsuariosService.getInstance();
+        UsuariosController service = UsuariosController.getInstance();
         service.agregar(u1, u2, u3, u4);
     }
 }

@@ -2,11 +2,10 @@ package seeders;
 
 import factories.ProveedoresFactory;
 import modelos.Proveedor;
-import modelos.Rubro;
+import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
-import servicios.ProveedoresService;
+import controllers.ProveedoresController;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -40,7 +39,7 @@ public class ProveedorSeeder {
                 new ArrayList<Rubro>()
         );
 
-        ProveedoresService ps = ProveedoresService.getInstance();
+        ProveedoresController ps = ProveedoresController.getInstance();
         ps.agregar(p1);
         ps.agregar(p2);
     }

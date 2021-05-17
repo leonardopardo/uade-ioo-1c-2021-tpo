@@ -1,9 +1,8 @@
 package app.Acceso;
 
-import modelos.Producto;
 import modelos.Usuario;
 import seeders.UsuarioSeeder;
-import servicios.UsuariosService;
+import controllers.UsuariosController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +42,7 @@ public class Login extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                UsuariosService service = UsuariosService.getInstance();
+                UsuariosController service = UsuariosController.getInstance();
 
                 boolean usrIsValid = service
                         .validarCredenciales(txtUsername.getText(), txtPassword.getPassword());

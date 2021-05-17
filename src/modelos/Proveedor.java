@@ -1,5 +1,6 @@
 package modelos;
 
+import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
 
 import java.time.LocalDate;
@@ -26,10 +27,10 @@ public class Proveedor {
 
     private Double limiteCtaCte;
 
-    private List<Rubro> rubro;
+    private List<Rubro> rubros;
 
     public Proveedor() {
-        this.rubro = new ArrayList<>();
+        this.rubros = new ArrayList<>();
     }
 
     public String getRazonSocial() {
@@ -105,10 +106,10 @@ public class Proveedor {
     }
 
     public List<Rubro> getRubro() {
-        return rubro;
+        return rubros;
     }
 
     public void setRubro(List<Rubro> rubro) {
-        this.rubro = rubro;
+        this.rubros = rubro;
     }
 }

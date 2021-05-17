@@ -1,18 +1,17 @@
-package servicios;
+package controllers;
 
 import modelos.Usuario;
-import modelos.enums.Role;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class UsuariosService implements IABMService<Usuario> {
+public class UsuariosController implements IABM<Usuario> {
 
     private List<Usuario> usuarios;
 
-    private static UsuariosService instance;
+    private static UsuariosController instance;
 
     protected static final String USUARIO_EXISTENTE_EXCEPTION
             = "El usuario que intenta agregar ya existe.";
@@ -20,7 +19,7 @@ public class UsuariosService implements IABMService<Usuario> {
     protected static final String USUARIO_NO_EXISTENTE_EXCEPTION
             = "El usuario con el que intenta operar no existe.";
 
-    protected UsuariosService() {
+    protected UsuariosController() {
         this.usuarios = new ArrayList<Usuario>();
     }
 
@@ -97,9 +96,9 @@ public class UsuariosService implements IABMService<Usuario> {
         instance = null;
     }
 
-    public static UsuariosService getInstance() {
+    public static UsuariosController getInstance() {
         if(instance == null){
-            instance = new UsuariosService();
+            instance = new UsuariosController();
         }
 
         return instance;

@@ -4,7 +4,7 @@ import factories.UsuariosFactory;
 import modelos.Usuario;
 import modelos.enums.Role;
 import org.junit.jupiter.api.Test;
-import servicios.UsuariosService;
+import controllers.UsuariosController;
 
 
 import java.time.LocalDate;
@@ -17,7 +17,7 @@ public class UsuarioModelTest {
         Usuario u1 = UsuariosFactory.create("Leonardo", "Pardo", "leopardo",
                 "123123", LocalDate.of(1981, 06, 12), Role.OPERADOR);
 
-        UsuariosService service = UsuariosService.getInstance();
+        UsuariosController service = UsuariosController.getInstance();
         service.agregar(u1);
 
         assertEquals(39, service.obtener("leopardo").getEdad());

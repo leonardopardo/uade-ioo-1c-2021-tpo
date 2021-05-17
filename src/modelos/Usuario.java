@@ -19,6 +19,19 @@ public class Usuario {
 
     private Role role;
 
+    public Usuario(){
+        // code here...
+    }
+
+    public Usuario(dto.Usuario usuarioDto){
+        this.nombre = usuarioDto.nombre;
+        this.apellido = usuarioDto.apellido;
+        this.username = usuarioDto.username;
+        this.password = usuarioDto.password;
+        this.edad = usuarioDto.edad;
+        this.role = usuarioDto.role;
+    }
+
     public Integer getEdad() {
         return Period.between(edad, LocalDate.now()).getYears();
     }

@@ -4,13 +4,13 @@ import factories.UsuariosFactory;
 import modelos.Usuario;
 import modelos.enums.Role;
 import org.junit.jupiter.api.Test;
-import servicios.UsuariosService;
+import controllers.UsuariosController;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UsuariosServiceTest {
+public class UsuariosControllerTest {
 
     @Test
     void validar_credenciales_correctas_de_usuario() throws Exception {
@@ -24,7 +24,7 @@ public class UsuariosServiceTest {
         Usuario u3 = UsuariosFactory.create("Federico", "Pardo", "fedepardo",
                 "789456", LocalDate.of(2011, 10, 4), Role.OPERADOR);
 
-        UsuariosService service = UsuariosService.getInstance();
+        UsuariosController service = UsuariosController.getInstance();
         service.agregar(u1, u2, u3);
 
         assertTrue(service.validarCredenciales("leopardo", "123123".toCharArray()));
@@ -41,7 +41,7 @@ public class UsuariosServiceTest {
         Usuario u1 = UsuariosFactory.create("Leonardo", "Pardo", "leopardo",
                 "123123", LocalDate.of(1981, 06, 12), Role.OPERADOR);
 
-        UsuariosService service = UsuariosService.getInstance();
+        UsuariosController service = UsuariosController.getInstance();
         service.agregar(u1);
 
         assertFalse(service.validarCredenciales("", "123123".toCharArray()));
@@ -55,7 +55,7 @@ public class UsuariosServiceTest {
         Usuario u1 = UsuariosFactory.create("Leonardo", "Pardo", "leopardo",
                 "123123", LocalDate.of(1981, 06, 12), Role.OPERADOR);
 
-        UsuariosService service = UsuariosService.getInstance();
+        UsuariosController service = UsuariosController.getInstance();
         service.agregar(u1);
 
         assertFalse(service.validarCredenciales("leopardo", "".toCharArray()));
@@ -68,7 +68,7 @@ public class UsuariosServiceTest {
         Usuario u1 = UsuariosFactory.create("Leonardo", "Pardo", "leopardo",
                 "123123", LocalDate.of(1981, 06, 12), Role.OPERADOR);
 
-        UsuariosService service = UsuariosService.getInstance();
+        UsuariosController service = UsuariosController.getInstance();
         service.agregar(u1);
 
         Usuario ux = service.obtener("leopardo");
@@ -83,7 +83,7 @@ public class UsuariosServiceTest {
         Usuario u1 = UsuariosFactory.create("Leonardo", "Pardo", "leopardo",
                 "123123", LocalDate.of(1981, 06, 12), Role.OPERADOR);
 
-        UsuariosService service = UsuariosService.getInstance();
+        UsuariosController service = UsuariosController.getInstance();
         service.agregar(u1);
 
         Usuario ux = service.obtener("nicopardo");
@@ -98,7 +98,7 @@ public class UsuariosServiceTest {
         Usuario u1 = UsuariosFactory.create("Leonardo", "Pardo", "leopardo",
                 "123123", LocalDate.of(1981, 06, 12), Role.OPERADOR);
 
-        UsuariosService service = UsuariosService.getInstance();
+        UsuariosController service = UsuariosController.getInstance();
         service.agregar(u1);
 
         Usuario ux = service.obtener("leopardo");
@@ -114,7 +114,7 @@ public class UsuariosServiceTest {
         Usuario u1 = UsuariosFactory.create("Leonardo", "Pardo", "leopardo",
                 "123123", LocalDate.of(1981, 06, 12), Role.ADMINISTRADOR);
 
-        UsuariosService service = UsuariosService.getInstance();
+        UsuariosController service = UsuariosController.getInstance();
         service.agregar(u1);
 
         Usuario ux = service.obtener("leopardo");
