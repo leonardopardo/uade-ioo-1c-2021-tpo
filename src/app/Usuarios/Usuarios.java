@@ -1,20 +1,20 @@
-package app.Main;
+package app.Usuarios;
 
-import app.Acceso.Login;
+import app.Main.Main;
+import modelos.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class Main extends JFrame {
+public class Usuarios extends JFrame {
     private JPanel pnlMain;
-    private JButton btnProveedores;
-    private JButton btnDocumentos;
-    private JButton btnOrdenes;
-    private JButton btnInformes;
-    private JButton btnUsuarios;
+    private JTable tblUsuarios;
     private JPanel pnlHeader;
+    private JPanel pnlTable;
+    private JPanel pnlActions;
+    private JPanel pnlTitle;
 
-    public Main(String title) {
+    public Usuarios(String title) {
         super(title);
         this.setResizable(false);
         this.setContentPane(this.pnlMain);
@@ -25,6 +25,6 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
-        Main loginFrame = new Main("Factura 2000");
+        Usuarios loginFrame = new Usuarios("Factura 2000");
     }
 }

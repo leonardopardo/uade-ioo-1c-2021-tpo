@@ -5,11 +5,99 @@
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
     <properties>
+      <background color="-1"/>
       <maximumSize width="450" height="400"/>
       <minimumSize width="450" height="400"/>
       <preferredSize width="450" height="400"/>
     </properties>
     <border type="none"/>
-    <children/>
+    <children>
+      <grid id="ec5ea" binding="pnlHeader" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints/>
+        <properties>
+          <background color="-1"/>
+          <preferredSize width="300" height="60"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="2b9ed" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <icon value="resources/brand/brand.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <hspacer id="520dc">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+        </children>
+      </grid>
+      <component id="fca60" class="javax.swing.JButton" binding="btnProveedores">
+        <constraints/>
+        <properties>
+          <background color="-1"/>
+          <borderPainted value="true"/>
+          <foreground color="-11513776"/>
+          <hideActionText value="false"/>
+          <icon value="resources/icons/proveedores-color.png"/>
+          <inheritsPopupMenu value="true"/>
+          <label value="Proveedores"/>
+          <preferredSize width="300" height="50"/>
+          <pressedIcon value="resources/icons/proveedores.png"/>
+          <text value="Proveedores"/>
+        </properties>
+      </component>
+      <component id="6a509" class="javax.swing.JButton" binding="btnDocumentos">
+        <constraints/>
+        <properties>
+          <background color="-1"/>
+          <foreground color="-11513776"/>
+          <icon value="resources/icons/documentos-color.png"/>
+          <label value="Documentos"/>
+          <preferredSize width="300" height="50"/>
+          <pressedIcon value="resources/icons/documentos.png"/>
+          <text value="Documentos"/>
+        </properties>
+      </component>
+      <component id="b3474" class="javax.swing.JButton" binding="btnOrdenes">
+        <constraints/>
+        <properties>
+          <background color="-1"/>
+          <foreground color="-11513776"/>
+          <icon value="resources/icons/ordenes-color.png"/>
+          <label value="Ordenes"/>
+          <preferredSize width="300" height="50"/>
+          <pressedIcon value="resources/icons/ordenes.png"/>
+          <text value="Ordenes"/>
+        </properties>
+      </component>
+      <component id="3ebec" class="javax.swing.JButton" binding="btnInformes">
+        <constraints/>
+        <properties>
+          <background color="-1"/>
+          <foreground color="-11513776"/>
+          <icon value="resources/icons/informes-color.png"/>
+          <preferredSize width="300" height="50"/>
+          <pressedIcon value="resources/icons/informes.png"/>
+          <text value="Informes"/>
+        </properties>
+      </component>
+      <component id="602a1" class="javax.swing.JButton" binding="btnUsuarios">
+        <constraints/>
+        <properties>
+          <background color="-1"/>
+          <foreground color="-11513776"/>
+          <icon value="resources/icons/usuarios-color.png"/>
+          <preferredSize width="300" height="50"/>
+          <pressedIcon value="resources/icons/usuarios.png"/>
+          <text value="Usuarios"/>
+        </properties>
+      </component>
+    </children>
   </grid>
 </form>
