@@ -4,9 +4,19 @@ import modelos.Proveedor;
 
 import java.util.List;
 
-public class ProveedoresController implements IABM<Proveedor> {
+public class ProveedoresController implements IController<Proveedor> {
 
     private static ProveedoresController instance;
+
+    @Override
+    public List<Proveedor> listar() {
+        return null;
+    }
+
+    @Override
+    public Proveedor obtener(String valor) {
+        return null;
+    }
 
     @Override
     public void agregar(Proveedor ... modelo) throws Exception {
@@ -23,16 +33,6 @@ public class ProveedoresController implements IABM<Proveedor> {
 
     }
 
-    @Override
-    public Proveedor obtener(String valor) {
-        return null;
-    }
-
-    @Override
-    public List<Proveedor> listar() {
-        return null;
-    }
-
     public void destroy() {
         instance = null;
     }
@@ -44,4 +44,5 @@ public class ProveedoresController implements IABM<Proveedor> {
 
         return instance;
     }
+
 }

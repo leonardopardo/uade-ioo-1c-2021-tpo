@@ -1,10 +1,20 @@
 package modelos;
 
+import modelos.enums.Rubro;
 import modelos.enums.Unidad;
 
 public abstract class Item {
-    private String codigo;
-    private String titulo;
-    private String descripcion;
-    private Unidad unidad;
+
+    protected Integer id;
+
+    protected String codigo;
+
+    protected String titulo;
+
+    protected String descripcion;
+
+    protected Unidad unidad;
+
+    protected Rubro rubro;
+
 }

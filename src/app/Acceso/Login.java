@@ -1,7 +1,6 @@
 package app.Acceso;
 
 import modelos.Usuario;
-import seeders.UsuarioSeeder;
 import controllers.UsuariosController;
 
 import javax.swing.*;
@@ -33,7 +32,6 @@ public class Login extends JFrame {
         this.setSize(pnlMain.getPreferredSize());
         this.setBackground(Color.WHITE);
 
-        UsuarioSeeder.run();
         this.logOn();
     }
 

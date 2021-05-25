@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class UsuariosController implements IABM<Usuario> {
+public class UsuariosController implements IController<Usuario> {
 
     private List<Usuario> usuarios;
 
@@ -23,6 +23,31 @@ public class UsuariosController implements IABM<Usuario> {
         this.usuarios = new ArrayList<Usuario>();
     }
 
+    public static UsuariosController getInstance() {
+        if(instance == null){
+            instance = new UsuariosController();
+        }
+
+        return instance;
+    }
+
+    @Override
+    public List<Usuario> listar() {
+        return this.usuarios;
+    }
+
+    @Override
+    public Usuario obtener(String valor) {
+        Usuario u = null;
+
+        for (Usuario usuario : this.usuarios) {
+            if(usuario.getUsername().contentEquals(valor))
+                u = usuario;
+        }
+
+        return u;
+    }
+
     @Override
     public void agregar(Usuario ... modelo) throws Exception {
         try {
@@ -32,15 +57,6 @@ public class UsuariosController implements IABM<Usuario> {
 
             Collections.addAll(this.usuarios, modelo);
 
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    @Override
-    public void eliminar(Usuario modelo){
-        try{
-            this.usuarios.remove(modelo);
         } catch (Exception e) {
             throw e;
         }
@@ -61,20 +77,12 @@ public class UsuariosController implements IABM<Usuario> {
     }
 
     @Override
-    public Usuario obtener(String valor) {
-        Usuario u = null;
-
-        for (Usuario usuario : this.usuarios) {
-            if(usuario.getUsername().contentEquals(valor))
-                u = usuario;
+    public void eliminar(Usuario modelo){
+        try{
+            this.usuarios.remove(modelo);
+        } catch (Exception e) {
+            throw e;
         }
-
-        return u;
-    }
-
-    @Override
-    public List<Usuario> listar() {
-        return this.usuarios;
     }
 
     public boolean validarCredenciales(String username, char[] password) {
@@ -94,13 +102,5 @@ public class UsuariosController implements IABM<Usuario> {
 
     public void destroy() {
         instance = null;
-    }
-
-    public static UsuariosController getInstance() {
-        if(instance == null){
-            instance = new UsuariosController();
-        }
-
-        return instance;
     }
 }

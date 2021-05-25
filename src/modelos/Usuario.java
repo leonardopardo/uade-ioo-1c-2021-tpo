@@ -1,11 +1,13 @@
 package modelos;
 
+import dto.UsuarioDTO;
 import modelos.enums.Role;
 
 import java.time.LocalDate;
-import java.time.Period;
 
 public class Usuario {
+
+    private Integer id;
 
     private String nombre;
 
@@ -19,64 +21,41 @@ public class Usuario {
 
     private Role role;
 
-    public Usuario(){
-        // code here...
+    public Usuario(UsuarioDTO dto){
+        this.nombre = dto.nombre.trim().toLowerCase();
+        this.apellido = dto.apellido.trim().toLowerCase();
+        this.username = dto.username.trim().toLowerCase();
+        this.password = dto.password.trim();
+        this.edad = dto.edad;
+        this.role = dto.role;
     }
 
-    public Usuario(dto.Usuario usuarioDto){
-        this.nombre = usuarioDto.nombre;
-        this.apellido = usuarioDto.apellido;
-        this.username = usuarioDto.username;
-        this.password = usuarioDto.password;
-        this.edad = usuarioDto.edad;
-        this.role = usuarioDto.role;
-    }
-
-    public Integer getEdad() {
-        return Period.between(edad, LocalDate.now()).getYears();
-    }
-
-    public void setEdad(LocalDate edad) {
-        this.edad = edad;
+    public Integer getId() {
+        return id;
     }
 
     public String getNombre() {
-        return nombre.toUpperCase();
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre.toLowerCase();
+        return nombre;
     }
 
     public String getApellido() {
-        return apellido.toUpperCase();
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido.toLowerCase();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+        return apellido;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username.toLowerCase();
+    public String getPassword() {
+        return password;
+    }
+
+    public LocalDate getEdad() {
+        return edad;
     }
 
     public Role getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
 }
