@@ -36,8 +36,7 @@ public class ProveedoreService implements IService<Proveedor, ProveedorDTO> {
 
     }
 
-    @Override
-    public Proveedor map(ResultSet rs) throws SQLException {
+    private Proveedor map(ResultSet rs) throws SQLException {
         return null;
     }
 }

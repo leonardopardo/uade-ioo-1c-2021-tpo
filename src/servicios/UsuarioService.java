@@ -15,7 +15,6 @@ public class UsuarioService implements IService<Usuario, UsuarioDTO> {
 
     public UsuarioService() throws SQLException {
         this.ctx = new ConnectionService();
-
     }
 
     @Override
@@ -71,8 +70,7 @@ public class UsuarioService implements IService<Usuario, UsuarioDTO> {
 
     }
 
-    @Override
-    public Usuario map(ResultSet rs) throws SQLException {
+    private Usuario map(ResultSet rs) throws SQLException {
 
         UsuarioDTO dto = new UsuarioDTO();
         dto.id = rs.getInt("id");

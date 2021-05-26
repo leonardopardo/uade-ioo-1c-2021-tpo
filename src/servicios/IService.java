@@ -16,6 +16,4 @@ public interface IService<T, T2> {
 
     void delete(Integer value) throws SQLException;
 
-    T map(ResultSet rs) throws SQLException;
-
 }

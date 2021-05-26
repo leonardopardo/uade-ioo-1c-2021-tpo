@@ -1,7 +1,10 @@
 package controllers;
 
 import modelos.Usuario;
+import servicios.UsuarioService;
 
+import javax.swing.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,7 +23,12 @@ public class UsuariosController implements IController<Usuario> {
             = "El usuario con el que intenta operar no existe.";
 
     protected UsuariosController() {
-        this.usuarios = new ArrayList<Usuario>();
+        try {
+            UsuarioService service = new UsuarioService();
+            this.usuarios = service.list();
+        } catch(SQLException e) {
+            e.getMessage();
+        }
     }
 
     public static UsuariosController getInstance() {
