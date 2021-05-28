@@ -1,7 +1,7 @@
 # UADE - Introducción a la Orientación a Objetos 🚀
 1er Cuatrimestre 2021 - TPO  
 
-__Integrantes__  
+__Integrantes__   👨‍🎓	👩‍🎓
 - Mora Stok
 - Natalia Diaz
 - Tomás Orobio
