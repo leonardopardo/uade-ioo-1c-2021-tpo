@@ -9,8 +9,8 @@ __Integrantes__   👨‍🎓	👩‍🎓
 - Levigna Franco
 
 __Contacto__      ☎️
-Teams: Leonardo Pardo  
-mail: lepardo@uade.edu.ar  
+- Teams: Leonardo Pardo  
+- mail: lepardo@uade.edu.ar  
 
 ## Antecedentes 📝
 
