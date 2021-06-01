@@ -1,11 +1,13 @@
 package modelos;
 
+import dto.UsuarioDTO;
 import modelos.enums.Role;
 
 import java.time.LocalDate;
-import java.time.Period;
 
 public class Usuario {
+
+    private Integer id;
 
     private String nombre;
 
@@ -19,51 +21,41 @@ public class Usuario {
 
     private Role role;
 
-    public Integer getEdad() {
-        return Period.between(edad, LocalDate.now()).getYears();
+    public Usuario(UsuarioDTO dto){
+        this.nombre = dto.nombre.trim().toLowerCase();
+        this.apellido = dto.apellido.trim().toLowerCase();
+        this.username = dto.username.trim().toLowerCase();
+        this.password = dto.password.trim();
+        this.edad = dto.edad;
+        this.role = dto.role;
     }
 
-    public void setEdad(LocalDate edad) {
-        this.edad = edad;
+    public Integer getId() {
+        return id;
     }
 
     public String getNombre() {
         return nombre.toUpperCase();
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre.toLowerCase();
-    }
-
     public String getApellido() {
         return apellido.toUpperCase();
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido.toLowerCase();
+    public String getUsername() {
+        return username.toLowerCase();
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username.toLowerCase();
+    public LocalDate getEdad() {
+        return edad;
     }
 
     public Role getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
 }

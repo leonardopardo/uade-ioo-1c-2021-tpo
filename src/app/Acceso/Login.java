@@ -1,9 +1,7 @@
 package app.Acceso;
 
-import modelos.Producto;
 import modelos.Usuario;
-import seeders.UsuarioSeeder;
-import servicios.UsuariosService;
+import controllers.UsuariosController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,12 +27,10 @@ public class Login extends JFrame {
         this.setResizable(false);
         this.setContentPane(this.pnlMain);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        //this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setSize(pnlMain.getPreferredSize());
         this.setBackground(Color.WHITE);
 
-        UsuarioSeeder.run();
         this.logOn();
     }
 
@@ -43,7 +39,7 @@ public class Login extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                UsuariosService service = UsuariosService.getInstance();
+                UsuariosController service = UsuariosController.getInstance();
 
                 boolean usrIsValid = service
                         .validarCredenciales(txtUsername.getText(), txtPassword.getPassword());

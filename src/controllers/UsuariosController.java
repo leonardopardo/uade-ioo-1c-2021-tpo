@@ -1,18 +1,21 @@
-package servicios;
+package controllers;
 
+import dto.UsuarioDTO;
 import modelos.Usuario;
-import modelos.enums.Role;
+import servicios.UsuarioService;
 
+import javax.swing.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class UsuariosService implements IABMService<Usuario> {
+public class UsuariosController implements IController<Usuario> {
 
     private List<Usuario> usuarios;
 
-    private static UsuariosService instance;
+    private static UsuariosController instance;
 
     protected static final String USUARIO_EXISTENTE_EXCEPTION
             = "El usuario que intenta agregar ya existe.";
@@ -20,8 +23,38 @@ public class UsuariosService implements IABMService<Usuario> {
     protected static final String USUARIO_NO_EXISTENTE_EXCEPTION
             = "El usuario con el que intenta operar no existe.";
 
-    protected UsuariosService() {
-        this.usuarios = new ArrayList<Usuario>();
+    protected UsuariosController() {
+        try {
+            UsuarioService service = new UsuarioService();
+            this.usuarios = service.list();
+        } catch(SQLException e) {
+            e.getMessage();
+        }
+    }
+
+    public static UsuariosController getInstance() {
+        if(instance == null){
+            instance = new UsuariosController();
+        }
+
+        return instance;
+    }
+
+    @Override
+    public List<Usuario> listar() {
+        return this.usuarios;
+    }
+
+    @Override
+    public Usuario obtener(String valor) {
+        Usuario u = null;
+
+        for (Usuario usuario : this.usuarios) {
+            if(usuario.getUsername().contentEquals(valor))
+                u = usuario;
+        }
+
+        return u;
     }
 
     @Override
@@ -33,15 +66,6 @@ public class UsuariosService implements IABMService<Usuario> {
 
             Collections.addAll(this.usuarios, modelo);
 
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    @Override
-    public void eliminar(Usuario modelo){
-        try{
-            this.usuarios.remove(modelo);
         } catch (Exception e) {
             throw e;
         }
@@ -62,20 +86,12 @@ public class UsuariosService implements IABMService<Usuario> {
     }
 
     @Override
-    public Usuario obtener(String valor) {
-        Usuario u = null;
-
-        for (Usuario usuario : this.usuarios) {
-            if(usuario.getUsername().contentEquals(valor))
-                u = usuario;
+    public void eliminar(Usuario modelo){
+        try{
+            this.usuarios.remove(modelo);
+        } catch (Exception e) {
+            throw e;
         }
-
-        return u;
-    }
-
-    @Override
-    public List<Usuario> listar() {
-        return this.usuarios;
     }
 
     public boolean validarCredenciales(String username, char[] password) {
@@ -95,13 +111,5 @@ public class UsuariosService implements IABMService<Usuario> {
 
     public void destroy() {
         instance = null;
-    }
-
-    public static UsuariosService getInstance() {
-        if(instance == null){
-            instance = new UsuariosService();
-        }
-
-        return instance;
     }
 }

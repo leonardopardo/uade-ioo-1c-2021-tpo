@@ -80,12 +80,12 @@ A cualquier orden de pago se le pueden asociar cheques propios o de terceros (em
 - Total de deuda por proveedor
 - Total de impuestos retenidos
 - Consulta de libro IVA compras donde debe constar:
-- CUIT del proveedor
-- Nombre del proveedor
-- Fecha
-- Tipo de documento (Factura / NC / ND)
-- IVA 2,5%, 5%, 10.5%, 21% y 27%
-- Total
+    - CUIT del proveedor
+    - Nombre del proveedor
+    - Fecha
+    - Tipo de documento (Factura / NC / ND)
+    - IVA 2,5%, 5%, 10.5%, 21% y 27%
+    - Total
 
 ## Módulos a entregar
 
