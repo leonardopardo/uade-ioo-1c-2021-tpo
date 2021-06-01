@@ -24,11 +24,11 @@ public class UsuarioService implements IService<Usuario, UsuarioDTO> {
 
         Statement stmt = conn.createStatement();
 
-        ResultSet rs  = stmt.executeQuery("SELECT * FROM usuarios");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
 
         List<Usuario> usuarios = new ArrayList<>();
 
-        while(rs.next()){
+        while (rs.next()) {
             usuarios.add(this.map(rs));
         }
 

@@ -1,6 +1,5 @@
 package app.Main;
 
-import app.Acceso.Login;
 import app.Usuarios.Usuarios;
 
 import javax.swing.*;

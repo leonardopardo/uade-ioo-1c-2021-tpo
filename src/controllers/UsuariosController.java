@@ -1,5 +1,6 @@
 package controllers;
 
+import dto.UsuarioDTO;
 import modelos.Usuario;
 import servicios.UsuarioService;
 

@@ -35,15 +35,15 @@ public class Usuario {
     }
 
     public String getNombre() {
-        return nombre;
+        return nombre.toUpperCase();
     }
 
     public String getApellido() {
-        return apellido;
+        return apellido.toUpperCase();
     }
 
     public String getUsername() {
-        return username;
+        return username.toLowerCase();
     }
 
     public String getPassword() {
