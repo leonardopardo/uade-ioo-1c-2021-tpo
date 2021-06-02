@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class UsuariosController implements IController<Usuario> {
+public class UsuariosController{
 
     private List<Usuario> usuarios;
 
@@ -24,12 +24,7 @@ public class UsuariosController implements IController<Usuario> {
             = "El usuario con el que intenta operar no existe.";
 
     protected UsuariosController() {
-        try {
-            UsuarioService service = new UsuarioService();
-            this.usuarios = service.list();
-        } catch(SQLException e) {
-            e.getMessage();
-        }
+
     }
 
     public static UsuariosController getInstance() {
@@ -40,12 +35,21 @@ public class UsuariosController implements IController<Usuario> {
         return instance;
     }
 
-    @Override
-    public List<Usuario> listar() {
-        return this.usuarios;
+    public List<UsuarioDTO> listar() {
+
+        List<UsuarioDTO> usuarios = new ArrayList<>();
+
+        this.usuarios.stream().forEach(usuario -> {
+            UsuarioDTO u = new UsuarioDTO();
+            u.username = usuario.getNombre();
+            u.apellido = usuario.getApellido();
+            u.edad = usuario.getEdad();
+            u.role = usuario.getRole();
+        });
+
+        return usuarios;
     }
 
-    @Override
     public Usuario obtener(String valor) {
         Usuario u = null;
 
@@ -57,7 +61,6 @@ public class UsuariosController implements IController<Usuario> {
         return u;
     }
 
-    @Override
     public void agregar(Usuario ... modelo) throws Exception {
         try {
 
@@ -71,7 +74,6 @@ public class UsuariosController implements IController<Usuario> {
         }
     }
 
-    @Override
     public void actualizar(Usuario modelo) throws Exception {
         try{
 
@@ -85,7 +87,6 @@ public class UsuariosController implements IController<Usuario> {
         }
     }
 
-    @Override
     public void eliminar(Usuario modelo){
         try{
             this.usuarios.remove(modelo);

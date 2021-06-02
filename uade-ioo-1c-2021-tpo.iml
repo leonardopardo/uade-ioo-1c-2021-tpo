@@ -24,7 +24,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="sqlite-jdbc-3.34.0" level="project" />
-    <orderEntry type="library" name="gson-2.8.6" level="project" />
-    <orderEntry type="library" name="gson-2.8.6" level="project" />
+    <orderEntry type="library" name="gson-2.8.5" level="project" />
   </component>
 </module>

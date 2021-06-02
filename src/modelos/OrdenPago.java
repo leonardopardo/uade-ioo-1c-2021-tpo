@@ -26,4 +26,9 @@ public class OrdenPago {
         this.pagos = new ArrayList<>();
     }
 
+    private void agregarPago(){
+        Pago p = new Pago();
+        this.pagos.add(p);
+    }
+
 }

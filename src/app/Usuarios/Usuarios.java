@@ -4,6 +4,7 @@ import app.Main.Main;
 import com.sun.org.apache.xerces.internal.impl.xs.util.ObjectListImpl;
 import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import controllers.UsuariosController;
+import dto.UsuarioDTO;
 import modelos.Usuario;
 import modelos.enums.Role;
 import servicios.UsuarioService;
@@ -103,7 +104,7 @@ public class Usuarios extends JFrame {
 
         try {
 
-            List<Usuario> usuarios = UsuariosController.getInstance().listar();
+            List<UsuarioDTO> usuarios = UsuariosController.getInstance().listar();
 
             String[] columns = new String[] {
                     "nombre".toUpperCase(),
@@ -117,11 +118,11 @@ public class Usuarios extends JFrame {
 
             usuarios.stream().forEach( x -> {
                 Object[] o = {
-                        x.getNombre().toUpperCase(),
-                        x.getApellido().toUpperCase(),
-                        x.getUsername(),
-                        x.getEdad(),
-                        x.getRole()
+                        x.nombre.toUpperCase(),
+                        x.apellido.toUpperCase(),
+                        x.username,
+                        x.edad,
+                        x.role
                 };
 
                 tblModel.addRow(o);
