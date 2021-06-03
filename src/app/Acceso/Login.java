@@ -1,6 +1,6 @@
 package app.Acceso;
 
-import modelos.Usuario;
+import dto.UsuarioDTO;
 import controllers.UsuariosController;
 
 import javax.swing.*;
@@ -39,19 +39,24 @@ public class Login extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                UsuariosController service = UsuariosController.getInstance();
+                UsuariosController service = null;
+                try {
+                    service = UsuariosController.getInstance();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
 
                 boolean usrIsValid = service
                         .validarCredenciales(txtUsername.getText(), txtPassword.getPassword());
 
                 if(usrIsValid){
 
-                    Usuario usuario = service
+                    UsuarioDTO usuario = service
                             .obtener(txtUsername.getText().trim());
 
                     JOptionPane.showMessageDialog(
                             pnlMain,
-                            "Las credenciales son válidas y el role del usuario es \n" + usuario.getRole(),
+                            "Las credenciales son válidas y el role del usuario es \n" + usuario.role,
                             "Excelente",
                             JOptionPane.INFORMATION_MESSAGE
                     );

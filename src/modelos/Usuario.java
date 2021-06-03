@@ -22,6 +22,7 @@ public class Usuario {
     private Role role;
 
     public Usuario(UsuarioDTO dto){
+        this.id = dto.id;
         this.nombre = dto.nombre.trim().toLowerCase();
         this.apellido = dto.apellido.trim().toLowerCase();
         this.username = dto.username.trim().toLowerCase();

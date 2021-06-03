@@ -6,7 +6,7 @@ import vendor.GenericDAO;
 public class ProveedoreService extends GenericDAO {
 
     public ProveedoreService() throws Exception {
-        super(Proveedor.class, "");
+        super(Proveedor.class, "./src/json/proveedores.json");
     }
 
 }

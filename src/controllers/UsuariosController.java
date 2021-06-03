@@ -23,11 +23,12 @@ public class UsuariosController{
     protected static final String USUARIO_NO_EXISTENTE_EXCEPTION
             = "El usuario con el que intenta operar no existe.";
 
-    protected UsuariosController() {
-
+    protected UsuariosController() throws Exception {
+        UsuarioService service = new UsuarioService();
+        this.usuarios = service.getAll();
     }
 
-    public static UsuariosController getInstance() {
+    public static UsuariosController getInstance() throws Exception {
         if(instance == null){
             instance = new UsuariosController();
         }
@@ -41,24 +42,36 @@ public class UsuariosController{
 
         this.usuarios.stream().forEach(usuario -> {
             UsuarioDTO u = new UsuarioDTO();
-            u.username = usuario.getNombre();
+            u.nombre = usuario.getNombre();
             u.apellido = usuario.getApellido();
+            u.username = usuario.getUsername();
             u.edad = usuario.getEdad();
             u.role = usuario.getRole();
+            u.id = usuario.getId();
+
+            usuarios.add(u);
         });
 
         return usuarios;
     }
 
-    public Usuario obtener(String valor) {
-        Usuario u = null;
+    public UsuarioDTO obtener(String valor) {
+
+        UsuarioDTO u = new UsuarioDTO();
 
         for (Usuario usuario : this.usuarios) {
-            if(usuario.getUsername().contentEquals(valor))
-                u = usuario;
+            if(usuario.getUsername().contentEquals(valor)){
+                u.nombre = usuario.getNombre();
+                u.apellido = usuario.getApellido();
+                u.role = usuario.getRole();
+                u.username = usuario.getUsername();
+                u.edad = usuario.getEdad();
+
+                return u;
+            }
         }
 
-        return u;
+        return null;
     }
 
     public void agregar(Usuario ... modelo) throws Exception {
@@ -74,10 +87,10 @@ public class UsuariosController{
         }
     }
 
-    public void actualizar(Usuario modelo) throws Exception {
+    public void actualizar(UsuarioDTO dto) throws Exception {
         try{
 
-            Usuario usuario = this.obtener(modelo.getUsername());
+            UsuarioDTO usuario = this.obtener(dto.username);
 
             if(usuario == null)
                 throw new Exception(USUARIO_NO_EXISTENTE_EXCEPTION);

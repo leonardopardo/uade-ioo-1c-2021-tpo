@@ -1,35 +1,37 @@
 package tests;
 
+import dto.UsuarioDTO;
 import modelos.Usuario;
+import modelos.enums.Role;
 import org.junit.jupiter.api.Test;
-import servicios.ConnectionService;
 import servicios.UsuarioService;
 
-import java.util.List;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UsuariosServiceTest {
 
     @Test
-    public void puede_conectar_a_la_base_de_datos() throws Exception{
-        ConnectionService service = new ConnectionService();
-        assertNotNull(service.connect());
-        service.disconnect();
-    }
+    public void puede_guardar_un_usuario() throws Exception {
 
-    @Test
-    public void puede_obtener_una_lista_de_usuarios() throws Exception {
+        UsuarioDTO u1 = new UsuarioDTO();
+        u1.nombre = "Leonardo";
+        u1.apellido = "Pardo";
+        u1.edad = LocalDate.of(1981, 06, 12);
+        u1.username = "leopardo";
+        u1.role = Role.ADMINISTRADOR;
+        u1.id = 1;
+        u1.password = "123123";
+
         UsuarioService service = new UsuarioService();
-        List<Usuario> usuarios = service.list();
+        service.save(new Usuario(u1));
 
-        assertEquals(5, usuarios.size());
-    }
+        Usuario usuario = (Usuario) service.search(u1.id);
 
-    @Test
-    public void puede_obtener_un_usuarios_dado_un_id() throws Exception {
-        UsuarioService service = new UsuarioService();
-        assertEquals("leonardo".toLowerCase(), service.find(1).getNombre().toLowerCase());
+        assertEquals("leopardo", usuario.getUsername());
+
+        service.delete(u1.id);
     }
 
 }

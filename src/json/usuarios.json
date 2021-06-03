@@ -1,0 +1,4 @@
+{"id":1,"nombre":"leonardo","apellido":"pardo","username":"leopardo@mail.com","password":"123123","edad":{"year":1981,"month":6,"day":12},"role":"ADMINISTRADOR"}
+{"id":2,"nombre":"nicolás","apellido":"pardo","username":"nicopardo@mail.com","password":"123123","edad":{"year":2011,"month":10,"day":4},"role":"ADMINISTRADOR"}
+{"id":3,"nombre":"federico","apellido":"pardo","username":"fedepardo@mail.com","password":"123123","edad":{"year":2016,"month":12,"day":24},"role":"ADMINISTRADOR"}
+{"id":4,"nombre":"operador","apellido":"operador","username":"operador@mail.com","password":"123123","edad":{"year":2000,"month":1,"day":1},"role":"OPERADOR"}
