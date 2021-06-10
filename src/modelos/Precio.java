@@ -14,4 +14,15 @@ public class Precio {
 
     private LocalDate fecha;
 
+    public Item getItem() {
+        return item;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
 }

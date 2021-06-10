@@ -17,4 +17,15 @@ public abstract class Item {
 
     protected Rubro rubro;
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public Rubro getRubro() {
+        return rubro;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
 }
