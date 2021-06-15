@@ -1,18 +1,18 @@
-# UADE - Introducción a la Orientación a Objetos
+# UADE - Introducción a la Orientación a Objetos 🚀
 1er Cuatrimestre 2021 - TPO  
 
-__Integrantes__  
+__Integrantes__   👨‍🎓	👩‍🎓
 - Mora Stok
 - Natalia Diaz
 - Tomás Orobio
 - Leonardo Pardo
 - Levigna Franco
 
-__Contacto__  
-Teams: Leonardo Pardo  
-mail: lepardo@uade.edu.ar  
+__Contacto__      ☎️
+- Teams: Leonardo Pardo  
+- mail: lepardo@uade.edu.ar  
 
-## Antecedentes
+## Antecedentes 📝
 
 **JMBSoft** es una empresa experta en sistemas de facturación. Su sistema **Factura 2000** tiene una amplia penetración en el mercado argentino y el grado de satisfacción de sus clientes es alto.
 El sistema se encarga de la administración de productos, clientes, emisión de remitos y facturas electrónica, cobros, cuenta corriente de clientes y presentación mensual del libro IVA ventas.
