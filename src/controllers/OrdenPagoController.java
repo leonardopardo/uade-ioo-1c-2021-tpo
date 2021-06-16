@@ -1,8 +1,9 @@
 package controllers;
 
 import dto.FacturaDTO;
-import dto.ProveedorDTO;
+import dto.ProveedorCompulsaDTO;
 import dto.OrdenPagoDTO;
+import dto.ProveedorRetencionDTO;
 import modelos.OrdenPago;
 import modelos.enums.EstadoPago;
 
@@ -15,7 +16,7 @@ public class OrdenPagoController {
     class CuentaCorriente {
         List<FacturaDTO> facturasPagas;
         List<FacturaDTO> facturasImpagas;
-        ProveedorDTO proveedorDTO;
+        ProveedorCompulsaDTO proveedorCompulsaDTO;
 
         public CuentaCorriente() {
             this.facturasPagas = new ArrayList<>();
@@ -33,7 +34,7 @@ public class OrdenPagoController {
 
             if (op.getProveedor().getCuit().equals(cuit)) {
 
-                ctaCte.proveedorDTO = op.getProveedor().toDTO();
+                ctaCte.proveedorCompulsaDTO = op.getProveedor().toDTO();
 
                 // Pagadas
                 if (op.getEstado().equals(EstadoPago.CANCELADO)) {
@@ -126,5 +127,24 @@ public class OrdenPagoController {
         });
 
         return opEmitidas;
+    }
+
+    public ProveedorRetencionDTO retencionPorProveedorPorMes(String cuit, int mes) throws Exception {
+        List<Double> totalRetenciones = new ArrayList<Double>();
+
+        this.ordenesPago.forEach(op -> {
+            if (op.getFecha().getMonthValue() == mes && op.getCuitProveedor().equals(cuit)) {
+                totalRetenciones.add(op.getRetenciones());
+            }
+        });
+
+
+        ProveedorRetencionDTO dto = new ProveedorRetencionDTO();
+        dto.monto = totalRetenciones.stream().mapToDouble(Double::doubleValue).sum();
+        dto.mes = mes;
+        dto.cuit = cuit;
+        dto.razonSocial = ProveedorController.getInstance().obtener(cuit).razonSocial;
+
+        return dto;
     }
 }
