@@ -1,6 +1,6 @@
 package modelos;
 
-import dto.ProveedorDTO;
+import dto.ProveedorCompulsaDTO;
 import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
 
@@ -50,7 +50,7 @@ public class Proveedor {
         return balance;
     }
 
-    public ProveedorDTO toDTO(){
-        return new ProveedorDTO();
+    public ProveedorCompulsaDTO toDTO(){
+        return new ProveedorCompulsaDTO();
     }
 }
