@@ -4,7 +4,7 @@ import app.Main.Main;
 import com.sun.org.apache.xerces.internal.impl.xs.util.ObjectListImpl;
 import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import controllers.UsuariosController;
-import modelos.Usuario;
+import dto.UsuarioDTO;
 import modelos.enums.Role;
 import servicios.UsuarioService;
 
@@ -16,6 +16,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.Array;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,7 +53,7 @@ public class Usuarios extends JFrame {
 
     private UsuariosController controller;
 
-    public Usuarios(String title) throws SQLException {
+    public Usuarios(String title) throws Exception {
         super(title);
 
         //region Service Controller
@@ -77,18 +78,18 @@ public class Usuarios extends JFrame {
         this.closeModule();
         this.cancelAction();
         this.selectedRow();
-        this.cambiarColor();
+        this.guardarAction();
         //endregion
     }
 
     void populateInputs(String selectedRow){
-        Usuario u = this.controller.obtener(selectedRow);
-        this.textFieldNombre.setText(u.getNombre());
-        this.textFieldApellido.setText(u.getApellido());
-        this.textFieldUsername.setText(u.getUsername());
+        UsuarioDTO u = this.controller.obtener(selectedRow);
+        this.textFieldNombre.setText(u.nombre);
+        this.textFieldApellido.setText(u.apellido);
+        this.textFieldUsername.setText(u.username);
         this.textFieldUsername.setEditable(false);
-        this.textFieldEdad.setText(u.getEdad().toString());
-        this.comboBoxRole.setSelectedItem(u.getRole());
+        this.textFieldEdad.setText(u.edad.toString());
+        this.comboBoxRole.setSelectedItem(u.role);
     }
 
     void clearInputs(){
@@ -103,7 +104,7 @@ public class Usuarios extends JFrame {
 
         try {
 
-            List<Usuario> usuarios = UsuariosController.getInstance().listar();
+            List<UsuarioDTO> usuarios = UsuariosController.getInstance().listar();
 
             String[] columns = new String[] {
                     "nombre".toUpperCase(),
@@ -117,11 +118,11 @@ public class Usuarios extends JFrame {
 
             usuarios.stream().forEach( x -> {
                 Object[] o = {
-                        x.getNombre().toUpperCase(),
-                        x.getApellido().toUpperCase(),
-                        x.getUsername(),
-                        x.getEdad(),
-                        x.getRole()
+                        x.nombre.toUpperCase(),
+                        x.apellido.toUpperCase(),
+                        x.username,
+                        x.edad,
+                        x.role
                 };
 
                 tblModel.addRow(o);
@@ -149,12 +150,17 @@ public class Usuarios extends JFrame {
         this.comboBoxRole.setModel(comboBoxModel);
     }
 
-    void closeModule() {
+    void closeModule(){
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                Main m = new Main("Main");
+                Main m = null;
+                try {
+                    m = new Main("Main");
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
                 m.setVisible(true);
             }
         });
@@ -181,15 +187,81 @@ public class Usuarios extends JFrame {
         });
     }
 
-    void cambiarColor(){
+    void guardarAction(){
 
         Usuarios self = this;
 
-        this.checkDark.addActionListener(new ActionListener() {
+        this.buttonGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                self.update(self.getGraphics());
+                String username = self.textFieldUsername.getText();
+
+                if(self.controller.obtener(username) != null){
+
+                    // Actualizar...
+                    UsuarioDTO u = new UsuarioDTO();
+                    u.nombre = self.textFieldNombre.getText();
+                    u.apellido = self.textFieldApellido.getText();
+                    u.edad = LocalDate.parse(self.textFieldEdad.getText());
+                    u.role = Role.valueOf(self.comboBoxRole.getSelectedItem().toString());
+                    u.password = self.textFieldPassword.getText();
+
+                    try {
+                        self.controller.actualizar(u);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(
+                                pnlMain,
+                                "No se pudo actualizar el usuario. \n" + ex.getMessage(),
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+
+                } else {
+
+                    try {
+
+                        // Guardar...
+                        if(self.validationRules())
+                            throw new Exception("Todos los campos deben estar completos.");
+
+
+                        UsuarioDTO u = new UsuarioDTO();
+                        u.nombre = self.textFieldNombre.getText();
+                        u.apellido = self.textFieldApellido.getText();
+                        u.edad = LocalDate.parse(self.textFieldEdad.getText());
+                        u.role = Role.valueOf(self.comboBoxRole.getSelectedItem().toString());
+                        u.password = self.textFieldPassword.getText();
+                        u.username = self.textFieldUsername.getText();
+
+
+                        self.controller.actualizar(u);
+
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(
+                                pnlMain,
+                                "No se pudo guardar el usuario. \n" + ex.getMessage(),
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+                }
             }
         });
     }
+
+    private boolean validationRules() {
+
+        if(this.textFieldUsername.getText().equals("")
+                || this.textFieldPassword.getText().equals("")
+                || this.textFieldNombre.getText().equals("")
+                || this.textFieldApellido.getText().equals("")
+                || this.textFieldEdad.getText().equals("")){
+
+            return false;
+        }
+
+        return true;
+    }
+
 }

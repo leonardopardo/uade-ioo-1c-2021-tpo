@@ -1,6 +1,7 @@
 package app.Main;
 
 import app.Usuarios.Usuarios;
+import bootstrap.seeder.UsuariosSeeder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,8 +20,9 @@ public class Main extends JFrame {
     private JButton btnUsuarios;
     private JPanel pnlHeader;
 
-    public Main(String title) {
+    public Main(String title) throws Exception{
         super(title);
+
         this.setResizable(false);
         this.setContentPane(this.pnlMain);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -48,6 +50,8 @@ public class Main extends JFrame {
                     Usuarios u = new Usuarios("Usuarios");
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
                 }
             }
         });

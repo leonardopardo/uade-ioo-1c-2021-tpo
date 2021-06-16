@@ -1,5 +1,6 @@
 package modelos;
 
+import dto.ProveedorDTO;
 import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
 
@@ -31,7 +32,25 @@ public class Proveedor {
 
     private Double limiteCtaCte;
 
+    private Double balance;
+
     public Proveedor() {
         this.rubros = new ArrayList<>();
+    }
+
+    public String getCuit() {
+        return cuit;
+    }
+
+    public String getRazonSocial() {
+        return razonSocial;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public ProveedorDTO toDTO(){
+        return new ProveedorDTO();
     }
 }

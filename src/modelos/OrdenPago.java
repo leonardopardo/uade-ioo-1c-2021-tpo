@@ -26,4 +26,36 @@ public class OrdenPago {
         this.pagos = new ArrayList<>();
     }
 
+    private void agregarPago(){
+        Pago p = new Pago();
+        this.pagos.add(p);
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public List<Factura> getFacturas() {
+        return facturas;
+    }
+
+    public Double getImporteTotal() {
+        return importeTotal;
+    }
+
+    public Double getRetenciones() {
+        return retenciones;
+    }
+
+    public List<Pago> getPagos() {
+        return pagos;
+    }
+
+    public EstadoPago getEstado() {
+        return estado;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
 }
