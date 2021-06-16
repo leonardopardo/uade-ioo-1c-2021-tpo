@@ -258,10 +258,10 @@ public class Usuarios extends JFrame {
                 || this.textFieldApellido.getText().equals("")
                 || this.textFieldEdad.getText().equals("")){
 
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
 }

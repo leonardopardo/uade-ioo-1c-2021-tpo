@@ -130,17 +130,17 @@ public class OrdenPagoController {
     }
 
     public ProveedorRetencionDTO retencionPorProveedorPorMes(String cuit, int mes) throws Exception {
-        List<Double> totalRetenciones = new ArrayList<Double>();
 
-        this.ordenesPago.forEach(op -> {
+        Double totalRetenciones = 0.0;
+
+        for (OrdenPago op : this.ordenesPago) {
             if (op.getFecha().getMonthValue() == mes && op.getCuitProveedor().equals(cuit)) {
-                totalRetenciones.add(op.getRetenciones());
+                totalRetenciones += op.getRetenciones();
             }
-        });
-
+        }
 
         ProveedorRetencionDTO dto = new ProveedorRetencionDTO();
-        dto.monto = totalRetenciones.stream().mapToDouble(Double::doubleValue).sum();
+        dto.monto = totalRetenciones;
         dto.mes = mes;
         dto.cuit = cuit;
         dto.razonSocial = ProveedorController.getInstance().obtener(cuit).razonSocial;

@@ -4,8 +4,6 @@ import dto.UsuarioDTO;
 import modelos.Usuario;
 import servicios.UsuarioService;
 
-import javax.swing.*;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
