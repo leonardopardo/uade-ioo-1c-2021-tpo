@@ -1,6 +1,6 @@
 package dto;
 
-public class ProveedorDTO {
+public class ProveedorCompulsaDTO {
 
     public String razonSocial;
 
