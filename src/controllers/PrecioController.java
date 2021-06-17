@@ -10,6 +10,8 @@ import java.util.concurrent.atomic.AtomicReference;
 public class PrecioController {
 
     List<Precio> precios;
+    public static PrecioController instance;
+
 
     class CompulsaPrecio {
         public String itemTitulo;
@@ -35,9 +37,9 @@ public class PrecioController {
 
     public CompulsaPrecio filtrarPorItem(String codigo, Rubro rubro) {
 
-        try{
+        try {
 
-            if(this.buscarItemTituloPorCodigo(codigo).equals(null))
+            if (this.buscarItemTituloPorCodigo(codigo).equals(null))
                 throw new Exception("El código suministrado no corresponde a un item del catálogo.");
 
             CompulsaPrecio compulsa = new CompulsaPrecio();
@@ -50,32 +52,42 @@ public class PrecioController {
 
                     compulsa.listado.add(
                             new ProveedorCompulsa(
-                            precio.getProveedor().getRazonSocial(),
-                            precio.getProveedor().getCuit(),
-                            precio.getPrecio()
-                    ));
+                                    precio.getProveedor().getRazonSocial(),
+                                    precio.getProveedor().getCuit(),
+                                    precio.getPrecio()
+                            ));
                 }
             });
 
             return compulsa;
 
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ex.getMessage();
         }
 
         return null;
     }
 
-    private String buscarItemTituloPorCodigo(String codigo){
+    private String buscarItemTituloPorCodigo(String codigo) {
 
         AtomicReference<String> titulo = null;
 
         this.precios.forEach(precio -> {
-            if(precio.getItem().getCodigo().equals(codigo)){
+            if (precio.getItem().getCodigo().equals(codigo)) {
                 titulo.set(precio.getItem().getTitulo());
             }
         });
 
         return titulo.get();
     }
+
+
+    public static PrecioController getInstance() throws Exception {
+        if (instance == null) {
+            instance = new PrecioController();
+        }
+        return instance;
+    }
+
+
 }
