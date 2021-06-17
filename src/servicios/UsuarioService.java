@@ -1,13 +1,13 @@
 package servicios;
 
-import modelos.Usuario;
+import modelos.OrdenCompra;
 import vendor.GenericDAO;
 
 
 public class UsuarioService extends GenericDAO {
 
     public UsuarioService() throws Exception {
-        super(Usuario.class, "./src/json/usuarios.json");
+        super(OrdenCompra.class, "./src/json/usuarios.json");
     }
 
 }
