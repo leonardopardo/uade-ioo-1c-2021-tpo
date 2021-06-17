@@ -59,4 +59,23 @@ public class Usuario {
         return role;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEdad(LocalDate edad) {
+        this.edad = edad;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

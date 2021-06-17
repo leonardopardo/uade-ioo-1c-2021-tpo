@@ -15,6 +15,8 @@ public class UsuariosController{
 
     private static UsuariosController instance;
 
+    private UsuarioService service;
+
     protected static final String USUARIO_EXISTENTE_EXCEPTION
             = "El usuario que intenta agregar ya existe.";
 
@@ -22,8 +24,8 @@ public class UsuariosController{
             = "El usuario con el que intenta operar no existe.";
 
     protected UsuariosController() throws Exception {
-        UsuarioService service = new UsuarioService();
-        this.usuarios = service.getAll();
+        this.service = new UsuarioService();
+        this.usuarios = this.service.getAll();
     }
 
     public static UsuariosController getInstance() throws Exception {
@@ -72,13 +74,18 @@ public class UsuariosController{
         return null;
     }
 
-    public void agregar(Usuario ... modelo) throws Exception {
+    public void agregar(UsuarioDTO modelo) throws Exception {
         try {
 
-            if(this.usuarios.contains(modelo))
+            if(this.usuarios.contains(modelo)){
                 throw new Exception(USUARIO_EXISTENTE_EXCEPTION);
+            }
 
-            Collections.addAll(this.usuarios, modelo);
+            Usuario nuevoUsuario = new Usuario(modelo);
+
+            this.service.save(nuevoUsuario);
+
+            Collections.addAll(this.usuarios, nuevoUsuario);
 
         } catch (Exception e) {
             throw e;
@@ -88,19 +95,33 @@ public class UsuariosController{
     public void actualizar(UsuarioDTO dto) throws Exception {
         try{
 
-            UsuarioDTO usuario = this.obtener(dto.username);
+            for (Usuario u : this.usuarios) {
+                if(u.getUsername().equals(dto.username)){
+                    u.setNombre(dto.nombre);
+                    u.setApellido(dto.apellido);
+                    u.setEdad(dto.edad);
+                    u.setPassword(dto.password);
+                    u.setRole(dto.role);
 
-            if(usuario == null)
-                throw new Exception(USUARIO_NO_EXISTENTE_EXCEPTION);
+                    this.service.update(u);
+                }
+            }
 
         } catch(Exception e) {
             throw e;
         }
     }
 
-    public void eliminar(Usuario modelo){
-        try{
-            this.usuarios.remove(modelo);
+    public void eliminar(String username) throws Exception {
+        try {
+
+            for (Usuario u:this.usuarios) {
+                if(u.getUsername().equals(username)){
+                    this.service.delete(u.getId());
+                    this.usuarios.remove(u);
+                }
+            }
+
         } catch (Exception e) {
             throw e;
         }

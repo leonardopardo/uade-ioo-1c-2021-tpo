@@ -40,7 +40,7 @@ public class Usuarios extends JFrame {
     private JTextField textFieldEdad;
     private JButton buttonGuardar;
     private JButton buttonCancelar;
-    private JButton buttonBuscar;
+    private JButton buttonEliminar;
     private JLabel lblIconModule;
     private JLabel lblTitleModule;
     private JLabel lblUsername;
@@ -79,6 +79,7 @@ public class Usuarios extends JFrame {
         this.cancelAction();
         this.selectedRow();
         this.guardarAction();
+        this.eliminarAction();
         //endregion
     }
 
@@ -151,17 +152,26 @@ public class Usuarios extends JFrame {
     }
 
     void closeModule(){
+
+        Usuarios self = this;
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                Main m = null;
+
                 try {
+
+                    Main m = null;
                     m = new Main("Main");
+                    m.setVisible(true);
+
                 } catch (Exception exception) {
+
                     exception.printStackTrace();
+
                 }
-                m.setVisible(true);
+
             }
         });
     }
@@ -235,7 +245,7 @@ public class Usuarios extends JFrame {
                         u.username = self.textFieldUsername.getText();
 
 
-                        self.controller.actualizar(u);
+                        self.controller.agregar(u);
 
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(
@@ -245,6 +255,43 @@ public class Usuarios extends JFrame {
                                 JOptionPane.ERROR_MESSAGE
                         );
                     }
+                }
+            }
+        });
+    }
+
+    void eliminarAction(){
+
+        Usuarios self = this;
+
+        this.buttonEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+
+                    String usuario = self.textFieldUsername.getText();
+
+                    if (usuario.isEmpty())
+                        throw new Exception("Debe seleccionar el usuario que quiere eliminar.");
+
+                    int confirmResult = JOptionPane.showConfirmDialog(
+                            pnlMain,
+                            "Está seguro que desea eliminar al usuario " + usuario,
+                            "Eliminar Usuario",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if(confirmResult == JOptionPane.YES_OPTION)
+                        self.controller.eliminar(usuario);
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         });
