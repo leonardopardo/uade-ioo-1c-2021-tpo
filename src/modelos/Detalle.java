@@ -1,5 +1,6 @@
 package modelos;
 
+import dto.DetalleDTO;
 import modelos.enums.AlicuotaIVA;
 
 public class Detalle {
@@ -13,5 +14,16 @@ public class Detalle {
     private Double precioUnitario;
 
     private AlicuotaIVA iva;
+
+    public Detalle(DetalleDTO d) {
+        this.cantidad = d.cantItem;
+        this.precioUnitario = d.precioUnidad;
+        this.iva = d.iva;
+    }
+
+    public void setItem(Item item){
+        this.item = item;
+    }
+
 
 }
