@@ -9,13 +9,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class UsuariosController{
+public class UsuariosController {
 
     private List<Usuario> usuarios;
-
     private static UsuariosController instance;
-
     private UsuarioService service;
+
 
     protected static final String USUARIO_EXISTENTE_EXCEPTION
             = "El usuario que intenta agregar ya existe.";
@@ -29,7 +28,7 @@ public class UsuariosController{
     }
 
     public static UsuariosController getInstance() throws Exception {
-        if(instance == null){
+        if (instance == null) {
             instance = new UsuariosController();
         }
 
@@ -60,7 +59,7 @@ public class UsuariosController{
         UsuarioDTO u = new UsuarioDTO();
 
         for (Usuario usuario : this.usuarios) {
-            if(usuario.getUsername().contentEquals(valor)){
+            if (usuario.getUsername().contentEquals(valor)) {
                 u.nombre = usuario.getNombre();
                 u.apellido = usuario.getApellido();
                 u.role = usuario.getRole();
@@ -77,7 +76,7 @@ public class UsuariosController{
     public void agregar(UsuarioDTO modelo) throws Exception {
         try {
 
-            if(this.usuarios.contains(modelo)){
+            if (this.usuarios.contains(modelo)) {
                 throw new Exception(USUARIO_EXISTENTE_EXCEPTION);
             }
 
@@ -93,10 +92,10 @@ public class UsuariosController{
     }
 
     public void actualizar(UsuarioDTO dto) throws Exception {
-        try{
+        try {
 
             for (Usuario u : this.usuarios) {
-                if(u.getUsername().equals(dto.username)){
+                if (u.getUsername().equals(dto.username)) {
                     u.setNombre(dto.nombre);
                     u.setApellido(dto.apellido);
                     u.setEdad(dto.edad);
@@ -107,7 +106,7 @@ public class UsuariosController{
                 }
             }
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw e;
         }
     }
@@ -115,8 +114,8 @@ public class UsuariosController{
     public void eliminar(String username) throws Exception {
         try {
 
-            for (Usuario u:this.usuarios) {
-                if(u.getUsername().equals(username)){
+            for (Usuario u : this.usuarios) {
+                if (u.getUsername().equals(username)) {
                     this.service.delete(u.getId());
                     this.usuarios.remove(u);
                 }
@@ -134,7 +133,7 @@ public class UsuariosController{
             char[] p = usuario.getPassword().toCharArray();
 
             if (Arrays.equals(usuario.getUsername().toCharArray(), username.toCharArray())
-                    && Arrays.equals(p,password)) {
+                    && Arrays.equals(p, password)) {
                 return true;
             }
         }

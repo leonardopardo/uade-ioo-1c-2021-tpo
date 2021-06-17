@@ -13,6 +13,8 @@ import java.util.List;
 
 public class OrdenPagoController {
 
+    private List<OrdenPago> ordenesPago;
+
     class CuentaCorriente {
         List<FacturaDTO> facturasPagas;
         List<FacturaDTO> facturasImpagas;
@@ -24,7 +26,6 @@ public class OrdenPagoController {
         }
     }
 
-    private List<OrdenPago> ordenesPago;
 
     public CuentaCorriente ctaCte(String cuit) {
 
@@ -143,7 +144,7 @@ public class OrdenPagoController {
         dto.monto = totalRetenciones;
         dto.mes = mes;
         dto.cuit = cuit;
-        dto.razonSocial = ProveedorController.getInstance().obtener(cuit).razonSocial;
+        dto.razonSocial = ProveedorController.getInstance().obtenerCompulsa(cuit).razonSocial;
 
         return dto;
     }
