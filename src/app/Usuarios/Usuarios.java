@@ -83,7 +83,7 @@ public class Usuarios extends JFrame {
         //endregion
     }
 
-    void populateInputs(String selectedRow){
+    void populateInputs(String selectedRow) {
         UsuarioDTO u = this.controller.obtener(selectedRow);
         this.textFieldNombre.setText(u.nombre);
         this.textFieldApellido.setText(u.apellido);
@@ -93,7 +93,7 @@ public class Usuarios extends JFrame {
         this.comboBoxRole.setSelectedItem(u.role);
     }
 
-    void clearInputs(){
+    void clearInputs() {
         this.textFieldNombre.setText("");
         this.textFieldApellido.setText("");
         this.textFieldUsername.setText("");
@@ -107,7 +107,7 @@ public class Usuarios extends JFrame {
 
             List<UsuarioDTO> usuarios = UsuariosController.getInstance().listar();
 
-            String[] columns = new String[] {
+            String[] columns = new String[]{
                     "nombre".toUpperCase(),
                     "apellido".toUpperCase(),
                     "username".toUpperCase(),
@@ -117,7 +117,7 @@ public class Usuarios extends JFrame {
 
             DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
 
-            usuarios.stream().forEach( x -> {
+            usuarios.stream().forEach(x -> {
                 Object[] o = {
                         x.nombre.toUpperCase(),
                         x.apellido.toUpperCase(),
@@ -142,7 +142,7 @@ public class Usuarios extends JFrame {
         }
     }
 
-    void populateRoleComboBox(){
+    void populateRoleComboBox() {
 
         DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel<String>();
         comboBoxModel.addElement(Role.ADMINISTRADOR);
@@ -151,7 +151,7 @@ public class Usuarios extends JFrame {
         this.comboBoxRole.setModel(comboBoxModel);
     }
 
-    void closeModule(){
+    void closeModule() {
 
         Usuarios self = this;
 
@@ -197,7 +197,7 @@ public class Usuarios extends JFrame {
         });
     }
 
-    void guardarAction(){
+    void guardarAction() {
 
         Usuarios self = this;
 
@@ -206,7 +206,7 @@ public class Usuarios extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String username = self.textFieldUsername.getText();
 
-                if(self.controller.obtener(username) != null){
+                if (self.controller.obtener(username) != null) {
 
                     // Actualizar...
                     UsuarioDTO u = new UsuarioDTO();
@@ -215,6 +215,7 @@ public class Usuarios extends JFrame {
                     u.edad = LocalDate.parse(self.textFieldEdad.getText());
                     u.role = Role.valueOf(self.comboBoxRole.getSelectedItem().toString());
                     u.password = self.textFieldPassword.getText();
+                    u.username = username;
 
                     try {
                         self.controller.actualizar(u);
@@ -232,7 +233,7 @@ public class Usuarios extends JFrame {
                     try {
 
                         // Guardar...
-                        if(self.validationRules())
+                        if (self.validationRules())
                             throw new Exception("Todos los campos deben estar completos.");
 
 
@@ -260,7 +261,7 @@ public class Usuarios extends JFrame {
         });
     }
 
-    void eliminarAction(){
+    void eliminarAction() {
 
         Usuarios self = this;
 
@@ -282,7 +283,7 @@ public class Usuarios extends JFrame {
                             JOptionPane.YES_NO_OPTION
                     );
 
-                    if(confirmResult == JOptionPane.YES_OPTION)
+                    if (confirmResult == JOptionPane.YES_OPTION)
                         self.controller.eliminar(usuario);
 
                 } catch (Exception ex) {
@@ -299,11 +300,11 @@ public class Usuarios extends JFrame {
 
     private boolean validationRules() {
 
-        if(this.textFieldUsername.getText().equals("")
+        if (this.textFieldUsername.getText().equals("")
                 || this.textFieldPassword.getText().equals("")
                 || this.textFieldNombre.getText().equals("")
                 || this.textFieldApellido.getText().equals("")
-                || this.textFieldEdad.getText().equals("")){
+                || this.textFieldEdad.getText().equals("")) {
 
             return true;
         }
