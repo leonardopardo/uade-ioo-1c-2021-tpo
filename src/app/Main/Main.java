@@ -1,7 +1,6 @@
 package app.Main;
 
 import app.Usuarios.Usuarios;
-import bootstrap.seeder.UsuariosSeeder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +19,7 @@ public class Main extends JFrame {
     private JButton btnUsuarios;
     private JPanel pnlHeader;
 
-    public Main(String title) throws Exception{
+    public Main(String title) throws Exception {
         super(title);
 
         this.setResizable(false);
