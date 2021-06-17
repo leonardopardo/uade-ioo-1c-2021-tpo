@@ -29,7 +29,7 @@ public class UsuariosServiceTest {
 
         Usuario usuario = (Usuario) service.search(u1.id);
 
-        assertEquals("leopardo", usuario.getUsername());
+        assertEquals("leopardo@mail.com", usuario.getUsername());
 
         service.delete(u1.id);
     }
