@@ -12,7 +12,14 @@ public class ProveedorController {
     private static ProveedorController instance;
 
 
-    public ProveedorCompulsaDTO obtener(String cuit) {
+    public static ProveedorController getInstance() throws Exception {
+        if (instance == null) {
+            instance = new ProveedorController();
+        }
+        return instance;
+    }
+
+    public ProveedorCompulsaDTO obtenerCompulsa(String cuit) {
 
         ProveedorCompulsaDTO dto = new ProveedorCompulsaDTO();
 
@@ -27,11 +34,15 @@ public class ProveedorController {
         return null;
     }
 
-    public static ProveedorController getInstance() throws Exception {
-        if (instance == null) {
-            instance = new ProveedorController();
+    public Proveedor obtener(String cuit) {
+        for (Proveedor proveedor : this.proveedores) {
+            if (proveedor.getCuit().equals(cuit)) {
+                return proveedor;
+            }
         }
-        return instance;
+        return null;
+
     }
+
 
 }
