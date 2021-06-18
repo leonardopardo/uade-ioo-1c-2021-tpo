@@ -12,14 +12,11 @@ public class OrdenCompra extends Documento {
     private LocalDateTime fecha;
     private String descripcion;
     private List<Detalle> detalles;
-    private Double monto;
     private Proveedor proveedor;
 
     public OrdenCompra(OrdenCompraDTO dto) {
-        this.numero = dto.numero;
         this.fecha = dto.fecha;
         this.descripcion = dto.descripcion;
-        this.monto = dto.monto;
         this.detalles = new ArrayList<Detalle>();
     }
 
@@ -36,6 +33,4 @@ public class OrdenCompra extends Documento {
     public void setNumero(int num) {
         this.numero = num;
     }
-
-
 }

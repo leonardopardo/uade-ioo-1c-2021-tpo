@@ -1,21 +1,57 @@
 package modelos;
 
+import dto.ProductoDTO;
+import dto.ServicioDTO;
 import modelos.enums.Rubro;
+import modelos.enums.TipoItem;
 import modelos.enums.Unidad;
 
-public abstract class Item {
+import java.time.LocalDateTime;
 
-    protected Integer id;
+public class Item {
 
-    protected String codigo;
+    private Integer id;
 
-    protected String titulo;
+    private String codigo;
 
-    protected String descripcion;
+    private String titulo;
 
-    protected Unidad unidad;
+    private String descripcion;
 
-    protected Rubro rubro;
+    private Unidad unidad;
+
+    private Rubro rubro;
+
+    private LocalDateTime inicio;
+
+    private LocalDateTime fin;
+
+    private TipoItem tipoItem;
+
+
+    public Item(ServicioDTO dto) {
+        this.tipoItem = TipoItem.SERVICIO;
+        this.inicio = dto.inicio;
+        this.fin = dto.fin;
+
+        this.codigo = dto.codigo;
+        this.titulo = dto.titulo;
+        this.descripcion = dto.descripcion;
+        this.unidad = dto.unidad;
+        this.rubro = dto.rubro;
+
+    }
+
+    public Item(ProductoDTO dto) {
+        this.tipoItem = TipoItem.PRODUCTO;
+
+        this.codigo = dto.codigo;
+        this.titulo = dto.titulo;
+        this.descripcion = dto.descripcion;
+        this.unidad = dto.unidad;
+        this.rubro = dto.rubro;
+    }
+
 
     public String getCodigo() {
         return codigo;
@@ -28,4 +64,5 @@ public abstract class Item {
     public String getTitulo() {
         return titulo;
     }
+
 }

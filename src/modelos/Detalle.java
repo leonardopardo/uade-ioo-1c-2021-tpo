@@ -1,28 +1,33 @@
 package modelos;
 
-import dto.DetalleDTO;
-import modelos.enums.AlicuotaIVA;
 
 public class Detalle {
 
-    private Integer id;
-
     private Item item;
-
-    private Float cantidad;
-
+    private Double cantidad;
     private Double precioUnitario;
+    private Double iva;
 
-    private AlicuotaIVA iva;
 
-    public Detalle(DetalleDTO d) {
-        this.cantidad = d.cantItem;
-        this.precioUnitario = d.precioUnidad;
-        this.iva = d.iva;
+    public Detalle() {
     }
 
-    public void setItem(Item item){
-        this.item = item;
+
+    public Double getPrecioUnitario() {
+        return this.precioUnitario;
+    }
+
+
+    public void setCantidad(Double cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void setPrecioUnitario(Double precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public void setIva(Double iva) {
+        this.iva = iva;
     }
 
 
