@@ -22,7 +22,6 @@ public class DocumentosController {
     private FacturaService facturaService;
 
 
-
     protected DocumentosController() throws Exception {
         this.ordenCompraService = new OrdenCompraService();
         this.facturaService = new FacturaService();
@@ -47,12 +46,15 @@ public class DocumentosController {
         oc.setProveedor(this.pController.obtener(dto.cuitProveedor));
         oc.setNumero(ordenCompraService.getProximoNumero());
 
-        for (DetalleDTO d : dto.detalles
-        ) {
-            Detalle nuevoDetalle = new Detalle(d);
-        }
+        for (DetalleDTO d :
+                dto.detalles) {
+            Detalle nuevoDetalle = new Detalle();
 
+            nuevoDetalle.setCantidad(d.cantItem);
+
+        }
     }
+
 
 }
 
