@@ -105,7 +105,7 @@ public class Usuarios extends JFrame {
 
         try {
 
-            List<UsuarioDTO> usuarios = UsuariosController.getInstance().listar();
+            List<UsuarioDTO> usuarios = this.controller.listar();
 
             String[] columns = new String[]{
                     "nombre".toUpperCase(),

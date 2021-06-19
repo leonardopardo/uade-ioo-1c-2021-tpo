@@ -1,5 +1,6 @@
 package controllers;
 
+import dto.ItemDTO;
 import modelos.Precio;
 import modelos.enums.Rubro;
 
@@ -10,7 +11,8 @@ import java.util.concurrent.atomic.AtomicReference;
 public class PrecioController {
 
     List<Precio> precios;
-    public static PrecioController instance;
+
+    private static PrecioController instance;
 
     class CompulsaPrecio {
         public String itemTitulo;
@@ -32,6 +34,10 @@ public class PrecioController {
             this.precio = precio;
             this.cuit = cuit;
         }
+    }
+
+    public List<ItemDTO> listarItems(){
+        return new ArrayList<>();
     }
 
     public CompulsaPrecio filtrarPorItem(String codigo, Rubro rubro) {

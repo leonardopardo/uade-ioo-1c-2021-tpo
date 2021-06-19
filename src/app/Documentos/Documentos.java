@@ -35,7 +35,7 @@ public class Documentos extends JFrame{
         this.closeModule();
     }
 
-    void loadItemsModule(){
+    void loadItemsModule() throws Exception{
         this.pnlItems.setLayout(new BorderLayout());
         this.pnlItems.add(new Items(), BorderLayout.NORTH);
     }
