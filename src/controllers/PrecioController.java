@@ -12,7 +12,6 @@ public class PrecioController {
     List<Precio> precios;
     public static PrecioController instance;
 
-
     class CompulsaPrecio {
         public String itemTitulo;
         public Rubro rubro;
@@ -81,13 +80,11 @@ public class PrecioController {
         return titulo.get();
     }
 
-
     public static PrecioController getInstance() throws Exception {
         if (instance == null) {
             instance = new PrecioController();
         }
         return instance;
     }
-
 
 }

@@ -1,5 +1,6 @@
 package app.Main;
 
+import app.Documentos.Documentos;
 import app.Usuarios.Usuarios;
 
 import javax.swing.*;
@@ -29,7 +30,10 @@ public class Main extends JFrame {
         this.setSize(pnlMain.getPreferredSize());
         this.setBackground(Color.WHITE);
 
+        //region Register Actions
         this.showUsuariosModule();
+        this.showDocumentosModule();
+        //endregion
         this.closeModule();
     }
 
@@ -47,14 +51,28 @@ public class Main extends JFrame {
                 self.setVisible(false);
                 try {
                     Usuarios u = new Usuarios("Usuarios");
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });
 
+    }
+
+    void showDocumentosModule(){
+        Main self = this;
+
+        this.btnDocumentos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                self.setVisible(false);
+                try {
+                    Documentos d = new Documentos("Documentos");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
     void closeModule() {

@@ -43,15 +43,13 @@ public class DocumentosController {
     public void agregarOrdenCompra(OrdenCompraDTO dto) throws Exception {
         OrdenCompra oc = new OrdenCompra(dto);
         this.ordenesCompra.add(oc);
+
         oc.setProveedor(this.pController.obtener(dto.cuitProveedor));
         oc.setNumero(ordenCompraService.getProximoNumero());
 
-        for (DetalleDTO d :
-                dto.detalles) {
+        for (DetalleDTO d : dto.detalles) {
             Detalle nuevoDetalle = new Detalle();
-
             nuevoDetalle.setCantidad(d.cantItem);
-
         }
     }
 
