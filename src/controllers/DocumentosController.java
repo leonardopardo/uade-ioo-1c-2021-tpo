@@ -13,14 +13,13 @@ import java.util.List;
 
 public class DocumentosController {
 
-    public static DocumentosController instance;
+    private static DocumentosController instance;
     private ProveedorController pController;
     private PrecioController precController;
     private List<OrdenCompra> ordenesCompra;
     private List<Factura> facturas;
     private OrdenCompraService ordenCompraService;
     private FacturaService facturaService;
-
 
     protected DocumentosController() throws Exception {
         this.ordenCompraService = new OrdenCompraService();
@@ -31,14 +30,12 @@ public class DocumentosController {
         this.precController = PrecioController.getInstance();
     }
 
-
     public static DocumentosController getInstance() throws Exception {
         if (instance == null) {
             instance = new DocumentosController();
         }
         return instance;
     }
-
 
     public void agregarOrdenCompra(OrdenCompraDTO dto) throws Exception {
         OrdenCompra oc = new OrdenCompra(dto);
@@ -53,8 +50,4 @@ public class DocumentosController {
         }
     }
 
-
 }
-
-
-

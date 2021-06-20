@@ -1,5 +1,6 @@
 package controllers;
 
+import modelos.Item;
 import modelos.Precio;
 import modelos.enums.Rubro;
 
@@ -10,7 +11,15 @@ import java.util.concurrent.atomic.AtomicReference;
 public class PrecioController {
 
     List<Precio> precios;
+    List<Item> items;
     public static PrecioController instance;
+
+    public static PrecioController getInstance() throws Exception {
+        if (instance == null) {
+            instance = new PrecioController();
+        }
+        return instance;
+    }
 
     class CompulsaPrecio {
         public String itemTitulo;
@@ -46,8 +55,8 @@ public class PrecioController {
             compulsa.rubro = rubro;
 
             precios.forEach(precio -> {
-                if (precio.getItem().getCodigo().equals(codigo)
-                        && precio.getItem().getRubro().equals(rubro)) {
+                if (precio.getItem().getCodigo().equals(codigo) &&
+                        precio.getItem().getRubro().equals(rubro)) {
 
                     compulsa.listado.add(
                             new ProveedorCompulsa(
@@ -78,13 +87,6 @@ public class PrecioController {
         });
 
         return titulo.get();
-    }
-
-    public static PrecioController getInstance() throws Exception {
-        if (instance == null) {
-            instance = new PrecioController();
-        }
-        return instance;
     }
 
 }

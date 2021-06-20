@@ -15,7 +15,6 @@ public class UsuariosController {
     private static UsuariosController instance;
     private UsuarioService service;
 
-
     protected static final String USUARIO_EXISTENTE_EXCEPTION
             = "El usuario que intenta agregar ya existe.";
 
@@ -132,8 +131,8 @@ public class UsuariosController {
 
             char[] p = usuario.getPassword().toCharArray();
 
-            if (Arrays.equals(usuario.getUsername().toCharArray(), username.toCharArray())
-                    && Arrays.equals(p, password)) {
+            if (Arrays.equals(usuario.getUsername().toCharArray(), username.toCharArray()) &&
+                    Arrays.equals(p, password)) {
                 return true;
             }
         }

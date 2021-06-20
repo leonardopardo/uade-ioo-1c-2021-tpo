@@ -3,14 +3,12 @@ package controllers;
 import dto.ProveedorCompulsaDTO;
 import modelos.Proveedor;
 
-
 import java.util.List;
 
 public class ProveedorController {
     private List<Proveedor> proveedores;
 
     private static ProveedorController instance;
-
 
     public static ProveedorController getInstance() throws Exception {
         if (instance == null) {
@@ -43,6 +41,5 @@ public class ProveedorController {
         return null;
 
     }
-
 
 }

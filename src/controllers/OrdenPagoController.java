@@ -1,9 +1,6 @@
 package controllers;
 
-import dto.FacturaDTO;
-import dto.ProveedorCompulsaDTO;
-import dto.OrdenPagoDTO;
-import dto.ProveedorRetencionDTO;
+import dto.*;
 import modelos.OrdenPago;
 import modelos.enums.EstadoPago;
 
@@ -14,22 +11,18 @@ import java.util.List;
 public class OrdenPagoController {
 
     private List<OrdenPago> ordenesPago;
+    private static OrdenPagoController instance;
 
-    class CuentaCorriente {
-        List<FacturaDTO> facturasPagas;
-        List<FacturaDTO> facturasImpagas;
-        ProveedorCompulsaDTO proveedorCompulsaDTO;
-
-        public CuentaCorriente() {
-            this.facturasPagas = new ArrayList<>();
-            this.facturasImpagas = new ArrayList<>();
+    public static OrdenPagoController getInstance() throws Exception {
+        if (instance == null) {
+            instance = new OrdenPagoController();
         }
+        return instance;
     }
 
+    public CuentaCorrienteDTO ctaCte(String cuit) {
 
-    public CuentaCorriente ctaCte(String cuit) {
-
-        CuentaCorriente ctaCte = new CuentaCorriente();
+        CuentaCorrienteDTO ctaCte = new CuentaCorrienteDTO();
 
         this.ordenesPago.forEach(op -> {
 
@@ -51,14 +44,13 @@ public class OrdenPagoController {
                     });
                 }
             }
-
         });
 
         return ctaCte;
     }
 
-
     public List<OrdenPagoDTO> ordenesPagoEmitidas() {
+
         List<OrdenPagoDTO> opEmitidas = new ArrayList<OrdenPagoDTO>();
 
         this.ordenesPago.forEach(op -> {
@@ -69,7 +61,6 @@ public class OrdenPagoController {
 
         return opEmitidas;
     }
-
 
     public List<OrdenPagoDTO> ordenesPagoEmitidas(String cuit) {
 
@@ -85,7 +76,6 @@ public class OrdenPagoController {
         return opEmitidas;
     }
 
-
     public List<OrdenPagoDTO> ordenesPagoEmitidas(String cuit, LocalDate fecha) {
 
         List<OrdenPagoDTO> opEmitidas = new ArrayList<OrdenPagoDTO>();
@@ -100,7 +90,6 @@ public class OrdenPagoController {
         return opEmitidas;
     }
 
-
     public List<OrdenPagoDTO> ordenesPagoEmitidas(LocalDate desde, LocalDate hasta) {
 
         List<OrdenPagoDTO> opEmitidas = new ArrayList<OrdenPagoDTO>();
@@ -114,7 +103,6 @@ public class OrdenPagoController {
 
         return opEmitidas;
     }
-
 
     public List<OrdenPagoDTO> ordenesPagoEmitidas(LocalDate desde, LocalDate hasta, String cuit) {
 
