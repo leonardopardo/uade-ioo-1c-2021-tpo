@@ -1,13 +1,12 @@
 package controllers;
 
-import dto.ProveedorCompulsaDTO;
 import modelos.Proveedor;
 
 import java.util.List;
 
 public class ProveedorController {
-    private List<Proveedor> proveedores;
 
+    private List<Proveedor> proveedores;
     private static ProveedorController instance;
 
     public static ProveedorController getInstance() throws Exception {
@@ -17,21 +16,11 @@ public class ProveedorController {
         return instance;
     }
 
-    public ProveedorCompulsaDTO obtenerCompulsa(String cuit) {
-
-        ProveedorCompulsaDTO dto = new ProveedorCompulsaDTO();
-
-        for (Proveedor proveedor : this.proveedores) {
-            if (proveedor.getCuit().equals(cuit)) {
-                dto.razonSocial = proveedor.getRazonSocial();
-                dto.cuit = proveedor.getCuit();
-                return dto;
-            }
-        }
-
-        return null;
-    }
-
+    /**
+     * @param cuit
+     * @return Proveedor
+     * @tarea Dado un cuit, en caso de que exista un proveedor con dicho cuit, devuelve un objeto Proveedor, si no null.
+     */
     public Proveedor obtener(String cuit) {
         for (Proveedor proveedor : this.proveedores) {
             if (proveedor.getCuit().equals(cuit)) {

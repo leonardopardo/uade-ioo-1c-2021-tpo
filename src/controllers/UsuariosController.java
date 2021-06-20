@@ -15,11 +15,9 @@ public class UsuariosController {
     private static UsuariosController instance;
     private UsuarioService service;
 
-    protected static final String USUARIO_EXISTENTE_EXCEPTION
-            = "El usuario que intenta agregar ya existe.";
+    protected static final String USUARIO_EXISTENTE_EXCEPTION = "El usuario que intenta agregar ya existe.";
 
-    protected static final String USUARIO_NO_EXISTENTE_EXCEPTION
-            = "El usuario con el que intenta operar no existe.";
+    protected static final String USUARIO_NO_EXISTENTE_EXCEPTION = "El usuario con el que intenta operar no existe.";
 
     protected UsuariosController() throws Exception {
         this.service = new UsuarioService();
@@ -34,6 +32,10 @@ public class UsuariosController {
         return instance;
     }
 
+    /**
+     * @return List<UsuarioDTO>
+     * @tarea Lista todos los usuarios del sistema.
+     */
     public List<UsuarioDTO> listar() {
 
         List<UsuarioDTO> usuarios = new ArrayList<>();
@@ -53,6 +55,10 @@ public class UsuariosController {
         return usuarios;
     }
 
+    /**
+     * @param valor
+     * @return Dado un usuario, busca si existe tal usuario en el sistema, si existe, devuelve un DTO usuario, si no null.
+     */
     public UsuarioDTO obtener(String valor) {
 
         UsuarioDTO u = new UsuarioDTO();
@@ -72,6 +78,11 @@ public class UsuariosController {
         return null;
     }
 
+    /**
+     * @param modelo
+     * @throws Exception
+     * @tarea Dado un DTO usuario, crea y agrega un nuevo usuario en el sistema.
+     */
     public void agregar(UsuarioDTO modelo) throws Exception {
         try {
 
@@ -90,6 +101,11 @@ public class UsuariosController {
         }
     }
 
+    /**
+     * @param dto
+     * @throws Exception
+     * @tarea Dado un DTO usuario, este método actualiza los datos del usuario con los recibidos.
+     */
     public void actualizar(UsuarioDTO dto) throws Exception {
         try {
 
@@ -110,6 +126,11 @@ public class UsuariosController {
         }
     }
 
+    /**
+     * @param username
+     * @throws Exception
+     * @tarea Dado un usuario, este método elimina el mismo del sistema.
+     */
     public void eliminar(String username) throws Exception {
         try {
 
@@ -125,6 +146,12 @@ public class UsuariosController {
         }
     }
 
+    /**
+     * @param username
+     * @param password
+     * @return boolean
+     * @tarea Dado un usuario y contraseña, el método valida la correctitud.
+     */
     public boolean validarCredenciales(String username, char[] password) {
 
         for (Usuario usuario : this.usuarios) {

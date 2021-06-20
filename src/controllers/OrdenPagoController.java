@@ -20,6 +20,11 @@ public class OrdenPagoController {
         return instance;
     }
 
+    /**
+     * @param cuit
+     * @return CuentaCorrienteDTO
+     * @tarea Dado un proveedor devuelve su Cuenta corriente, la cual consta de: deuda, documentos recibidos, documentos impagos y pagos realizados.
+     */
     public CuentaCorrienteDTO ctaCte(String cuit) {
 
         CuentaCorrienteDTO ctaCte = new CuentaCorrienteDTO();
@@ -27,17 +32,16 @@ public class OrdenPagoController {
         this.ordenesPago.forEach(op -> {
 
             if (op.getProveedor().getCuit().equals(cuit)) {
-
                 ctaCte.proveedorCompulsaDTO = op.getProveedor().toDTO();
 
-                // Pagadas
+                // Facturas pagadas.
                 if (op.getEstado().equals(EstadoPago.CANCELADO)) {
                     op.getFacturas().forEach(factura -> {
                         ctaCte.facturasPagas.add(factura.facturaDTO());
                     });
                 }
 
-                // No pagadas
+                // Facturas no pagadas.
                 if (op.getEstado().equals(EstadoPago.PENDIENTE)) {
                     op.getFacturas().forEach(factura -> {
                         ctaCte.facturasPagas.add(factura.facturaDTO());
@@ -49,19 +53,26 @@ public class OrdenPagoController {
         return ctaCte;
     }
 
+    /**
+     * @return List<OrdenPagoDTO>
+     * @tarea Devuelve todas las ordenes de pago emitidas por el sistema.
+     */
     public List<OrdenPagoDTO> ordenesPagoEmitidas() {
 
         List<OrdenPagoDTO> opEmitidas = new ArrayList<OrdenPagoDTO>();
 
         this.ordenesPago.forEach(op -> {
-
             opEmitidas.add(op.toDTO());
-
         });
 
         return opEmitidas;
     }
 
+    /**
+     * @param cuit
+     * @return List<OrdenPagoDTO>
+     * @tarea Dado un provedor, devuelve todas las ordenes de pago emitidas por ese proveedor.
+     */
     public List<OrdenPagoDTO> ordenesPagoEmitidas(String cuit) {
 
         List<OrdenPagoDTO> opEmitidas = new ArrayList<OrdenPagoDTO>();
@@ -76,6 +87,12 @@ public class OrdenPagoController {
         return opEmitidas;
     }
 
+    /**
+     * @param cuit
+     * @param fecha
+     * @return List<OrdenPagoDTO>
+     * @tarea Dado un proveedor y una fecha, devuelve las ordenes de pago emitidas por el proveedor en la fecha.
+     */
     public List<OrdenPagoDTO> ordenesPagoEmitidas(String cuit, LocalDate fecha) {
 
         List<OrdenPagoDTO> opEmitidas = new ArrayList<OrdenPagoDTO>();
@@ -90,6 +107,12 @@ public class OrdenPagoController {
         return opEmitidas;
     }
 
+    /**
+     * @param desde
+     * @param hasta
+     * @return List<OrdenPagoDTO>
+     * @tarea Dadas dos fechas (desde, hasta) devuelve las ordenes de pago emitidas entre estas dos fechas.
+     */
     public List<OrdenPagoDTO> ordenesPagoEmitidas(LocalDate desde, LocalDate hasta) {
 
         List<OrdenPagoDTO> opEmitidas = new ArrayList<OrdenPagoDTO>();
@@ -104,6 +127,13 @@ public class OrdenPagoController {
         return opEmitidas;
     }
 
+    /**
+     * @param desde
+     * @param hasta
+     * @param cuit
+     * @return List<OrdenPagoDTO>
+     * @tarea Dadas dos fechas (desde, hasta) y un proveedor, devuelve las ordenes de pago emitidas entre estas dos fechas.
+     */
     public List<OrdenPagoDTO> ordenesPagoEmitidas(LocalDate desde, LocalDate hasta, String cuit) {
 
         List<OrdenPagoDTO> opEmitidas = new ArrayList<OrdenPagoDTO>();
@@ -118,6 +148,13 @@ public class OrdenPagoController {
         return opEmitidas;
     }
 
+    /**
+     * @param cuit
+     * @param mes
+     * @return ProveedorRetencionDTO
+     * @throws Exception
+     * @tarea Dado un proveedor y un mes, devuelve los impeustos retenidos al proveedor en el mes especificado.
+     */
     public ProveedorRetencionDTO retencionPorProveedorPorMes(String cuit, int mes) throws Exception {
 
         Double totalRetenciones = 0.0;
@@ -132,7 +169,7 @@ public class OrdenPagoController {
         dto.monto = totalRetenciones;
         dto.mes = mes;
         dto.cuit = cuit;
-        dto.razonSocial = ProveedorController.getInstance().obtenerCompulsa(cuit).razonSocial;
+        dto.razonSocial = ProveedorController.getInstance().obtener(cuit).getRazonSocial();
 
         return dto;
     }

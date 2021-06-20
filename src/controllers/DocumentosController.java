@@ -11,6 +11,7 @@ import servicios.OrdenCompraService;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class DocumentosController {
 
     private static DocumentosController instance;
@@ -37,6 +38,11 @@ public class DocumentosController {
         return instance;
     }
 
+    /**
+     * @param dto
+     * @throws Exception
+     * @tarea Dado un DTO OrdenCompra, crea un objeto del dominio.
+     */
     public void agregarOrdenCompra(OrdenCompraDTO dto) throws Exception {
         OrdenCompra oc = new OrdenCompra(dto);
         this.ordenesCompra.add(oc);
