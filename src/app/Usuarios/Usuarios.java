@@ -298,7 +298,7 @@ public class Usuarios extends JFrame {
         });
     }
 
-    private boolean validationRules() {
+    boolean validationRules() {
 
         if (this.textFieldUsername.getText().equals("")
                 || this.textFieldPassword.getText().equals("")

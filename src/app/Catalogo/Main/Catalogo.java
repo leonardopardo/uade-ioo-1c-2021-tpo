@@ -1,57 +1,61 @@
-package app.Documentos;
+package app.Catalogo.Main;
 
-import app.Documentos.Item.Items;
 import app.Main.Main;
-import app.Usuarios.Usuarios;
+import app.Proveedores.Main.Proveedores;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class Documentos extends JFrame{
+public class Catalogo extends JFrame{
     private JPanel pnlMain;
     private JPanel pnlHeader;
     private JPanel pnlBody;
-    private JPanel pnlActions;
-    private JTabbedPane tabbedPaneMain;
-    private JPanel pnlItems;
+    private JTabbedPane tabbedPane1;
+    private JLabel lblIcon;
+    private JLabel lblTitle;
+    private JPanel pnlIcon;
+    private JPanel pnlTitle;
 
-    public static void main(String[] args) throws Exception {
-        Documentos self = new Documentos("Factura 2000");
-    }
-
-    public Documentos(String title) throws Exception{
+    public Catalogo(String title){
         super(title);
 
+        //region Settings
         this.setResizable(false);
         this.setContentPane(this.pnlMain);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
         this.setSize(pnlMain.getPreferredSize());
         this.setBackground(Color.WHITE);
+        //endregion
 
-        this.loadItemsModule();
+        //region Register Actions
         this.closeModule();
-    }
-
-    void loadItemsModule() throws Exception{
-        this.pnlItems.setLayout(new BorderLayout());
-        this.pnlItems.add(new Items(), BorderLayout.NORTH);
+        //endregion
     }
 
     void closeModule() {
+
+        Catalogo self = this;
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
+
                 try {
+
                     Main m = null;
                     m = new Main("Main");
                     m.setVisible(true);
+
                 } catch (Exception exception) {
+
                     exception.printStackTrace();
+
                 }
+
             }
         });
     }
