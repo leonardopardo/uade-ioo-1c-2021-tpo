@@ -85,7 +85,7 @@ public class Main extends JFrame {
 
     }
 
-    void showDocumentosModule(){
+    void showDocumentosModule() {
         Main self = this;
 
         this.btnDocumentos.addActionListener(new ActionListener() {
