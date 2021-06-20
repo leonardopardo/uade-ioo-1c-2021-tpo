@@ -11,21 +11,13 @@ import java.time.LocalDateTime;
 public class Item {
 
     private Integer id;
-
     private String codigo;
-
     private String titulo;
-
     private String descripcion;
-
     private Unidad unidad;
-
     private Rubro rubro;
-
     private LocalDateTime inicio;
-
     private LocalDateTime fin;
-
     private TipoItem tipoItem;
 
 

@@ -9,22 +9,17 @@ import java.util.List;
 public class Pago {
 
     private Integer id;
-
     private TipoPago tipo;
-
     private Double monto;
-
     private LocalDateTime fecha;
-
     private OrdenPago orden;
-
     private List<Cheque> chequeList;
 
-    public Pago(){
+    public Pago() {
         this.chequeList = new ArrayList<>();
     }
 
-    void agregarPago(){
+    void agregarPago() {
         this.chequeList.add(new Cheque());
     }
 

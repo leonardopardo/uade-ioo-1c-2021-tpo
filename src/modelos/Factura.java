@@ -12,7 +12,8 @@ public class Factura extends Documento {
         this.detalles = new ArrayList<>();
     }
 
-    public FacturaDTO facturaDTO(){
+    public FacturaDTO facturaDTO() {
         return new FacturaDTO();
     }
+
 }

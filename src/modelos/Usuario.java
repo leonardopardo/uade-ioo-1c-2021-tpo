@@ -8,20 +8,14 @@ import java.time.LocalDate;
 public class Usuario {
 
     private Integer id;
-
     private String nombre;
-
     private String apellido;
-
     private String username;
-
     private String password;
-
     private LocalDate edad;
-
     private Role role;
 
-    public Usuario(UsuarioDTO dto){
+    public Usuario(UsuarioDTO dto) {
         this.id = dto.id;
         this.nombre = dto.nombre.trim().toLowerCase();
         this.apellido = dto.apellido.trim().toLowerCase();

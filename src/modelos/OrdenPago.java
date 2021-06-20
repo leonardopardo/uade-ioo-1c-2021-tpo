@@ -10,19 +10,12 @@ import java.util.List;
 public class OrdenPago {
 
     private Integer numero;
-
     private List<Factura> facturas;
-
     private Double importeTotal;
-
     private Double retenciones;
-
     private List<Pago> pagos;
-
     private EstadoPago estado;
-
     private Proveedor proveedor;
-
     private LocalDate fecha;
 
     public OrdenPago() {

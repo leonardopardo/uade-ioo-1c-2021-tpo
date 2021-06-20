@@ -8,11 +8,12 @@ import java.util.List;
 
 public class OrdenCompra extends Documento {
 
-    private int numero;
+    private Integer numero;
     private LocalDateTime fecha;
     private String descripcion;
     private List<Detalle> detalles;
     private Proveedor proveedor;
+
 
     public OrdenCompra(OrdenCompraDTO dto) {
         this.fecha = dto.fecha;
@@ -33,4 +34,5 @@ public class OrdenCompra extends Documento {
     public void setNumero(int num) {
         this.numero = num;
     }
+
 }

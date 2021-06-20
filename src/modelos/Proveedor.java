@@ -11,25 +11,15 @@ import java.util.List;
 public class Proveedor {
 
     private Integer id;
-
     private String razonSocial;
-
     private String cuit;
-
     private TipoIVA tipoIVA;
-
     private String nombreFantasia;
-
     private String email;
-
     private String telefono;
-
     private LocalDate inicioActividad;
-
     private String ingresosBrutos;
-
     private List<Rubro> rubros;
-
     private Double limiteCtaCte;
 
     private Double balance;
@@ -50,7 +40,7 @@ public class Proveedor {
         return balance;
     }
 
-    public ProveedorCompulsaDTO toDTO(){
+    public ProveedorCompulsaDTO toDTO() {
         return new ProveedorCompulsaDTO();
     }
 }

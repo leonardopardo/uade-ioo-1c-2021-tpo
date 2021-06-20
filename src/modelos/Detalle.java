@@ -9,14 +9,9 @@ public class Detalle {
     private Double iva;
 
 
-    public Detalle() {
-    }
-
-
     public Double getPrecioUnitario() {
         return this.precioUnitario;
     }
-
 
     public void setCantidad(Double cantidad) {
         this.cantidad = cantidad;
@@ -30,5 +25,8 @@ public class Detalle {
         this.iva = iva;
     }
 
+    public void setItem(Item item) {
+        this.item = item;
+    }
 
 }
