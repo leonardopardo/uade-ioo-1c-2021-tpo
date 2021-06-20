@@ -1,17 +1,16 @@
-package app.Documentos.Item;
+package app.Catalogo.Item;
 
-import modelos.enums.Role;
+import controllers.PrecioController;
+import dto.ItemDTO;
 import modelos.enums.Rubro;
 import modelos.enums.TipoItem;
 import modelos.enums.Unidad;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-import java.awt.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.util.List;
 
 public class Items extends JPanel {
     private JTable tableItems;
@@ -38,14 +37,54 @@ public class Items extends JPanel {
     private JLabel lblInicio;
     private JPanel pnlFecha;
 
-    public Items(){
+    public Items() throws Exception{
 
         this.add(this.pnlMain);
         this.pnlFecha.setVisible(false);
+
+        populateTableItems();
         populateComboRubro();
         populateComboTipo();
         populateComboUnidad();
         actionSelectedTipo();
+    }
+
+    void populateTableItems() {
+
+        try {
+            List<ItemDTO> items = PrecioController.getInstance().listarItems();
+
+            String[] columns = new String[]{
+                    "codigo".toUpperCase(),
+                    "título".toUpperCase(),
+                    "unidad".toUpperCase(),
+                    "rubro".toUpperCase(),
+                    "tipo".toUpperCase()
+            };
+
+            DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
+
+            items.stream().forEach(x -> {
+                Object[] o = {
+                        x.codigo,
+                        x.titulo,
+                        x.unidad,
+                        x.rubro,
+                        x.tipo
+                };
+
+                tblModel.addRow(o);
+            });
+
+            this.tableItems.setModel(tblModel);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(
+                    pnlMain,
+                    e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     void populateComboTipo(){
