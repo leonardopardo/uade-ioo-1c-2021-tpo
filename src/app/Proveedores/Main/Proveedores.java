@@ -1,7 +1,8 @@
 package app.Proveedores.Main;
 
 import app.Main.Main;
-import app.Usuarios.Usuarios;
+import controllers.ProveedorController;
+import dto.ProveedorDTO;
 import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
 import org.jdatepicker.impl.DateComponentFormatter;
@@ -10,15 +11,19 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class Proveedores extends JFrame {
+
+    //region UI Elements
     private JPanel pnlMain;
     private JPanel pnlHeader;
     private JPanel pnlBody;
@@ -28,10 +33,10 @@ public class Proveedores extends JFrame {
     private JPanel pnlForm;
     private JPanel pnlTable;
     private JPanel pnlActions;
-    private JTable table1;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
+    private JTable tableProveedores;
+    private JButton guardarButton;
+    private JButton cancelarButton;
+    private JButton eliminarButton;
     private JPanel pnlInputs;
     private JTextField textFieldRazonSocial;
     private JPanel pnlList;
@@ -64,36 +69,87 @@ public class Proveedores extends JFrame {
     private JLabel lblNombreFantasia;
     private JButton btnElimnarRubro;
     private JPanel pnlDatePicker;
+    private JPanel pnlCertTable;
+    private JPanel pnlCertForm;
+    private JPanel pnlCertActions;
+    //endregion
 
     private ArrayList<Rubro> rubros;
 
     public Proveedores(String title) throws Exception{
         super(title);
 
+        //region Setting Form
         this.setResizable(false);
         this.setContentPane(this.pnlMain);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
         this.setSize(pnlMain.getPreferredSize());
         this.setBackground(Color.WHITE);
+        //endregion
 
         //region Register Actions
         this.closeModule();
         this.actionAgregarRubro();
         this.actionElimarRubro();
+        this.actionEliminarProveedor();
+        this.actionCancelarProveedor();
+        this.actionGuardarProveedor();
         //endregion
 
         //region Populate Elements
         this.populateRubros();
         this.populateTipoIVA();
+        this.populateTableProveedores();
         //endregion
 
+        //region Load Elements
         this.loadDatePicker();
+        //endregion
 
+        //region Initialize Properties
         this.rubros = new ArrayList<>();
-
+        //endregion
     }
 
+    //region Populate Methods
+    void populateRubros(){
+        for (Rubro r: Rubro.values()) {
+            this.comboBoxRubros.addItem(r);
+        }
+    }
+
+    void populateTipoIVA(){
+        for (TipoIVA t: TipoIVA.values()) {
+            this.comboBoxTipoIVA.addItem(t);
+        }
+    }
+
+    void populateTableProveedores() throws Exception{
+
+        List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
+
+        String[] columns = new String[]{
+                "Razon Social".toUpperCase(),
+                "CUIT".toUpperCase(),
+        };
+
+        DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
+
+        proveedores.stream().forEach(x -> {
+            Object[] o = {
+                    x.razonSocial,
+                    x.cuit,
+            };
+
+            tblModel.addRow(o);
+        });
+
+        this.tableProveedores.setModel(tblModel);
+    }
+    //endregion
+
+    //region Action Methods
     void closeModule() {
 
         Proveedores self = this;
@@ -117,18 +173,6 @@ public class Proveedores extends JFrame {
 
             }
         });
-    }
-
-    void populateRubros(){
-        for (Rubro r: Rubro.values()) {
-            this.comboBoxRubros.addItem(r);
-        }
-    }
-
-    void populateTipoIVA(){
-        for (TipoIVA t: TipoIVA.values()) {
-            this.comboBoxTipoIVA.addItem(t);
-        }
     }
 
     void actionAgregarRubro(){
@@ -161,7 +205,7 @@ public class Proveedores extends JFrame {
 
                 try{
                     if(value == null)
-                        throw new Exception("Debe seleccionar un rubro de la lista a su derecha.");
+                        throw new Exception("Debe seleccionar un rubro de la lista.");
 
                     self.rubros.remove(Rubro.valueOf(value.toString()));
 
@@ -184,6 +228,50 @@ public class Proveedores extends JFrame {
 
     }
 
+    void actionGuardarProveedor(){
+        this.guardarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(
+                        pnlMain,
+                        "Click en Guardar",
+                        "",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
+    }
+
+    void actionCancelarProveedor(){
+        this.cancelarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(
+                        pnlMain,
+                        "Click en Cancelar",
+                        "",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
+    }
+
+    void actionEliminarProveedor(){
+        this.eliminarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(
+                        pnlMain,
+                        "Click en Eliminar",
+                        "",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
+    }
+    //endregion
+
+    //region Load Methods
     void loadDatePicker(){
         UtilDateModel model = new UtilDateModel();
         JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
@@ -191,4 +279,5 @@ public class Proveedores extends JFrame {
         this.pnlDatePicker.setLayout(new GridLayout());
         this.pnlDatePicker.add(datePicker);
     }
+    //endregion
 }
