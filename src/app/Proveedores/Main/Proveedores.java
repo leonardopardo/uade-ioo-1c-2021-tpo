@@ -3,6 +3,11 @@ package app.Proveedores.Main;
 import app.Main.Main;
 import app.Usuarios.Usuarios;
 import modelos.enums.Rubro;
+import modelos.enums.TipoIVA;
+import org.jdatepicker.impl.DateComponentFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class Proveedores extends JFrame {
     private JPanel pnlMain;
@@ -36,7 +42,6 @@ public class Proveedores extends JFrame {
     private JPanel pnlFiscal;
     private JTextField textFieldCuit;
     private JTextField textFieldIibb;
-    private JComboBox comboBoxInicioAct;
     private JComboBox comboBoxTipoIVA;
     private JLabel lblCuit;
     private JLabel lblIibb;
@@ -58,6 +63,7 @@ public class Proveedores extends JFrame {
     private JLabel lblBalanceMonto;
     private JLabel lblNombreFantasia;
     private JButton btnElimnarRubro;
+    private JPanel pnlDatePicker;
 
     private ArrayList<Rubro> rubros;
 
@@ -79,7 +85,10 @@ public class Proveedores extends JFrame {
 
         //region Populate Elements
         this.populateRubros();
+        this.populateTipoIVA();
         //endregion
+
+        this.loadDatePicker();
 
         this.rubros = new ArrayList<>();
 
@@ -113,6 +122,12 @@ public class Proveedores extends JFrame {
     void populateRubros(){
         for (Rubro r: Rubro.values()) {
             this.comboBoxRubros.addItem(r);
+        }
+    }
+
+    void populateTipoIVA(){
+        for (TipoIVA t: TipoIVA.values()) {
+            this.comboBoxTipoIVA.addItem(t);
         }
     }
 
@@ -167,5 +182,13 @@ public class Proveedores extends JFrame {
             }
         });
 
+    }
+
+    void loadDatePicker(){
+        UtilDateModel model = new UtilDateModel();
+        JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
+        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
+        this.pnlDatePicker.setLayout(new GridLayout());
+        this.pnlDatePicker.add(datePicker);
     }
 }
