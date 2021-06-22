@@ -1,5 +1,6 @@
 package controllers;
 
+import dto.CertificadoDTO;
 import dto.ProveedorDTO;
 import modelos.Proveedor;
 import servicios.ProveedoreService;
@@ -55,6 +56,15 @@ public class ProveedorController {
         }
 
         return lista;
+    }
+
+    public List<CertificadoDTO> listarCertificadosPorProveedor(String cuit){
+        Proveedor p = this.obtener(cuit);
+
+        if(p != null)
+            return p.getCertificados();
+
+        return new ArrayList<>();
     }
 
 }

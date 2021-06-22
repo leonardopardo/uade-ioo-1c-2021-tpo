@@ -2,9 +2,12 @@ package app.Proveedores.Main;
 
 import app.Main.Main;
 import controllers.ProveedorController;
+import dto.CertificadoDTO;
 import dto.ProveedorDTO;
+import modelos.CertificadoExcencion;
 import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
+import modelos.enums.TipoRetencion;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -72,6 +75,22 @@ public class Proveedores extends JFrame {
     private JPanel pnlCertTable;
     private JPanel pnlCertForm;
     private JPanel pnlCertActions;
+    private JComboBox comboBoxCertProveedor;
+    private JTextField textFieldCertCuit;
+    private JComboBox comboBoxCertTipoRetencion;
+    private JTable tableCert;
+    private JButton guardarCertButton;
+    private JButton cancelarCertButton;
+    private JButton eliminarCertButton;
+    private JPanel pnlCertCuit;
+    private JPanel pnlCertProveedor;
+    private JLabel lblCertProveedor;
+    private JLabel lblCertCuit;
+    private JLabel lblCertTipoRetencion;
+    private JPanel pnlCertFechaInicio;
+    private JLabel lblCertFechaInicio;
+    private JLabel lblCertFechaFin;
+    private JPanel pnlCertFechaFin;
     //endregion
 
     private ArrayList<Rubro> rubros;
@@ -101,10 +120,14 @@ public class Proveedores extends JFrame {
         this.populateRubros();
         this.populateTipoIVA();
         this.populateTableProveedores();
+        this.populateTipoRetencion();
         //endregion
 
         //region Load Elements
-        this.loadDatePicker();
+        this.loadDatePicker(this.pnlDatePicker);
+        this.loadDatePicker(this.pnlCertFechaInicio);
+        this.loadDatePicker(this.pnlCertFechaFin);
+        this.loadTableCert();
         //endregion
 
         //region Initialize Properties
@@ -146,6 +169,12 @@ public class Proveedores extends JFrame {
         });
 
         this.tableProveedores.setModel(tblModel);
+    }
+
+    void populateTipoRetencion(){
+        for (TipoRetencion t: TipoRetencion.values()) {
+            this.comboBoxCertTipoRetencion.addItem(t);
+        }
     }
     //endregion
 
@@ -272,12 +301,42 @@ public class Proveedores extends JFrame {
     //endregion
 
     //region Load Methods
-    void loadDatePicker(){
+    void loadDatePicker(JPanel panel){
         UtilDateModel model = new UtilDateModel();
         JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
         JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-        this.pnlDatePicker.setLayout(new GridLayout());
-        this.pnlDatePicker.add(datePicker);
+
+        panel.setLayout(new GridLayout());
+        panel.add(datePicker);
+    }
+
+    void loadTableCert() throws Exception{
+
+        String cuit = this.textFieldCertCuit.getText();
+
+        String[] columns = new String[]{
+                "Tipo",
+                "Fecha Inicio",
+                "Fecha Fin"
+        };
+
+        DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
+
+        if(cuit != null){
+            List<CertificadoDTO> certificados = ProveedorController.getInstance().listarCertificadosPorProveedor(cuit);
+
+            certificados.stream().forEach(x -> {
+                Object[] o = {
+                        x.tipo,
+                        x.fechaInicio,
+                        x.fechaFin
+                };
+
+                tblModel.addRow(o);
+            });
+        }
+
+        this.tableCert.setModel(tblModel);
     }
     //endregion
 }
