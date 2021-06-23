@@ -4,6 +4,7 @@ import app.Main.Main;
 import controllers.ProveedorController;
 import dto.CertificadoDTO;
 import dto.ProveedorDTO;
+import dto.ProveedorUIDTO;
 import modelos.CertificadoExcencion;
 import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
@@ -20,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -91,11 +93,13 @@ public class Proveedores extends JFrame {
     private JLabel lblCertFechaInicio;
     private JLabel lblCertFechaFin;
     private JPanel pnlCertFechaFin;
+    private ProveedorController proveedorController;
     //endregion
+    private JDatePickerImpl inicioAct;
 
     private ArrayList<Rubro> rubros;
 
-    public Proveedores(String title) throws Exception{
+    public Proveedores(String title) throws Exception {
         super(title);
 
         //region Setting Form
@@ -124,33 +128,39 @@ public class Proveedores extends JFrame {
         //endregion
 
         //region Load Elements
-        this.loadDatePicker(this.pnlDatePicker);
-        this.loadDatePicker(this.pnlCertFechaInicio);
-        this.loadDatePicker(this.pnlCertFechaFin);
+        this.inicioAct = this.nuevoDatePicker();
+        this.pnlDatePicker.setLayout(new GridLayout());
+        this.pnlDatePicker.add(this.inicioAct);
+
         this.loadTableCert();
+        // this.loadDatePicker(this.pnlDatePicker);
+        // this.loadDatePicker(this.pnlCertFechaInicio);
+        // this.loadDatePicker(this.pnlCertFechaFin);
         //endregion
 
         //region Initialize Properties
         this.rubros = new ArrayList<>();
+        this.proveedorController = ProveedorController.getInstance();
+
         //endregion
     }
 
     //region Populate Methods
-    void populateRubros(){
-        for (Rubro r: Rubro.values()) {
+    void populateRubros() {
+        for (Rubro r : Rubro.values()) {
             this.comboBoxRubros.addItem(r);
         }
     }
 
-    void populateTipoIVA(){
-        for (TipoIVA t: TipoIVA.values()) {
+    void populateTipoIVA() {
+        for (TipoIVA t : TipoIVA.values()) {
             this.comboBoxTipoIVA.addItem(t);
         }
     }
 
-    void populateTableProveedores() throws Exception{
+    void populateTableProveedores() throws Exception {
 
-        List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
+        List<ProveedorUIDTO> proveedores = ProveedorController.getInstance().listar();
 
         String[] columns = new String[]{
                 "Razon Social".toUpperCase(),
@@ -171,8 +181,8 @@ public class Proveedores extends JFrame {
         this.tableProveedores.setModel(tblModel);
     }
 
-    void populateTipoRetencion(){
-        for (TipoRetencion t: TipoRetencion.values()) {
+    void populateTipoRetencion() {
+        for (TipoRetencion t : TipoRetencion.values()) {
             this.comboBoxCertTipoRetencion.addItem(t);
         }
     }
@@ -204,14 +214,13 @@ public class Proveedores extends JFrame {
         });
     }
 
-    void actionAgregarRubro(){
+    void actionAgregarRubro() {
         Proveedores self = this;
 
         this.btnAgregarRubro.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                if(!self.rubros.contains(self.comboBoxRubros.getSelectedItem())){
+                if (!self.rubros.contains(self.comboBoxRubros.getSelectedItem())) {
                     self.rubros.add(Rubro.valueOf(self.comboBoxRubros.getSelectedItem().toString()));
 
                     DefaultListModel model = new DefaultListModel();
@@ -223,7 +232,7 @@ public class Proveedores extends JFrame {
         });
     }
 
-    void actionElimarRubro(){
+    void actionElimarRubro() {
         Proveedores self = this;
 
         this.btnElimnarRubro.addActionListener(new ActionListener() {
@@ -232,8 +241,8 @@ public class Proveedores extends JFrame {
 
                 var value = self.listRubros.getSelectedValue();
 
-                try{
-                    if(value == null)
+                try {
+                    if (value == null)
                         throw new Exception("Debe seleccionar un rubro de la lista.");
 
                     self.rubros.remove(Rubro.valueOf(value.toString()));
@@ -244,7 +253,7 @@ public class Proveedores extends JFrame {
                     self.listRubros.setModel(model);
 
 
-                } catch(Exception ex) {
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
                             ex.getMessage(),
@@ -257,21 +266,47 @@ public class Proveedores extends JFrame {
 
     }
 
-    void actionGuardarProveedor(){
+    void actionGuardarProveedor() {
+        Proveedores self = this;
         this.guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(
-                        pnlMain,
-                        "Click en Guardar",
-                        "",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
+                try {
+
+                    ProveedorDTO pDto = new ProveedorDTO();
+                    pDto.cuit = self.textFieldCuit.getText();
+                    pDto.razonSocial = self.textFieldRazonSocial.getText();
+                    pDto.nombreFantasia = self.textFieldNombreFantasia.getText();
+                    pDto.email = self.textFieldEmail.getText();
+                    pDto.telefono = self.textFieldTelefono.getText();
+                    pDto.ingresosBrutos = self.textFieldIibb.getText();
+                    pDto.tipoIVA = TipoIVA.valueOf(self.comboBoxTipoIVA.getSelectedItem().toString());
+                    pDto.limiteCtaCte = Double.parseDouble(self.textFieldCtaCte.getText());
+                    pDto.inicioActividad = LocalDate.of(self.inicioAct.getModel().getYear(), self.inicioAct.getModel().getMonth(), self.inicioAct.getModel().getDay());
+
+                    for (int i = 0; i < self.listRubros.getModel().getSize(); i++) {
+                        Rubro r = Rubro.valueOf(self.listRubros.getModel().getElementAt(i).toString());
+                        pDto.rubros.add(r);
+                    }
+
+                    self.proveedorController.agregar(pDto);
+
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+
+
             }
         });
     }
 
-    void actionCancelarProveedor(){
+    void actionCancelarProveedor() {
         this.cancelarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -285,7 +320,7 @@ public class Proveedores extends JFrame {
         });
     }
 
-    void actionEliminarProveedor(){
+    void actionEliminarProveedor() {
         this.eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -301,16 +336,15 @@ public class Proveedores extends JFrame {
     //endregion
 
     //region Load Methods
-    void loadDatePicker(JPanel panel){
+    JDatePickerImpl nuevoDatePicker() {
         UtilDateModel model = new UtilDateModel();
         JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
         JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
 
-        panel.setLayout(new GridLayout());
-        panel.add(datePicker);
+        return datePicker;
     }
 
-    void loadTableCert() throws Exception{
+    void loadTableCert() throws Exception {
 
         String cuit = this.textFieldCertCuit.getText();
 
@@ -322,7 +356,7 @@ public class Proveedores extends JFrame {
 
         DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
 
-        if(cuit != null){
+        if (cuit != null) {
             List<CertificadoDTO> certificados = ProveedorController.getInstance().listarCertificadosPorProveedor(cuit);
 
             certificados.stream().forEach(x -> {
