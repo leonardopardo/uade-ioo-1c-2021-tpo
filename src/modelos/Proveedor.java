@@ -1,6 +1,8 @@
 package modelos;
 
+import dto.CertificadoDTO;
 import dto.ProveedorCompulsaDTO;
+import dto.ProveedorDTO;
 import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
 
@@ -21,11 +23,23 @@ public class Proveedor {
     private String ingresosBrutos;
     private List<Rubro> rubros;
     private Double limiteCtaCte;
+    private List<CertificadoExcencion> certificados;
 
     private Double balance;
 
-    public Proveedor() {
+    public Proveedor(ProveedorDTO p) {
+        this.razonSocial = p.razonSocial;
+        this.cuit = p.cuit;
+        this.tipoIVA = p.tipoIVA;
+        this.nombreFantasia = p.nombreFantasia;
+        this.email = p.email;
+        this.telefono = p.telefono;
+        this.inicioActividad = p.inicioActividad;
+        this.ingresosBrutos = p.ingresosBrutos;
+        this.limiteCtaCte = p.limiteCtaCte;
+
         this.rubros = new ArrayList<>();
+        this.certificados = new ArrayList<>();
     }
 
     public String getCuit() {
@@ -36,11 +50,30 @@ public class Proveedor {
         return razonSocial;
     }
 
+    public List<CertificadoDTO> getCertificados() {
+        List<CertificadoDTO> list = new ArrayList<>();
+        for (CertificadoExcencion c : this.certificados) {
+            CertificadoDTO x = new CertificadoDTO();
+            x.tipo = c.getTipo();
+            x.fechaInicio = c.getFechaInicio();
+            x.fechaFin = c.getFechaFin();
+
+            list.add(x);
+        }
+
+        return list;
+    }
+
+
     public Double getBalance() {
         return balance;
     }
 
     public ProveedorCompulsaDTO toDTO() {
         return new ProveedorCompulsaDTO();
+    }
+
+    public void agregarRubro(Rubro r) {
+        this.rubros.add(r);
     }
 }

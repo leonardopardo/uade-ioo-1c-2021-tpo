@@ -1,6 +1,6 @@
 package app.Documentos.Main;
 
-import app.Catalogo.Item.Items;
+import app.Documentos.OrdenCompra.Vista;
 import app.Main.Main;
 
 import javax.swing.*;
@@ -12,8 +12,9 @@ public class Documentos extends JFrame{
     private JPanel pnlMain;
     private JPanel pnlHeader;
     private JPanel pnlBody;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane tabbedPaneMain;
     private JLabel lblIcono;
+    private JPanel pnlOrdenCompra;
 
     public static void main(String[] args) throws Exception {
         Documentos self = new Documentos("Factura 2000");
@@ -34,13 +35,22 @@ public class Documentos extends JFrame{
         //region Register Actions
         this.closeModule();
         //endregion
+
+        this.loadOrdenCompraPanel();
     }
 
-    void loadModules() throws Exception{
-        /*this.pnlItems.setLayout(new BorderLayout());
-        this.pnlItems.add(new Items(), BorderLayout.NORTH);*/
+    //region Loaders
+    void loadOrdenCompraPanel() {
+        try {
+            this.pnlOrdenCompra.setLayout(new GridLayout());
+            this.pnlOrdenCompra.add(new Vista(), BorderLayout.CENTER);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
+    //endregion
 
+    //region Actions
     void closeModule() {
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -56,4 +66,5 @@ public class Documentos extends JFrame{
             }
         });
     }
+    //endregion
 }
