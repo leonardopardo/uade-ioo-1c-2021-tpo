@@ -2,21 +2,23 @@ package controllers;
 
 import dto.CertificadoDTO;
 import dto.ProveedorDTO;
+import dto.ProveedorUIDTO;
 import modelos.Proveedor;
+import modelos.enums.Rubro;
 import servicios.ProveedoreService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ProveedorController {
 
     private List<Proveedor> proveedores;
-
     private static ProveedorController instance;
-
     private ProveedoreService service;
+    protected static final String PROVEEDOR_EXISTENTE_EXCEPTION = "El proveedor que intenta agregar ya existe.";
 
-    private ProveedorController() throws Exception{
+    private ProveedorController() throws Exception {
         this.service = new ProveedoreService();
         this.proveedores = this.service.getAll();
     }
@@ -26,6 +28,26 @@ public class ProveedorController {
             instance = new ProveedorController();
         }
         return instance;
+    }
+
+    public void agregar(ProveedorDTO proveedor) throws Exception {
+        try {
+            if (this.proveedores.contains(proveedor)) {
+                throw new Exception(PROVEEDOR_EXISTENTE_EXCEPTION);
+            }
+
+            Proveedor nuevoProveedor = new Proveedor(proveedor);
+
+            for (Rubro r : proveedor.rubros) {
+                nuevoProveedor.agregarRubro(r);
+            }
+
+            this.service.save(nuevoProveedor);
+            Collections.addAll(this.proveedores, nuevoProveedor);
+
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
     /**
@@ -43,12 +65,16 @@ public class ProveedorController {
 
     }
 
-    public List<ProveedorDTO> listar(){
+    /**
+     * @return ArrayList<ProveedorDTO>
+     * @tarea Lista todos los proveedores del dominio como DTOS.
+     */
+    public List<ProveedorUIDTO> listar() {
 
-        List<ProveedorDTO> lista = new ArrayList<>();
+        List<ProveedorUIDTO> lista = new ArrayList<>();
 
-        for (Proveedor p: this.proveedores) {
-            ProveedorDTO x = new ProveedorDTO();
+        for (Proveedor p : this.proveedores) {
+            ProveedorUIDTO x = new ProveedorUIDTO();
             x.razonSocial = p.getRazonSocial();
             x.cuit = p.getCuit();
 
@@ -58,10 +84,14 @@ public class ProveedorController {
         return lista;
     }
 
-    public List<CertificadoDTO> listarCertificadosPorProveedor(String cuit){
+    /**
+     * @param cuit
+     * @return Lista los certificados como DTO de un provedor en particular.
+     */
+    public List<CertificadoDTO> listarCertificadosPorProveedor(String cuit) {
         Proveedor p = this.obtener(cuit);
 
-        if(p != null)
+        if (p != null)
             return p.getCertificados();
 
         return new ArrayList<>();
