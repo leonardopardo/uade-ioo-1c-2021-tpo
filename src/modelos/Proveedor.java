@@ -64,16 +64,27 @@ public class Proveedor {
         return list;
     }
 
-
     public Double getBalance() {
         return balance;
     }
 
-    public ProveedorCompulsaDTO toDTO() {
+    public ProveedorCompulsaDTO toCompulsaDTO() {
         return new ProveedorCompulsaDTO();
     }
 
     public void agregarRubro(Rubro r) {
         this.rubros.add(r);
+    }
+
+    public ProveedorDTO toDTO(){
+        ProveedorDTO dto = new ProveedorDTO();
+        dto.razonSocial = this.razonSocial;
+        dto.nombreFantasia = this.nombreFantasia;
+        dto.cuit = this.cuit;
+        dto.ingresosBrutos = this.ingresosBrutos;
+        dto.email = this.email;
+        dto.telefono = this.telefono;
+
+        return dto;
     }
 }

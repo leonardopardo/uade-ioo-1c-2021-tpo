@@ -50,6 +50,7 @@ public class ProveedorController {
         }
     }
 
+    // TODO: CAMBIAR EL RETORNO DEL MÉTODO A DTO
     /**
      * @param cuit
      * @return Proveedor
@@ -62,7 +63,15 @@ public class ProveedorController {
             }
         }
         return null;
+    }
 
+    public ProveedorDTO obtenerPorRazonSocial(String razonSocial){
+        for (Proveedor proveedor : this.proveedores) {
+            if (proveedor.getRazonSocial().equals(razonSocial)) {
+                return proveedor.toDTO();
+            }
+        }
+        return null;
     }
 
     /**

@@ -32,7 +32,7 @@ public class OrdenPagoController {
         this.ordenesPago.forEach(op -> {
 
             if (op.getProveedor().getCuit().equals(cuit)) {
-                ctaCte.proveedorCompulsaDTO = op.getProveedor().toDTO();
+                ctaCte.proveedorCompulsaDTO = op.getProveedor().toCompulsaDTO();
 
                 // Facturas pagadas.
                 if (op.getEstado().equals(EstadoPago.CANCELADO)) {

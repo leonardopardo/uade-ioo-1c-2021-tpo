@@ -23,6 +23,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -118,6 +119,10 @@ public class Proveedores extends JFrame {
         this.actionEliminarProveedor();
         this.actionCancelarProveedor();
         this.actionGuardarProveedor();
+        this.actionGuardarCertificado();
+        this.actionCancelarCertificado();
+        this.actionEliminarCertificado();
+        this.actionSelectedProveedor();
         //endregion
 
         //region Populate Elements
@@ -125,6 +130,7 @@ public class Proveedores extends JFrame {
         this.populateTipoIVA();
         this.populateTableProveedores();
         this.populateTipoRetencion();
+        this.populateTableProveedoresCert();
         //endregion
 
         //region Load Elements
@@ -140,8 +146,8 @@ public class Proveedores extends JFrame {
 
         //region Initialize Properties
         this.rubros = new ArrayList<>();
+        this.textFieldCertCuit.setEnabled(false);
         this.proveedorController = ProveedorController.getInstance();
-
         //endregion
     }
 
@@ -179,6 +185,25 @@ public class Proveedores extends JFrame {
         });
 
         this.tableProveedores.setModel(tblModel);
+    }
+
+    void populateTableProveedoresCert(){
+        try {
+
+            List<ProveedorUIDTO> proveedores = ProveedorController.getInstance().listar();
+
+            proveedores.stream().forEach(x -> {
+                this.comboBoxCertProveedor.addItem(x.razonSocial);
+            });
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    pnlMain,
+                    ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     void populateTipoRetencion() {
@@ -291,17 +316,16 @@ public class Proveedores extends JFrame {
 
                     self.proveedorController.agregar(pDto);
 
+                    self.populateTableProveedores();
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
                             ex.getMessage(),
-                            "",
+                            "Error",
                             JOptionPane.ERROR_MESSAGE
                     );
                 }
-
-
             }
         });
     }
@@ -310,12 +334,21 @@ public class Proveedores extends JFrame {
         this.cancelarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(
-                        pnlMain,
-                        "Click en Cancelar",
-                        "",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
+                try {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Click en Cancelar",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                } catch(Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
             }
         });
     }
@@ -324,12 +357,108 @@ public class Proveedores extends JFrame {
         this.eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(
+                try {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Click en Eliminar",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                } catch(Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionGuardarCertificado(){
+        this.guardarCertButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    JOptionPane.showMessageDialog(
                         pnlMain,
-                        "Click en Eliminar",
+                        "Click en Guardar Certificado",
                         "",
                         JOptionPane.INFORMATION_MESSAGE
-                );
+                    );
+                } catch(Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionCancelarCertificado(){
+        this.cancelarCertButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Click en Cancelar Certificado",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                } catch(Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionEliminarCertificado(){
+        this.eliminarCertButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Click en Eliminar Certificado",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                } catch(Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionSelectedProveedor(){
+
+        Proveedores self = this;
+
+        this.comboBoxCertProveedor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String razonSocial = self.comboBoxCertProveedor.getSelectedItem().toString();
+                    ProveedorDTO dto = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
+                    self.textFieldCertCuit.setText(dto.cuit);
+                } catch(Exception ex) {
+
+                }
             }
         });
     }
