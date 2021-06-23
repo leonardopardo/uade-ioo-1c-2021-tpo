@@ -1,26 +1,16 @@
 package app.Usuarios;
 
 import app.Main.Main;
-import com.sun.org.apache.xerces.internal.impl.xs.util.ObjectListImpl;
-import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import controllers.UsuariosController;
 import dto.UsuarioDTO;
 import modelos.enums.Role;
-import servicios.UsuarioService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Array;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Usuarios extends JFrame {
 
