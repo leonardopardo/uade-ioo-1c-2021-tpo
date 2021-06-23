@@ -65,7 +65,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <tabbedpane id="8b1a9" binding="tabbedPane1" default-binding="true">
+          <tabbedpane id="8b1a9" binding="tabbedPaneMain">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <preferred-size width="200" height="200"/>
@@ -74,7 +74,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="9e9d8" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="9e9d8" binding="pnlOrdenCompra" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <tabbedpane title="Ordenes de Compra"/>
