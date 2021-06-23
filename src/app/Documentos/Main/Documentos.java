@@ -2,11 +2,17 @@ package app.Documentos.Main;
 
 import app.Documentos.OrdenCompra.Vista;
 import app.Main.Main;
+import controllers.DocumentosController;
+import controllers.ProveedorController;
+import dto.OrdenCompraDTO;
+import dto.ProveedorDTO;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 public class Documentos extends JFrame{
     private JPanel pnlMain;
@@ -39,11 +45,11 @@ public class Documentos extends JFrame{
         this.loadOrdenCompraPanel();
     }
 
-    //region Loaders
+        //region Loaders
     void loadOrdenCompraPanel() {
         try {
             this.pnlOrdenCompra.setLayout(new GridLayout());
-            this.pnlOrdenCompra.add(new Vista(), BorderLayout.CENTER);
+            this.pnlOrdenCompra.add(new Vista(), BorderLayout.WEST);
         } catch (Exception exception) {
             exception.printStackTrace();
         }

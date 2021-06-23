@@ -35,4 +35,34 @@ public class OrdenCompra extends Documento {
         this.numero = num;
     }
 
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public List<Detalle> getDetalles() {
+        return detalles;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public OrdenCompraDTO toDTO(){
+        OrdenCompraDTO o = new OrdenCompraDTO();
+        o.fecha = this.fecha;
+        o.numero = this.numero;
+        o.descripcion = this.descripcion;
+        o.cuitProveedor = this.proveedor.getCuit();
+        o.razonSocial = this.proveedor.getRazonSocial();
+
+        return o;
+    }
 }

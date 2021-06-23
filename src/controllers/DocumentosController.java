@@ -56,4 +56,15 @@ public class DocumentosController {
         }
     }
 
+    public List<OrdenCompraDTO> listarOrdenes(){
+        List<OrdenCompraDTO> ordenes = new ArrayList<>();
+
+        for (OrdenCompra op : this.ordenesCompra) {
+            OrdenCompraDTO o = op.toDTO();
+            ordenes.add(o);
+        }
+
+        return ordenes;
+    }
+
 }
