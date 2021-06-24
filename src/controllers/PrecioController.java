@@ -3,11 +3,15 @@ package controllers;
 import dto.CompulsaPrecioDTO;
 import dto.ItemDTO;
 import dto.ProveedorCompulsaDTO;
+import dto.ProveedorDTO;
 import modelos.Item;
 import modelos.Precio;
+import modelos.Proveedor;
 import modelos.enums.Rubro;
+import servicios.ItemsService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -16,6 +20,8 @@ public class PrecioController {
     List<Precio> precios;
     List<Item> items;
     public static PrecioController instance;
+    private ItemsService service;
+    protected static final String ITEM_EXISTENTE_EXCEPTION = "El item que intenta agregar ya existe.";
 
     public static PrecioController getInstance() throws Exception {
         if (instance == null) {
@@ -86,5 +92,21 @@ public class PrecioController {
      */
     public List<ItemDTO> listarItems() {
         return new ArrayList<>();
+    }
+
+    public void agregar(ItemDTO item) throws Exception {
+        try {
+            if (this.items.contains(item)) {
+                throw new Exception(ITEM_EXISTENTE_EXCEPTION);
+            }
+
+            Item nuevoItem = new Item(item);
+
+            this.service.save(nuevoItem);
+            Collections.addAll(this.items, nuevoItem);
+
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 }

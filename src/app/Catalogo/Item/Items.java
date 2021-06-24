@@ -36,6 +36,7 @@ public class Items extends JPanel {
     private JLabel lblFin;
     private JLabel lblInicio;
     private JPanel pnlFecha;
+    private PrecioController precioController;
 
     public Items() throws Exception{
 
@@ -47,6 +48,10 @@ public class Items extends JPanel {
         populateComboTipo();
         populateComboUnidad();
         actionSelectedTipo();
+
+        this.actionGuardarItem();
+
+        this.precioController = PrecioController.getInstance();
     }
 
     void populateTableItems() {
@@ -127,6 +132,37 @@ public class Items extends JPanel {
                 } else {
                     self.pnlFecha.setVisible(false);
                 }
+
+            }
+        });
+    }
+
+    void actionGuardarItem() {
+        Items self = this;
+
+        this.guardarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    ItemDTO iDto = new ItemDTO();
+                    iDto.codigo = self.textFieldCodigo.getText();
+                    iDto.titulo = self.textFieldTitulo.getText();
+                    iDto.rubro = Rubro.valueOf(self.comboBoxRubro.getSelectedItem().toString());
+                    iDto.unidad = Unidad.valueOf(self.comboBoxUnidad.getSelectedItem().toString());
+                    iDto.tipo = TipoItem.valueOf(self.comboBoxTipo.getSelectedItem().toString());
+
+                    self.precioController.agregar(iDto);
+
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+
 
             }
         });
