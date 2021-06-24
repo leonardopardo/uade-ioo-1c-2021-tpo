@@ -17,10 +17,7 @@ import org.jdatepicker.impl.UtilDateModel;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,8 +93,8 @@ public class Proveedores extends JFrame {
     private ProveedorController proveedorController;
     //endregion
     private JDatePickerImpl inicioAct;
-
     private ArrayList<Rubro> rubros;
+    protected static final String PROVEEDOR_EXISTENTE_EXCEPTION = "El proveedor que intenta agregar ya existe.";
 
     public Proveedores(String title) throws Exception {
         super(title);
@@ -118,6 +115,11 @@ public class Proveedores extends JFrame {
         this.actionEliminarProveedor();
         this.actionCancelarProveedor();
         this.actionGuardarProveedor();
+        this.actionGuardarCertificado();
+        this.actionCancelarCertificado();
+        this.actionEliminarCertificado();
+        this.actionSelectedProveedor();
+        this.selectedRow();
         //endregion
 
         //region Populate Elements
@@ -125,6 +127,7 @@ public class Proveedores extends JFrame {
         this.populateTipoIVA();
         this.populateTableProveedores();
         this.populateTipoRetencion();
+        this.populateTableProveedoresCert();
         //endregion
 
         //region Load Elements
@@ -140,12 +143,34 @@ public class Proveedores extends JFrame {
 
         //region Initialize Properties
         this.rubros = new ArrayList<>();
+        this.textFieldCertCuit.setEnabled(false);
         this.proveedorController = ProveedorController.getInstance();
-
         //endregion
     }
 
     //region Populate Methods
+    void selectedRow() {
+        this.tableProveedores.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JTable target = (JTable) e.getSource();
+                populateInputs(tableProveedores.getValueAt(target.getSelectedRow(), 1).toString());
+            }
+        });
+    }
+
+    void populateInputs(String selectedRow) {
+        ProveedorDTO p = this.proveedorController.obtener(selectedRow);
+        this.textFieldRazonSocial.setText(p.razonSocial);
+        this.textFieldNombreFantasia.setText(p.nombreFantasia);
+        this.textFieldCuit.setText(p.cuit);
+        this.textFieldIibb.setText(p.ingresosBrutos);
+        this.textFieldEmail.setText(p.email);
+        this.textFieldTelefono.setText(p.telefono);
+        this.textFieldCtaCte.setText(Double.toString(p.limiteCtaCte));
+    }
+
     void populateRubros() {
         for (Rubro r : Rubro.values()) {
             this.comboBoxRubros.addItem(r);
@@ -158,27 +183,53 @@ public class Proveedores extends JFrame {
         }
     }
 
-    void populateTableProveedores() throws Exception {
+    void populateTableProveedores() {
+        try {
+            List<ProveedorUIDTO> proveedores = ProveedorController.getInstance().listar();
 
-        List<ProveedorUIDTO> proveedores = ProveedorController.getInstance().listar();
-
-        String[] columns = new String[]{
-                "Razon Social".toUpperCase(),
-                "CUIT".toUpperCase(),
-        };
-
-        DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
-
-        proveedores.stream().forEach(x -> {
-            Object[] o = {
-                    x.razonSocial,
-                    x.cuit,
+            String[] columns = new String[]{
+                    "Razon Social".toUpperCase(),
+                    "CUIT".toUpperCase(),
             };
 
-            tblModel.addRow(o);
-        });
+            DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
 
-        this.tableProveedores.setModel(tblModel);
+            proveedores.stream().forEach(x -> {
+                Object[] o = {
+                        x.razonSocial,
+                        x.cuit,
+                };
+
+                tblModel.addRow(o);
+            });
+
+            this.tableProveedores.setModel(tblModel);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    pnlMain,
+                    ex.getMessage(),
+                    "",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    void populateTableProveedoresCert() {
+        try {
+            List<ProveedorUIDTO> proveedores = ProveedorController.getInstance().listar();
+
+            proveedores.stream().forEach(x -> {
+                this.comboBoxCertProveedor.addItem(x.razonSocial);
+            });
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    pnlMain,
+                    ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     void populateTipoRetencion() {
@@ -225,7 +276,6 @@ public class Proveedores extends JFrame {
 
                     DefaultListModel model = new DefaultListModel();
                     model.addAll(self.rubros);
-
                     self.listRubros.setModel(model);
                 }
             }
@@ -246,12 +296,9 @@ public class Proveedores extends JFrame {
                         throw new Exception("Debe seleccionar un rubro de la lista.");
 
                     self.rubros.remove(Rubro.valueOf(value.toString()));
-
                     DefaultListModel model = new DefaultListModel();
                     model.addAll(self.rubros);
-
                     self.listRubros.setModel(model);
-
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
@@ -273,6 +320,12 @@ public class Proveedores extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
 
+                    ProveedorDTO check = self.proveedorController.obtener(self.textFieldCuit.getText());
+
+                    if (check != null) {
+                        throw new Exception(PROVEEDOR_EXISTENTE_EXCEPTION);
+                    }
+
                     ProveedorDTO pDto = new ProveedorDTO();
                     pDto.cuit = self.textFieldCuit.getText();
                     pDto.razonSocial = self.textFieldRazonSocial.getText();
@@ -290,18 +343,16 @@ public class Proveedores extends JFrame {
                     }
 
                     self.proveedorController.agregar(pDto);
-
+                    self.populateTableProveedores();
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
                             ex.getMessage(),
-                            "",
+                            "Error",
                             JOptionPane.ERROR_MESSAGE
                     );
                 }
-
-
             }
         });
     }
@@ -310,26 +361,139 @@ public class Proveedores extends JFrame {
         this.cancelarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(
-                        pnlMain,
-                        "Click en Cancelar",
-                        "",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
+                try {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Click en Cancelar",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
             }
         });
     }
 
     void actionEliminarProveedor() {
+
+        Proveedores self = this;
+
         this.eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(
-                        pnlMain,
-                        "Click en Eliminar",
-                        "",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
+                try {
+                    String razonSocial = self.textFieldRazonSocial.getText();
+                    String cuit = self.textFieldCuit.getText();
+
+                    int confirmResult = JOptionPane.showConfirmDialog(pnlMain, "¿Está seguro que desea eliminar el proveedor " + razonSocial + "?",
+                            "Eliminar proveedor", JOptionPane.YES_NO_OPTION
+                    );
+                    if (confirmResult == JOptionPane.YES_OPTION) {
+                        self.proveedorController.eliminar(cuit);
+                        self.populateTableProveedores();
+                    }
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionGuardarCertificado() {
+        this.guardarCertButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Click en Guardar Certificado",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionCancelarCertificado() {
+        this.cancelarCertButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Click en Cancelar Certificado",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionEliminarCertificado() {
+        this.eliminarCertButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Click en Eliminar Certificado",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionSelectedProveedor() {
+
+        Proveedores self = this;
+
+        this.comboBoxCertProveedor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String razonSocial = self.comboBoxCertProveedor.getSelectedItem().toString();
+                    ProveedorDTO dto = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
+                    self.textFieldCertCuit.setText(dto.cuit);
+                } catch (Exception ex) {
+
+                }
             }
         });
     }

@@ -8,7 +8,6 @@ import modelos.enums.Rubro;
 import servicios.ProveedoreService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ProveedorController {
@@ -16,7 +15,6 @@ public class ProveedorController {
     private List<Proveedor> proveedores;
     private static ProveedorController instance;
     private ProveedoreService service;
-    protected static final String PROVEEDOR_EXISTENTE_EXCEPTION = "El proveedor que intenta agregar ya existe.";
 
     private ProveedorController() throws Exception {
         this.service = new ProveedoreService();
@@ -32,18 +30,15 @@ public class ProveedorController {
 
     public void agregar(ProveedorDTO proveedor) throws Exception {
         try {
-            if (this.proveedores.contains(proveedor)) {
-                throw new Exception(PROVEEDOR_EXISTENTE_EXCEPTION);
-            }
-
             Proveedor nuevoProveedor = new Proveedor(proveedor);
 
             for (Rubro r : proveedor.rubros) {
                 nuevoProveedor.agregarRubro(r);
             }
 
+            nuevoProveedor.setId(this.service.getProximoId());
             this.service.save(nuevoProveedor);
-            Collections.addAll(this.proveedores, nuevoProveedor);
+            this.proveedores.add(nuevoProveedor);
 
         } catch (Exception ex) {
             throw ex;
@@ -52,22 +47,35 @@ public class ProveedorController {
 
     /**
      * @param cuit
-     * @return Proveedor
-     * @tarea Dado un cuit, en caso de que exista un proveedor con dicho cuit, devuelve un objeto Proveedor, si no null.
+     * @return ProveedorDTO
+     * @tarea Dado un cuit, en caso de que exista un proveedor con dicho cuit, devuelve un objeto ProveedorDTO, si no null.
      */
-    public Proveedor obtener(String cuit) {
+    public ProveedorDTO obtener(String cuit) {
         for (Proveedor proveedor : this.proveedores) {
             if (proveedor.getCuit().equals(cuit)) {
-                return proveedor;
+                return proveedor.toDTO();
             }
         }
         return null;
+    }
 
+    /**
+     * @param razonSocial
+     * @return ProveedorDTO
+     * @tarea Dado una razonSocial, en caso de que exista un proveedor con dicha razonSocial, devuelve un objeto ProveedorDTO, si no null.
+     */
+    public ProveedorDTO obtenerPorRazonSocial(String razonSocial) {
+        for (Proveedor proveedor : this.proveedores) {
+            if (proveedor.getRazonSocial().equals(razonSocial)) {
+                return proveedor.toDTO();
+            }
+        }
+        return null;
     }
 
     /**
      * @return ArrayList<ProveedorDTO>
-     * @tarea Lista todos los proveedores del dominio como DTOS.
+     * @tarea Lista todos los proveedores del dominio como objetos DTO.
      */
     public List<ProveedorUIDTO> listar() {
 
@@ -86,15 +94,49 @@ public class ProveedorController {
 
     /**
      * @param cuit
-     * @return Lista los certificados como DTO de un provedor en particular.
+     * @return List<CertificadoDTO>
+     * @tarea Lista los certificados como DTO de un provedor en particular.
      */
     public List<CertificadoDTO> listarCertificadosPorProveedor(String cuit) {
-        Proveedor p = this.obtener(cuit);
+
+        Proveedor p = this.obtenerProveedor(cuit);
 
         if (p != null)
             return p.getCertificados();
 
         return new ArrayList<>();
+    }
+
+    public void eliminar(String cuit) throws Exception {
+        try {
+            if (this.proveedores.size() == 0) {
+                throw new Exception("No hay proveedores registrados");
+            }
+            for (Proveedor p : this.proveedores) {
+                if (p.getCuit().equals(cuit)) {
+                    this.service.delete(p.getId());
+                    this.proveedores.remove(p);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /**
+     * @param cuit
+     * @return proveedor
+     * @tarea metodo privado para poder operar con objetos del dominio.
+     * @comment El metodo es privado ya que devuelve un objeto del dominio.
+     */
+    private Proveedor obtenerProveedor(String cuit) {
+        for (Proveedor proveedor : this.proveedores) {
+            if (proveedor.getCuit().equals(cuit)) {
+                return proveedor;
+            }
+        }
+        return null;
     }
 
 }
