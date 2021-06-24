@@ -14,12 +14,9 @@ public class UsuariosController {
     private List<Usuario> usuarios;
     private static UsuariosController instance;
     private UsuarioService service;
-
     protected static final String USUARIO_EXISTENTE_EXCEPTION = "El usuario que intenta agregar ya existe.";
 
-    protected static final String USUARIO_NO_EXISTENTE_EXCEPTION = "El usuario con el que intenta operar no existe.";
-
-    protected UsuariosController() throws Exception {
+    private UsuariosController() throws Exception {
         this.service = new UsuarioService();
         this.usuarios = this.service.getAll();
     }
@@ -91,9 +88,7 @@ public class UsuariosController {
             }
 
             Usuario nuevoUsuario = new Usuario(modelo);
-
             this.service.save(nuevoUsuario);
-
             Collections.addAll(this.usuarios, nuevoUsuario);
 
         } catch (Exception e) {
@@ -138,6 +133,7 @@ public class UsuariosController {
                 if (u.getUsername().equals(username)) {
                     this.service.delete(u.getId());
                     this.usuarios.remove(u);
+                    break;
                 }
             }
 
