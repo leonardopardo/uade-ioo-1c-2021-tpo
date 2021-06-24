@@ -5,12 +5,19 @@ import dto.ItemDTO;
 import modelos.enums.Rubro;
 import modelos.enums.TipoItem;
 import modelos.enums.Unidad;
+import org.jdatepicker.impl.DateComponentFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Properties;
 
 public class Items extends JPanel {
     private JTable tableItems;
@@ -26,8 +33,6 @@ public class Items extends JPanel {
     private JComboBox comboBoxTipo;
     private JComboBox comboBoxRubro;
     private JComboBox comboBoxUnidad;
-    private JTextField textFieldInicio;
-    private JTextField textFieldFin;
     private JLabel lblCodigo;
     private JLabel lblTitulo;
     private JLabel lblTipo;
@@ -36,20 +41,35 @@ public class Items extends JPanel {
     private JLabel lblFin;
     private JLabel lblInicio;
     private JPanel pnlFecha;
+    private JPanel pnlDatePickerInicio;
+    private JPanel pnlDatePickerFin;
     private PrecioController precioController;
+    private JDatePickerImpl fieldInicio;
+    private JDatePickerImpl fieldFin;
+    private DefaultTableModel tblModel;
 
     public Items() throws Exception{
 
         this.add(this.pnlMain);
         this.pnlFecha.setVisible(false);
 
-        populateTableItems();
-        populateComboRubro();
-        populateComboTipo();
-        populateComboUnidad();
-        actionSelectedTipo();
+        this.populateTableItems();
+        this.populateComboRubro();
+        this.populateComboTipo();
+        this.populateComboUnidad();
+        this.actionSelectedTipo();
 
         this.actionGuardarItem();
+        this.actionEliminarItem();
+        this.actionCancelarItem();
+
+        this.fieldInicio = this.nuevoDatePicker();
+        this.pnlDatePickerInicio.setLayout(new GridLayout());
+        this.pnlDatePickerInicio.add(this.fieldInicio);
+
+        this.fieldFin = this.nuevoDatePicker();
+        this.pnlDatePickerFin.setLayout(new GridLayout());
+        this.pnlDatePickerFin.add(this.fieldFin);
 
         this.precioController = PrecioController.getInstance();
     }
@@ -67,7 +87,7 @@ public class Items extends JPanel {
                     "tipo".toUpperCase()
             };
 
-            DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
+            this.tblModel = new DefaultTableModel(columns, 0);
 
             items.stream().forEach(x -> {
                 Object[] o = {
@@ -150,9 +170,18 @@ public class Items extends JPanel {
                     iDto.rubro = Rubro.valueOf(self.comboBoxRubro.getSelectedItem().toString());
                     iDto.unidad = Unidad.valueOf(self.comboBoxUnidad.getSelectedItem().toString());
                     iDto.tipo = TipoItem.valueOf(self.comboBoxTipo.getSelectedItem().toString());
+                    iDto.inicio = LocalDate.of(self.fieldInicio.getModel().getYear(), self.fieldInicio.getModel().getMonth(), self.fieldInicio.getModel().getDay());
+                    iDto.fin = LocalDate.of(self.fieldFin.getModel().getYear(), self.fieldFin.getModel().getMonth(), self.fieldFin.getModel().getDay());
 
                     self.precioController.agregar(iDto);
+                    tblModel.addRow(new Object[]{iDto.codigo, iDto.titulo, iDto.unidad, iDto.rubro, iDto.tipo});
 
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Item guardado",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
@@ -162,10 +191,50 @@ public class Items extends JPanel {
                             JOptionPane.ERROR_MESSAGE
                     );
                 }
-
-
             }
         });
+    }
+
+    void actionCancelarItem() {
+        this.cancelarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textFieldCodigo.setText("");
+                textFieldTitulo.setText("");
+                JOptionPane.showMessageDialog(
+                        pnlMain,
+                        "Item cancelado",
+                        "",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
+    }
+
+    void actionEliminarItem() {
+        this.eliminarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(tableItems.getSelectedRow() != -1) {
+                    tblModel.removeRow(tableItems.getSelectedRow());
+
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Item eliminado",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    JDatePickerImpl nuevoDatePicker() {
+        UtilDateModel model = new UtilDateModel();
+        JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
+        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
+
+        return datePicker;
     }
 }
 

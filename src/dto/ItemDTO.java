@@ -5,7 +5,6 @@ import modelos.enums.TipoItem;
 import modelos.enums.Unidad;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class ItemDTO {
 
@@ -16,6 +15,6 @@ public class ItemDTO {
     public Unidad unidad;
     public TipoItem tipo;
     public LocalDate inicio;
-    public LocalDateTime fin;
+    public LocalDate fin;
 
 }
