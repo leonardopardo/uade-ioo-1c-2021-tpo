@@ -301,5 +301,4 @@ public class Usuarios extends JFrame {
 
         return false;
     }
-
 }

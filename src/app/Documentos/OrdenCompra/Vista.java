@@ -17,6 +17,7 @@ public class Vista extends JPanel {
     private JButton cancelarButton;
 
     public Vista(){
+
         this.add(this.pnlMain);
 
         //region Populate

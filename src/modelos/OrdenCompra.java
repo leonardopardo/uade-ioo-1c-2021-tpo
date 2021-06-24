@@ -14,7 +14,6 @@ public class OrdenCompra extends Documento {
     private List<Detalle> detalles;
     private Proveedor proveedor;
 
-
     public OrdenCompra(OrdenCompraDTO dto) {
         this.fecha = dto.fecha;
         this.descripcion = dto.descripcion;
@@ -25,11 +24,9 @@ public class OrdenCompra extends Documento {
         this.proveedor = p;
     }
 
-
     public void setDetalle(Detalle detalle) {
         this.detalles.add(detalle);
     }
-
 
     public void setNumero(int num) {
         this.numero = num;
@@ -53,6 +50,10 @@ public class OrdenCompra extends Documento {
 
     public Proveedor getProveedor() {
         return proveedor;
+    }
+
+    public String getProveedorCuit(){
+        return this.proveedor.getCuit();
     }
 
     public OrdenCompraDTO toDTO(){

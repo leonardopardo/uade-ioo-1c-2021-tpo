@@ -5,7 +5,6 @@ import controllers.ProveedorController;
 import dto.CertificadoDTO;
 import dto.ProveedorDTO;
 import dto.ProveedorUIDTO;
-import modelos.CertificadoExcencion;
 import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
 import modelos.enums.TipoRetencion;
@@ -23,7 +22,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -130,7 +128,7 @@ public class Proveedores extends JFrame {
         this.populateTipoIVA();
         this.populateTableProveedores();
         this.populateTipoRetencion();
-        this.populateTableProveedoresCert();
+        this.populateComboBoxProveedoresCert();
         //endregion
 
         //region Load Elements
@@ -187,7 +185,7 @@ public class Proveedores extends JFrame {
         this.tableProveedores.setModel(tblModel);
     }
 
-    void populateTableProveedoresCert(){
+    void populateComboBoxProveedoresCert(){
         try {
 
             List<ProveedorUIDTO> proveedores = ProveedorController.getInstance().listar();
