@@ -36,26 +36,26 @@ public class OrdenCompra extends Documento {
     }
 
     public Integer getNumero() {
-        return numero;
+        return this.numero;
     }
 
     public LocalDateTime getFecha() {
-        return fecha;
+        return this.fecha;
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return this.descripcion;
     }
 
     public List<Detalle> getDetalles() {
-        return detalles;
+        return this.detalles;
     }
 
     public Proveedor getProveedor() {
-        return proveedor;
+        return this.proveedor;
     }
 
-    public OrdenCompraDTO toDTO(){
+    public OrdenCompraDTO toDTO() {
         OrdenCompraDTO o = new OrdenCompraDTO();
         o.fecha = this.fecha;
         o.numero = this.numero;
