@@ -24,7 +24,6 @@ public class Proveedor {
     private List<Rubro> rubros;
     private Double limiteCtaCte;
     private List<CertificadoExcencion> certificados;
-
     private Double balance;
 
     public Proveedor(ProveedorDTO p) {
@@ -43,11 +42,31 @@ public class Proveedor {
     }
 
     public String getCuit() {
-        return cuit;
+        return this.cuit;
     }
 
     public String getRazonSocial() {
-        return razonSocial;
+        return this.razonSocial;
+    }
+
+    public Double getBalance() {
+        return this.balance;
+    }
+
+    public ProveedorCompulsaDTO toCompulsaDTO() {
+        return new ProveedorCompulsaDTO();
+    }
+
+    public void agregarRubro(Rubro r) {
+        this.rubros.add(r);
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public List<CertificadoDTO> getCertificados() {
@@ -64,19 +83,7 @@ public class Proveedor {
         return list;
     }
 
-    public Double getBalance() {
-        return balance;
-    }
-
-    public ProveedorCompulsaDTO toCompulsaDTO() {
-        return new ProveedorCompulsaDTO();
-    }
-
-    public void agregarRubro(Rubro r) {
-        this.rubros.add(r);
-    }
-
-    public ProveedorDTO toDTO(){
+    public ProveedorDTO toDTO() {
         ProveedorDTO dto = new ProveedorDTO();
         dto.razonSocial = this.razonSocial;
         dto.nombreFantasia = this.nombreFantasia;
@@ -84,7 +91,9 @@ public class Proveedor {
         dto.ingresosBrutos = this.ingresosBrutos;
         dto.email = this.email;
         dto.telefono = this.telefono;
+        dto.limiteCtaCte = this.limiteCtaCte;
 
         return dto;
     }
+
 }

@@ -13,6 +13,10 @@ public class OrdenPagoController {
     private List<OrdenPago> ordenesPago;
     private static OrdenPagoController instance;
 
+    private OrdenPagoController() {
+        this.ordenesPago = new ArrayList<OrdenPago>();
+    }
+
     public static OrdenPagoController getInstance() throws Exception {
         if (instance == null) {
             instance = new OrdenPagoController();
@@ -169,7 +173,7 @@ public class OrdenPagoController {
         dto.monto = totalRetenciones;
         dto.mes = mes;
         dto.cuit = cuit;
-        dto.razonSocial = ProveedorController.getInstance().obtener(cuit).getRazonSocial();
+        dto.razonSocial = ProveedorController.getInstance().obtener(cuit).razonSocial;
 
         return dto;
     }

@@ -9,4 +9,8 @@ public class ProveedoreService extends GenericDAO {
         super(Proveedor.class, "./src/json/proveedores.json");
     }
 
+    public int getProximoId() throws Exception {
+        return this.getAll().size() + 1;
+    }
+
 }

@@ -38,6 +38,9 @@ public class DocumentosController {
         return instance;
     }
 
+
+    // TODO -> Resolver linea 52
+
     /**
      * @param dto
      * @throws Exception
@@ -47,7 +50,7 @@ public class DocumentosController {
         OrdenCompra oc = new OrdenCompra(dto);
         this.ordenesCompra.add(oc);
 
-        oc.setProveedor(this.pController.obtener(dto.cuitProveedor));
+        //oc.setProveedor(this.pController.obtener(dto.cuitProveedor));
         oc.setNumero(ordenCompraService.getProximoNumero());
 
         for (DetalleDTO d : dto.detalles) {
@@ -56,7 +59,7 @@ public class DocumentosController {
         }
     }
 
-    public List<OrdenCompraDTO> listarOrdenes(){
+    public List<OrdenCompraDTO> listarOrdenes() {
         List<OrdenCompraDTO> ordenes = new ArrayList<>();
 
         for (OrdenCompra op : this.ordenesCompra) {
