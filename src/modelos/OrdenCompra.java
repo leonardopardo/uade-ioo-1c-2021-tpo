@@ -52,15 +52,11 @@ public class OrdenCompra extends Documento {
         return this.proveedor;
     }
 
-<<<<<<< HEAD
     public String getProveedorCuit(){
         return this.proveedor.getCuit();
     }
 
     public OrdenCompraDTO toDTO(){
-=======
-    public OrdenCompraDTO toDTO() {
->>>>>>> bde7a7f910e05b471878f01dd84e33d141e8ed05
         OrdenCompraDTO o = new OrdenCompraDTO();
         o.fecha = this.fecha;
         o.numero = this.numero;

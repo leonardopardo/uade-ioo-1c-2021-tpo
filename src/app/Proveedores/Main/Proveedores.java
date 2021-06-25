@@ -126,7 +126,7 @@ public class Proveedores extends JFrame {
         this.populateTipoIVA();
         this.populateTableProveedores();
         this.populateTipoRetencion();
-        this.populateComboBoxProveedoresCert();
+        //this.populateComboBoxProveedoresCert();
         //endregion
 
         //region Load Elements
@@ -213,11 +213,9 @@ public class Proveedores extends JFrame {
         }
     }
 
-<<<<<<< HEAD
-    void populateComboBoxProveedoresCert(){
-=======
+
     void populateTableProveedoresCert() {
->>>>>>> bde7a7f910e05b471878f01dd84e33d141e8ed05
+
         try {
             List<ProveedorUIDTO> proveedores = ProveedorController.getInstance().listar();
 
