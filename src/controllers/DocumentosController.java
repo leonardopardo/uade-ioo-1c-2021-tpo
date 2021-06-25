@@ -70,4 +70,17 @@ public class DocumentosController {
         return ordenes;
     }
 
+    public List<OrdenCompraDTO> listarOrdenes(String cuit){
+        List<OrdenCompraDTO> ordenes = new ArrayList<>();
+
+        for (OrdenCompra op : this.ordenesCompra) {
+            if(op.getProveedorCuit().equals(cuit)){
+                OrdenCompraDTO o = op.toDTO();
+                ordenes.add(o);
+            }
+        }
+
+        return ordenes;
+    }
+
 }
