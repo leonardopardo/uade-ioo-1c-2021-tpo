@@ -17,6 +17,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,13 +99,15 @@ public class Proveedores extends JFrame {
     public Proveedores(String title) throws Exception {
         super(title);
 
-        //region Setting Form
+        //region Setting
         this.setResizable(false);
         this.setContentPane(this.pnlMain);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
         this.setSize(pnlMain.getPreferredSize());
         this.setBackground(Color.WHITE);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         //endregion
 
         //region Register Actions
@@ -147,7 +150,22 @@ public class Proveedores extends JFrame {
         //endregion
     }
 
+
     //region Populate Methods
+    void populateInputs(String selectedRow) {
+        ProveedorDTO p = this.proveedorController.obtener(selectedRow);
+        this.textFieldRazonSocial.setText(p.razonSocial);
+        this.textFieldNombreFantasia.setText(p.nombreFantasia);
+        this.textFieldCuit.setText(p.cuit);
+        this.textFieldIibb.setText(p.ingresosBrutos);
+        this.textFieldEmail.setText(p.email);
+        this.textFieldTelefono.setText(p.telefono);
+        this.textFieldCtaCte.setText(Double.toString(p.limiteCtaCte));
+        this.comboBoxTipoIVA.setSelectedItem(p.tipoIVA);
+        this.inicioAct.getJFormattedTextField().setText(p.inicioActividad.toString());
+        this.populateListRubros((ArrayList) p.rubros);
+    }
+
     void selectedRow() {
         this.tableProveedores.addMouseListener(new MouseAdapter() {
             @Override
@@ -159,16 +177,6 @@ public class Proveedores extends JFrame {
         });
     }
 
-    void populateInputs(String selectedRow) {
-        ProveedorDTO p = this.proveedorController.obtener(selectedRow);
-        this.textFieldRazonSocial.setText(p.razonSocial);
-        this.textFieldNombreFantasia.setText(p.nombreFantasia);
-        this.textFieldCuit.setText(p.cuit);
-        this.textFieldIibb.setText(p.ingresosBrutos);
-        this.textFieldEmail.setText(p.email);
-        this.textFieldTelefono.setText(p.telefono);
-        this.textFieldCtaCte.setText(Double.toString(p.limiteCtaCte));
-    }
 
     void populateRubros() {
         for (Rubro r : Rubro.values()) {
@@ -176,11 +184,13 @@ public class Proveedores extends JFrame {
         }
     }
 
+
     void populateTipoIVA() {
         for (TipoIVA t : TipoIVA.values()) {
             this.comboBoxTipoIVA.addItem(t);
         }
     }
+
 
     void populateTableProveedores() {
         try {
@@ -203,6 +213,7 @@ public class Proveedores extends JFrame {
             });
 
             this.tableProveedores.setModel(tblModel);
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(
                     pnlMain,
@@ -215,7 +226,6 @@ public class Proveedores extends JFrame {
 
 
     void populateTableProveedoresCert() {
-
         try {
             List<ProveedorUIDTO> proveedores = ProveedorController.getInstance().listar();
 
@@ -233,16 +243,24 @@ public class Proveedores extends JFrame {
         }
     }
 
+
     void populateTipoRetencion() {
         for (TipoRetencion t : TipoRetencion.values()) {
             this.comboBoxCertTipoRetencion.addItem(t);
         }
     }
-    //endregion
+
+
+    void populateListRubros(ArrayList r) {
+        DefaultListModel model = new DefaultListModel();
+        model.addAll(r);
+        this.listRubros.setModel(model);
+    }
+    //end populate region
+
 
     //region Action Methods
     void closeModule() {
-
         Proveedores self = this;
 
         this.addWindowListener(new WindowAdapter() {
@@ -259,12 +277,11 @@ public class Proveedores extends JFrame {
                 } catch (Exception exception) {
 
                     exception.printStackTrace();
-
                 }
-
             }
         });
     }
+
 
     void actionAgregarRubro() {
         Proveedores self = this;
@@ -283,13 +300,13 @@ public class Proveedores extends JFrame {
         });
     }
 
+
     void actionElimarRubro() {
         Proveedores self = this;
 
         this.btnElimnarRubro.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 var value = self.listRubros.getSelectedValue();
 
                 try {
@@ -311,8 +328,8 @@ public class Proveedores extends JFrame {
                 }
             }
         });
-
     }
+
 
     void actionGuardarProveedor() {
         Proveedores self = this;
@@ -320,32 +337,15 @@ public class Proveedores extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-
                     ProveedorDTO check = self.proveedorController.obtener(self.textFieldCuit.getText());
 
                     if (check != null) {
-                        throw new Exception(PROVEEDOR_EXISTENTE_EXCEPTION);
+                        self.proveedorController.actualizar(self.crearActualizarProveedor());
+                    } else {
+                        ProveedorDTO pDto = self.crearActualizarProveedor();
+                        self.proveedorController.agregar(pDto);
                     }
-
-                    ProveedorDTO pDto = new ProveedorDTO();
-                    pDto.cuit = self.textFieldCuit.getText();
-                    pDto.razonSocial = self.textFieldRazonSocial.getText();
-                    pDto.nombreFantasia = self.textFieldNombreFantasia.getText();
-                    pDto.email = self.textFieldEmail.getText();
-                    pDto.telefono = self.textFieldTelefono.getText();
-                    pDto.ingresosBrutos = self.textFieldIibb.getText();
-                    pDto.tipoIVA = TipoIVA.valueOf(self.comboBoxTipoIVA.getSelectedItem().toString());
-                    pDto.limiteCtaCte = Double.parseDouble(self.textFieldCtaCte.getText());
-                    pDto.inicioActividad = LocalDate.of(self.inicioAct.getModel().getYear(), self.inicioAct.getModel().getMonth(), self.inicioAct.getModel().getDay());
-
-                    for (int i = 0; i < self.listRubros.getModel().getSize(); i++) {
-                        Rubro r = Rubro.valueOf(self.listRubros.getModel().getElementAt(i).toString());
-                        pDto.rubros.add(r);
-                    }
-
-                    self.proveedorController.agregar(pDto);
                     self.populateTableProveedores();
-
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
@@ -358,17 +358,32 @@ public class Proveedores extends JFrame {
         });
     }
 
+    ProveedorDTO crearActualizarProveedor() {
+        ProveedorDTO pDto = new ProveedorDTO();
+        pDto.cuit = this.textFieldCuit.getText();
+        pDto.razonSocial = this.textFieldRazonSocial.getText();
+        pDto.nombreFantasia = this.textFieldNombreFantasia.getText();
+        pDto.email = this.textFieldEmail.getText();
+        pDto.telefono = this.textFieldTelefono.getText();
+        pDto.ingresosBrutos = this.textFieldIibb.getText();
+        pDto.tipoIVA = TipoIVA.valueOf(this.comboBoxTipoIVA.getSelectedItem().toString());
+        pDto.limiteCtaCte = Double.parseDouble(this.textFieldCtaCte.getText());
+        pDto.inicioActividad = LocalDate.of(this.inicioAct.getModel().getYear(), this.inicioAct.getModel().getMonth(), this.inicioAct.getModel().getDay());
+
+        for (int i = 0; i < this.listRubros.getModel().getSize(); i++) {
+            Rubro r = Rubro.valueOf(this.listRubros.getModel().getElementAt(i).toString());
+            pDto.rubros.add(r);
+        }
+        return pDto;
+    }
+
     void actionCancelarProveedor() {
+        Proveedores self = this;
         this.cancelarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    JOptionPane.showMessageDialog(
-                            pnlMain,
-                            "Click en Cancelar",
-                            "",
-                            JOptionPane.INFORMATION_MESSAGE
-                    );
+                    self.clearInputs();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
@@ -381,10 +396,9 @@ public class Proveedores extends JFrame {
         });
     }
 
+
     void actionEliminarProveedor() {
-
         Proveedores self = this;
-
         this.eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -412,6 +426,7 @@ public class Proveedores extends JFrame {
         });
     }
 
+
     void actionGuardarCertificado() {
         this.guardarCertButton.addActionListener(new ActionListener() {
             @Override
@@ -434,6 +449,7 @@ public class Proveedores extends JFrame {
             }
         });
     }
+
 
     void actionCancelarCertificado() {
         this.cancelarCertButton.addActionListener(new ActionListener() {
@@ -458,6 +474,7 @@ public class Proveedores extends JFrame {
         });
     }
 
+
     void actionEliminarCertificado() {
         this.eliminarCertButton.addActionListener(new ActionListener() {
             @Override
@@ -481,10 +498,9 @@ public class Proveedores extends JFrame {
         });
     }
 
+
     void actionSelectedProveedor() {
-
         Proveedores self = this;
-
         this.comboBoxCertProveedor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -498,7 +514,7 @@ public class Proveedores extends JFrame {
             }
         });
     }
-    //endregion
+    //end action region
 
     //region Load Methods
     JDatePickerImpl nuevoDatePicker() {
@@ -509,8 +525,8 @@ public class Proveedores extends JFrame {
         return datePicker;
     }
 
-    void loadTableCert() throws Exception {
 
+    void loadTableCert() throws Exception {
         String cuit = this.textFieldCertCuit.getText();
 
         String[] columns = new String[]{
@@ -537,5 +553,21 @@ public class Proveedores extends JFrame {
 
         this.tableCert.setModel(tblModel);
     }
+
+
+    // clear inputs
+    void clearInputs() {
+        this.textFieldRazonSocial.setText("");
+        this.textFieldCuit.setText("");
+        this.textFieldCtaCte.setText("");
+        this.textFieldTelefono.setText("");
+        this.textFieldIibb.setText("");
+        this.textFieldEmail.setText("");
+        this.textFieldNombreFantasia.setText("");
+        this.inicioAct.getJFormattedTextField().setText("");
+        DefaultListModel listRubrosModel = (DefaultListModel) this.listRubros.getModel();
+        listRubrosModel.removeAllElements();
+    }
+
     //endregion
 }

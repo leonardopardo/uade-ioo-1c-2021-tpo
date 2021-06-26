@@ -41,6 +41,42 @@ public class Proveedor {
         this.certificados = new ArrayList<>();
     }
 
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
+
+    public void setCuit(String cuit) {
+        this.cuit = cuit;
+    }
+
+    public void setTipoIVA(TipoIVA tipoIVA) {
+        this.tipoIVA = tipoIVA;
+    }
+
+    public void setNombreFantasia(String nombreFantasia) {
+        this.nombreFantasia = nombreFantasia;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public void setIngresosBrutos(String ingresosBrutos) {
+        this.ingresosBrutos = ingresosBrutos;
+    }
+
+    public void setLimiteCtaCte(Double limiteCtaCte) {
+        this.limiteCtaCte = limiteCtaCte;
+    }
+
+    public void setCertificados(List<CertificadoExcencion> certificados) {
+        this.certificados = certificados;
+    }
+
     public String getCuit() {
         return this.cuit;
     }
@@ -92,8 +128,15 @@ public class Proveedor {
         dto.email = this.email;
         dto.telefono = this.telefono;
         dto.limiteCtaCte = this.limiteCtaCte;
+        dto.rubros = this.rubros;
+        dto.tipoIVA = this.tipoIVA;
+        dto.inicioActividad = this.inicioActividad;
 
         return dto;
+    }
+
+    public void reemplazarRubros(List nuevoRubros) {
+        this.rubros = nuevoRubros;
     }
 
 }
