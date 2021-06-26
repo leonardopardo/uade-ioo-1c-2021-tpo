@@ -1,5 +1,6 @@
 package app.Documentos.Main;
 
+import app.Documentos.OrdenCompra.Formulario;
 import app.Main.Main;
 import controllers.DocumentosController;
 import controllers.ProveedorController;
@@ -39,10 +40,10 @@ public class Documentos extends JFrame{
     private JPanel pnlOCActions;
     private JLabel lblOCProveedores;
     private JPanel pnlOCFormProveedores;
-    private JPanel pnlOCFormFechaInicio;
-    private JPanel pnlOCFormFechaFin;
-    private JPanel pnlOCFormFechaInicioDP;
-    private JPanel pnlOCFormFechaFinDP;
+    private JPanel pnlOCFormFechaDesde;
+    private JPanel pnlOCFormFechaHasta;
+    private JPanel pnlOCFormFechaDesdeDP;
+    private JPanel pnlOCFormFechaHastaDP;
     private JTextField textFieldOCFormCUIT;
     private JPanel pnlOCFormCUIT;
     private JButton eliminarButton;
@@ -65,15 +66,18 @@ public class Documentos extends JFrame{
         this.setSize(pnlMain.getPreferredSize());
         this.setBackground(Color.WHITE);
 
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+
         this.textFieldOCFormCUIT.setEnabled(false);
         //endregion
 
         //region Factory Elements
         this.opFechaInicio = this.nuevoDatePicker();
-        this.appendDatePicker(this.pnlOCFormFechaInicioDP, opFechaInicio);
+        this.appendDatePicker(this.pnlOCFormFechaDesdeDP, opFechaInicio);
 
         this.opFechaFin = this.nuevoDatePicker();
-        this.appendDatePicker(this.pnlOCFormFechaFinDP, opFechaFin);
+        this.appendDatePicker(this.pnlOCFormFechaHastaDP, opFechaFin);
         //endregion
 
         //region Populate
@@ -84,6 +88,7 @@ public class Documentos extends JFrame{
         //region Register Actions
         this.closeModule();
         this.actionSelectedOCProveedor();
+        this.actionNuevaOrden();
         //endregion
     }
 
@@ -175,8 +180,36 @@ public class Documentos extends JFrame{
         });
     }
 
-    void actionFilterOCTAble(){
+    void actionFilterOC() {
 
+    }
+
+    void actionEliminarOC() {
+
+    }
+
+    void actionCancelarOC() {
+
+    }
+
+    void actionNuevaOrden() {
+        this.btnNuevaOrden.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+
+                    Formulario frmOrdenCompra = new Formulario();
+
+                } catch(Exception ex){
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
     }
 
     void actionSelectedOCProveedor(){
