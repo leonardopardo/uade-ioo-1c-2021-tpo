@@ -17,7 +17,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -340,7 +339,14 @@ public class Proveedores extends JFrame {
                     ProveedorDTO check = self.proveedorController.obtener(self.textFieldCuit.getText());
 
                     if (check != null) {
-                        self.proveedorController.actualizar(self.crearActualizarProveedor());
+                        String message = "Usted está a punto de editar el proveedor " + check.razonSocial + " ¿está seguro?";
+
+                        int confirmResult = JOptionPane.showConfirmDialog(pnlMain, message,
+                                "Actualizar proveedor", JOptionPane.YES_NO_OPTION
+                        );
+                        if (confirmResult == JOptionPane.YES_OPTION) {
+                            self.proveedorController.actualizar(self.crearActualizarProveedor());
+                        }
                     } else {
                         ProveedorDTO pDto = self.crearActualizarProveedor();
                         self.proveedorController.agregar(pDto);
