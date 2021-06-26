@@ -3,10 +3,13 @@ package controllers;
 import dto.CertificadoDTO;
 import dto.ProveedorDTO;
 import dto.ProveedorUIDTO;
+import modelos.CertificadoExcencion;
 import modelos.Proveedor;
 import modelos.enums.Rubro;
+import modelos.enums.TipoIVA;
 import servicios.ProveedoreService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +60,29 @@ public class ProveedorController {
             }
         }
         return null;
+    }
+
+    /**
+     * @param dto
+     * @tarea Dado un ProveedorDTO y un proveedor existente, se actualizan las propiedades del mismo.
+     */
+    public void actualizar(ProveedorDTO dto) {
+
+        try {
+            Proveedor nuevoProveedor = obtenerProveedor(dto.cuit);
+
+            nuevoProveedor.reemplazarRubros(dto.rubros);
+            nuevoProveedor.setCuit(dto.cuit);
+            nuevoProveedor.setEmail(dto.email);
+            nuevoProveedor.setTipoIVA(dto.tipoIVA);
+            nuevoProveedor.setNombreFantasia(dto.nombreFantasia);
+            nuevoProveedor.setIngresosBrutos(dto.ingresosBrutos);
+            nuevoProveedor.setLimiteCtaCte(dto.limiteCtaCte);
+            nuevoProveedor.setTelefono(dto.telefono);
+            nuevoProveedor.setRazonSocial(dto.razonSocial);
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
     /**
