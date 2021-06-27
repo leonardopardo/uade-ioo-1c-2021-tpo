@@ -6,7 +6,6 @@ import controllers.DocumentosController;
 import controllers.ProveedorController;
 import dto.OrdenCompraDTO;
 import dto.ProveedorDTO;
-import dto.ProveedorUIDTO;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -57,7 +56,7 @@ public class Documentos extends JFrame{
     private JDatePickerImpl opFechaInicio;
     private JDatePickerImpl opFechaFin;
 
-    public Documentos(String title) throws Exception{
+    public Documentos(String title){
 
         super(title);
 
@@ -112,7 +111,7 @@ public class Documentos extends JFrame{
     //region Populate
     void populateOCComboBoxProveedores(){
         try {
-            List<ProveedorUIDTO> proveedores = ProveedorController.getInstance().listar();
+            List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
 
             this.comboBoxOCProveedores.addItem("-- Seleccione --");
             proveedores.stream().forEach(x -> {
@@ -195,12 +194,15 @@ public class Documentos extends JFrame{
     }
 
     void actionNuevaOrden() {
+
+        Documentos self = this;
+
         this.btnNuevaOrden.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
 
-                    Formulario frmOrdenCompra = new Formulario();
+                    Formulario frmOrdenCompra = new Formulario(self);
 
                 } catch(Exception ex){
                     JOptionPane.showMessageDialog(

@@ -50,6 +50,7 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         Main self = new Main("Factura 2000");
     }
 
