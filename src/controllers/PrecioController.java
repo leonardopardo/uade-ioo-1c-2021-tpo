@@ -6,6 +6,8 @@ import dto.ProveedorCompulsaDTO;
 import modelos.Item;
 import modelos.Precio;
 import modelos.enums.Rubro;
+import servicios.ItemsService;
+import servicios.PrecioService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +15,24 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class PrecioController {
 
-    List<Precio> precios;
-    List<Item> items;
+    private List<Precio> precios;
+
+    private List<Item> items;
+
+    private ItemsService itemsService;
+
+    private PrecioService precioService;
+
     public static PrecioController instance;
+
+    private PrecioController() throws Exception{
+        this.precios = new ArrayList<>();
+        this.items = new ArrayList<>();
+        this.itemsService = new ItemsService();
+        this.precioService = new PrecioService();
+
+        this.items = this.itemsService.getAll();
+    }
 
     public static PrecioController getInstance() throws Exception {
         if (instance == null) {
@@ -85,6 +102,15 @@ public class PrecioController {
      * @return
      */
     public List<ItemDTO> listarItems() {
-        return new ArrayList<>();
+        try{
+            List<ItemDTO> items = new ArrayList<>();
+            this.items.forEach(item->{
+               items.add(item.toDTO());
+            });
+
+            return items;
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 }

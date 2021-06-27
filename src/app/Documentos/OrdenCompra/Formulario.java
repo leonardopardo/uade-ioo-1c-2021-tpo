@@ -1,14 +1,25 @@
 package app.Documentos.OrdenCompra;
 
+import controllers.PrecioController;
 import controllers.ProveedorController;
 import dto.DetalleDTO;
+import dto.ItemDTO;
 import dto.ProveedorDTO;
+import org.jdatepicker.impl.DateComponentFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class Formulario extends JDialog {
 
@@ -17,7 +28,6 @@ public class Formulario extends JDialog {
     private JComboBox comboBoxItem;
     private JPanel pnlItem;
     private JLabel lblItem;
-    private JComboBox comboBoxCantidad;
     private JButton btnGuardar;
     private JButton btnCancelar;
     private JComboBox comboBoxProveedor;
@@ -35,11 +45,33 @@ public class Formulario extends JDialog {
     private JPanel pnlFormDetalle;
     private JPanel pnlFormCabecera;
     private JPanel pnlActions;
+    private JSpinner spinnerCantidad;
     private List<DetalleDTO> detalle;
+    private JDatePickerImpl datePickerfecha;
 
     public Formulario(JFrame parent) {
         super(parent);
         this.detalle = new ArrayList<>();
+        this.textFieldCuit.setEnabled(false);
+
+        //region Factory
+        this.datePickerfecha = this.nuevoDatePicker();
+        this.appendDatePicker(this.pnlFechaDP, this.datePickerfecha);
+        //endregion
+
+        //region Default Values
+        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
+        this.datePickerfecha.getJFormattedTextField().setText(LocalDate.now().format(formatters).toString());
+        //endregion
+
+        //region Populate
+        this.populateComboBoxProveedores();
+        this.populateComboBoxItems();
+        //endregion
+
+        //region Actions
+        this.actionSelectedComboBoxProveedor();
+        //endregion
 
         //region Settings
         this.setContentPane(this.pnlMain);
@@ -52,44 +84,27 @@ public class Formulario extends JDialog {
         this.setVisible(true);
         this.setTableSchemma();
         //endregion
-
-        //region Populate
-        this.populateComboBoxProveedores();
-        //endregion
     }
 
-    void setTableSchemma(){
-        try{
-            String[] columns = new String[]{
-                "CÓDIGO",
-                "DESCRIPCIÓN",
-                "CANTIDAD",
-            };
+    //region Factory
+    JDatePickerImpl nuevoDatePicker(){
+        UtilDateModel model = new UtilDateModel();
+        JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
+        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
+        datePicker.setLayout(new GridLayout());
+        datePicker.setPreferredSize(new Dimension(100, 30));
+        datePicker.setMinimumSize(new Dimension(100, 30));
 
-            DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
-
-            this.detalle.forEach(d->{
-                Object[] o = {
-                    d.codItem,
-                    d.descripcion,
-                    d.cantItem
-                };
-
-                tblModel.addRow(o);
-            });
-
-            this.tblDetalle.setModel(tblModel);
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(
-                pnlMain,
-                ex.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE
-            );
-        }
+        return datePicker;
     }
 
+    void appendDatePicker(JPanel panel, JDatePickerImpl picker){
+        panel.setLayout(new GridLayout());
+        panel.add(picker);
+    }
+    //endregion
+
+    //region Populate
     void populateComboBoxProveedores(){
         try {
 
@@ -101,6 +116,22 @@ public class Formulario extends JDialog {
                 this.comboBoxProveedor.addItem(p.razonSocial);
             });
 
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    pnlMain,
+                    ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    void populateComboBoxItems(){
+        try {
+            List<ItemDTO> items = PrecioController.getInstance().listarItems();
+            items.forEach(item -> {
+                this.comboBoxItem.addItem(item.codigo);
+            });
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(
                     pnlMain,
@@ -123,7 +154,69 @@ public class Formulario extends JDialog {
             );
         }
     }
+    //endregion
 
+    //region Actions
+    void actionSelectedComboBoxProveedor(){
+        Formulario self = this;
+        this.comboBoxProveedor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String razonSocial = self.comboBoxProveedor.getSelectedItem().toString();
+
+                    ProveedorDTO proveedor = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
+
+                    if(proveedor == null)
+                        self.textFieldCuit.setText("");
+                    else
+                        self.textFieldCuit.setText(proveedor.cuit);
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+    //endregion
+
+    //region Settings
+    void setTableSchemma(){
+        try{
+            String[] columns = new String[]{
+                    "CÓDIGO",
+                    "DESCRIPCIÓN",
+                    "CANTIDAD",
+            };
+
+            DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
+
+            this.detalle.forEach(d->{
+                Object[] o = {
+                        d.codItem,
+                        d.descripcion,
+                        d.cantItem
+                };
+
+                tblModel.addRow(o);
+            });
+
+            this.tblDetalle.setModel(tblModel);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    pnlMain,
+                    ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
     void positionScreen(){
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(
@@ -131,4 +224,6 @@ public class Formulario extends JDialog {
                 dim.height/2-this.getSize().height/2
         );
     }
+    //endregion
+
 }
