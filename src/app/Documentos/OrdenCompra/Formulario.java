@@ -27,12 +27,11 @@ public class Formulario extends JDialog {
     private JTable tblDetalle;
     private JComboBox comboBoxItem;
     private JPanel pnlItem;
-    private JLabel lblItem;
+    private JLabel lblCodigoItem;
     private JButton btnGuardar;
     private JButton btnCancelar;
     private JComboBox comboBoxProveedor;
     private JButton btnAgregarDetalle;
-    private JTextField textFieldDescription;
     private JTextField textFieldCuit;
     private JLabel lblCantidad;
     private JLabel lblDescription;
@@ -46,6 +45,8 @@ public class Formulario extends JDialog {
     private JPanel pnlFormCabecera;
     private JPanel pnlActions;
     private JSpinner spinnerCantidad;
+    private JComboBox comboBoxItemTitulo;
+    private JTextField textFieldCodigoItem;
     private List<DetalleDTO> detalle;
     private JDatePickerImpl datePickerfecha;
 
@@ -66,11 +67,12 @@ public class Formulario extends JDialog {
 
         //region Populate
         this.populateComboBoxProveedores();
-        this.populateComboBoxItems();
+        this.populateComboBoxItemTitulo();
         //endregion
 
         //region Actions
         this.actionSelectedComboBoxProveedor();
+        this.actionSelectedComboBoxItem();
         //endregion
 
         //region Settings
@@ -126,12 +128,16 @@ public class Formulario extends JDialog {
         }
     }
 
-    void populateComboBoxItems(){
+    void populateComboBoxItemTitulo(){
         try {
             List<ItemDTO> items = PrecioController.getInstance().listarItems();
+
+            this.comboBoxItemTitulo.addItem("-- Seleccione --");
+
             items.forEach(item -> {
-                this.comboBoxItem.addItem(item.codigo);
+                this.comboBoxItemTitulo.addItem(item.titulo);
             });
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(
                     pnlMain,
@@ -173,6 +179,34 @@ public class Formulario extends JDialog {
                         self.textFieldCuit.setText(proveedor.cuit);
 
                 } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionSelectedComboBoxItem(){
+        Formulario self = this;
+        this.comboBoxItemTitulo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+
+                    String selectItemCod = self.comboBoxItemTitulo.getSelectedItem().toString();
+
+                    ItemDTO item = PrecioController.getInstance().obtenerItemPorTitulo(selectItemCod);
+
+                    if(item != null)
+                        self.textFieldCodigoItem.setText(item.codigo);
+                    else
+                        self.textFieldCodigoItem.setText("");
+
+                } catch(Exception ex){
                     JOptionPane.showMessageDialog(
                             pnlMain,
                             ex.getMessage(),

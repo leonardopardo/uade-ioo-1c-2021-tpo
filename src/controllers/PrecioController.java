@@ -113,4 +113,36 @@ public class PrecioController {
             throw ex;
         }
     }
+
+    public ItemDTO obtenerItemPorCodigo(String itemCodigo){
+        try {
+
+            ItemDTO item = null;
+
+            for (Item i: this.items) {
+                if(i.getCodigo().equals(itemCodigo))
+                    item = i.toDTO();
+            }
+
+            return item;
+
+        } catch (Exception ex){
+            throw ex;
+        }
+    }
+
+    public ItemDTO obtenerItemPorTitulo(String itemTitulo){
+        try {
+            ItemDTO item = null;
+
+            for (Item i: this.items) {
+                if(i.getTitulo().equals(itemTitulo))
+                    item = i.toDTO();
+            }
+
+            return item;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
 }
