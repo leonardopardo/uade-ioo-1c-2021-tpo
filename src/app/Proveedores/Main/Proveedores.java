@@ -4,7 +4,6 @@ import app.Main.Main;
 import controllers.ProveedorController;
 import dto.CertificadoDTO;
 import dto.ProveedorDTO;
-import dto.ProveedorUIDTO;
 import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
 import modelos.enums.TipoRetencion;
@@ -194,7 +193,7 @@ public class Proveedores extends JFrame {
 
     void populateTableProveedores() {
         try {
-            List<ProveedorUIDTO> proveedores = ProveedorController.getInstance().listar();
+            List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
 
             String[] columns = new String[]{
                     "Razon Social".toUpperCase(),
@@ -227,7 +226,7 @@ public class Proveedores extends JFrame {
 
     void populateTableProveedoresCert() {
         try {
-            List<ProveedorUIDTO> proveedores = ProveedorController.getInstance().listar();
+            List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
 
             proveedores.stream().forEach(x -> {
                 this.comboBoxCertProveedor.addItem(x.razonSocial);

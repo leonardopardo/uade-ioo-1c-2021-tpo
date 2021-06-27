@@ -2,7 +2,6 @@ package controllers;
 
 import dto.CertificadoDTO;
 import dto.ProveedorDTO;
-import dto.ProveedorUIDTO;
 import modelos.CertificadoExcencion;
 import modelos.Proveedor;
 import modelos.enums.Rubro;
@@ -103,12 +102,12 @@ public class ProveedorController {
      * @return ArrayList<ProveedorDTO>
      * @tarea Lista todos los proveedores del dominio como objetos DTO.
      */
-    public List<ProveedorUIDTO> listar() {
+    public List<ProveedorDTO> listar() {
 
-        List<ProveedorUIDTO> lista = new ArrayList<>();
+        List<ProveedorDTO> lista = new ArrayList<>();
 
         for (Proveedor p : this.proveedores) {
-            ProveedorUIDTO x = new ProveedorUIDTO();
+            ProveedorDTO x = new ProveedorDTO();
             x.razonSocial = p.getRazonSocial();
             x.cuit = p.getCuit();
 

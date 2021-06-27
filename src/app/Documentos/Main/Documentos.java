@@ -6,7 +6,6 @@ import controllers.DocumentosController;
 import controllers.ProveedorController;
 import dto.OrdenCompraDTO;
 import dto.ProveedorDTO;
-import dto.ProveedorUIDTO;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -112,7 +111,7 @@ public class Documentos extends JFrame{
     //region Populate
     void populateOCComboBoxProveedores(){
         try {
-            List<ProveedorUIDTO> proveedores = ProveedorController.getInstance().listar();
+            List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
 
             this.comboBoxOCProveedores.addItem("-- Seleccione --");
             proveedores.stream().forEach(x -> {

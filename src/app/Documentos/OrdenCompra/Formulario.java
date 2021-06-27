@@ -1,11 +1,16 @@
 package app.Documentos.OrdenCompra;
 
 import controllers.DocumentosController;
+import controllers.ProveedorController;
+import dto.DetalleDTO;
 import dto.OrdenCompraDTO;
+import dto.ProductoDTO;
+import dto.ProveedorDTO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Formulario extends JDialog {
@@ -33,8 +38,12 @@ public class Formulario extends JDialog {
     private JPanel pnlFormDetalle;
     private JPanel pnlFormCabecera;
     private JPanel pnlActions;
+    private List<DetalleDTO> detalle;
 
     public Formulario() {
+        this.detalle = new ArrayList<>();
+        this.setTableSchemma();
+        //region Settings
         this.setContentPane(this.pnlMain);
         this.setResizable(false);
         this.setModal(true);
@@ -43,26 +52,17 @@ public class Formulario extends JDialog {
         this.pack();
         this.positionScreen();
         this.setVisible(true);
-
-        this.setTableSchemma();
+        //endregion
     }
 
     public Formulario(Integer id){
         // code here for update ...
     }
 
-    void setTableSchemma(){
-        try{
+    void populateComboBoxProveedores(){
+        try {
 
-            String[] columns = new String[]{
-                "CÓDIGO",
-                "DESCRIPCIÓN",
-                "CANTIDAD",
-            };
-
-            DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
-
-            this.tblDetalle.setModel(tblModel);
+            List<ProveedorDTO> controller = ProveedorController.getInstance().listar();
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(
@@ -74,9 +74,41 @@ public class Formulario extends JDialog {
         }
     }
 
+    void setTableSchemma(){
+        try{
+            String[] columns = new String[]{
+                "CÓDIGO",
+                "DESCRIPCIÓN",
+                "CANTIDAD",
+            };
+
+            DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
+
+            this.detalle.forEach(d->{
+                Object[] o = {
+                    d.codItem,
+                    d.descripcion,
+                    d.cantItem
+                };
+
+                tblModel.addRow(o);
+            });
+
+            this.tblDetalle.setModel(tblModel);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                pnlMain,
+                ex.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
     void populateTablaDetalle(){
         try {
-            //  populate table
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(
                     pnlMain,
