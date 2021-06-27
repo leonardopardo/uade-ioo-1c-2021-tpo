@@ -32,7 +32,6 @@ public class Documentos extends JFrame{
     private JPanel pnlFactura;
     private JTable tableOrdenesCompra;
     private JButton btnNuevaOrden;
-    private JButton btnCancelar;
     private JComboBox comboBoxOCProveedores;
     private JButton btnFiltrarOC;
     private JPanel pnlOCform;
@@ -47,28 +46,31 @@ public class Documentos extends JFrame{
     private JTextField textFieldOCFormCUIT;
     private JPanel pnlOCFormCUIT;
     private JButton eliminarButton;
-
+    private JButton limpiarFiltroButton;
+    private JComboBox comboBox1;
+    private JTextField textField1;
+    private JTable table1;
+    private JButton guardarButton;
+    private JButton eliminarButton1;
+    private JButton filtrarButton;
+    private JButton limpiarFiltroButton1;
     private JDatePickerImpl opFechaInicio;
     private JDatePickerImpl opFechaFin;
 
-    public static void main(String[] args) throws Exception {
-        Documentos self = new Documentos("Factura 2000");
-    }
-
     public Documentos(String title) throws Exception{
+
         super(title);
 
         //region Settings
-        this.setResizable(false);
         this.setContentPane(this.pnlMain);
+        this.setSize(pnlMain.getPreferredSize());
+        this.setResizable(false);
+        this.positionScreen();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
-        this.setSize(pnlMain.getPreferredSize());
-        this.setBackground(Color.WHITE);
+        //endregion
 
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-
+        //region Default Values
         this.textFieldOCFormCUIT.setEnabled(false);
         //endregion
 
@@ -242,6 +244,16 @@ public class Documentos extends JFrame{
                 }
             }
         });
+    }
+    //endregion
+
+    //region Load
+    void positionScreen(){
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(
+                dim.width/2-this.getSize().width/2,
+                dim.height/2-this.getSize().height/2
+        );
     }
     //endregion
 }
