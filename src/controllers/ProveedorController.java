@@ -5,19 +5,15 @@ import dto.ProveedorDTO;
 import modelos.CertificadoExcencion;
 import modelos.Proveedor;
 import modelos.enums.Rubro;
-import modelos.enums.TipoIVA;
 import servicios.ProveedoreService;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProveedorController {
 
     private List<Proveedor> proveedores;
-
     private static ProveedorController instance;
-
     private ProveedoreService service;
 
     private ProveedorController() throws Exception {
@@ -112,7 +108,6 @@ public class ProveedorController {
             ProveedorDTO x = new ProveedorDTO();
             x.razonSocial = p.getRazonSocial();
             x.cuit = p.getCuit();
-
             lista.add(x);
         }
 
