@@ -157,8 +157,8 @@ public class Proveedores extends JFrame {
 
 
     //region Populate Methods
-    void populateInputs(String selectedRow) {
-        ProveedorDTO proveedor = this.proveedorController.obtener(selectedRow);
+    void populateInputs(String selectedRow) throws Exception {
+        ProveedorDTO proveedor = ProveedorController.getInstance().obtener(selectedRow);
         this.textFieldRazonSocial.setText(proveedor.razonSocial);
         this.textFieldNombreFantasia.setText(proveedor.nombreFantasia);
         this.textFieldCuit.setText(proveedor.cuit);
@@ -257,7 +257,11 @@ public class Proveedores extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 JTable target = (JTable) e.getSource();
-                populateInputs(tableProveedores.getValueAt(target.getSelectedRow(), 1).toString());
+                try {
+                    populateInputs(tableProveedores.getValueAt(target.getSelectedRow(), 1).toString());
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         });
     }
@@ -312,7 +316,8 @@ public class Proveedores extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ProveedorDTO check = self.proveedorController.obtener(self.textFieldCuit.getText());
+                    ProveedorController pController = ProveedorController.getInstance();
+                    ProveedorDTO check = pController.obtener(self.textFieldCuit.getText());
 
                     if (check != null) {
                         String message = "Usted está a punto de editar el proveedor " + check.razonSocial + " ¿está seguro?";
@@ -321,17 +326,17 @@ public class Proveedores extends JFrame {
                                 "Actualizar proveedor", JOptionPane.YES_NO_OPTION
                         );
                         if (confirmResult == JOptionPane.YES_OPTION) {
-                            self.proveedorController.actualizar(self.crearActualizarProveedor());
+                            pController.actualizar(self.crearActualizarProveedor());
                         }
                     } else {
                         ProveedorDTO pDto = self.crearActualizarProveedor();
-                        self.proveedorController.agregar(pDto);
+                        pController.agregar(pDto);
                     }
                     self.populateTableProveedores();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
-                            ex.getMessage(),
+                            ex.getStackTrace(),
                             "Error",
                             JOptionPane.ERROR_MESSAGE
                     );
@@ -384,6 +389,7 @@ public class Proveedores extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    ProveedorController pController = ProveedorController.getInstance();
                     String razonSocial = self.textFieldRazonSocial.getText();
                     String cuit = self.textFieldCuit.getText();
 
@@ -391,7 +397,7 @@ public class Proveedores extends JFrame {
                             "Eliminar proveedor", JOptionPane.YES_NO_OPTION
                     );
                     if (confirmResult == JOptionPane.YES_OPTION) {
-                        self.proveedorController.eliminar(cuit);
+                        pController.eliminar(cuit);
                         self.populateTableProveedores();
                     }
 
