@@ -91,7 +91,9 @@ public class Proveedores extends JFrame {
     private ProveedorController proveedorController;
     //endregion
     private JDatePickerImpl inicioAct;
-    private ArrayList<Rubro> rubros;
+    private JDatePickerImpl certifInicio;
+    private JDatePickerImpl certifFin;
+    private List<Rubro> rubros;
     protected static final String PROVEEDOR_EXISTENTE_EXCEPTION = "El proveedor que intenta agregar ya existe.";
 
     public Proveedores(String title) throws Exception {
@@ -118,8 +120,8 @@ public class Proveedores extends JFrame {
         this.actionGuardarCertificado();
         this.actionCancelarCertificado();
         this.actionEliminarCertificado();
-        this.actionSelectedProveedor();
-        this.selectedRow();
+        this.actionSelectedCertificadoProveedor();
+        this.actionSelectedRowProveedores();
         //endregion
 
         //region Populate Elements
@@ -132,7 +134,13 @@ public class Proveedores extends JFrame {
 
         //region Load Elements
         this.inicioAct = this.nuevoDatePicker();
+        this.certifInicio = this.nuevoDatePicker();
+        this.certifFin = this.nuevoDatePicker();
         this.pnlDatePicker.setLayout(new GridLayout());
+        this.pnlCertFechaInicio.setLayout(new GridLayout());
+        this.pnlCertFechaFin.setLayout(new GridLayout());
+        this.pnlCertFechaInicio.add(this.certifInicio);
+        this.pnlCertFechaFin.add(this.certifFin);
         this.pnlDatePicker.add(this.inicioAct);
 
         this.loadTableCert();
@@ -151,28 +159,18 @@ public class Proveedores extends JFrame {
 
     //region Populate Methods
     void populateInputs(String selectedRow) {
-        ProveedorDTO p = this.proveedorController.obtener(selectedRow);
-        this.textFieldRazonSocial.setText(p.razonSocial);
-        this.textFieldNombreFantasia.setText(p.nombreFantasia);
-        this.textFieldCuit.setText(p.cuit);
-        this.textFieldIibb.setText(p.ingresosBrutos);
-        this.textFieldEmail.setText(p.email);
-        this.textFieldTelefono.setText(p.telefono);
-        this.textFieldCtaCte.setText(Double.toString(p.limiteCtaCte));
-        this.comboBoxTipoIVA.setSelectedItem(p.tipoIVA);
-        this.inicioAct.getJFormattedTextField().setText(p.inicioActividad.toString());
-        this.populateListRubros((ArrayList) p.rubros);
-    }
-
-    void selectedRow() {
-        this.tableProveedores.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                JTable target = (JTable) e.getSource();
-                populateInputs(tableProveedores.getValueAt(target.getSelectedRow(), 1).toString());
-            }
-        });
+        ProveedorDTO proveedor = this.proveedorController.obtener(selectedRow);
+        this.textFieldRazonSocial.setText(proveedor.razonSocial);
+        this.textFieldNombreFantasia.setText(proveedor.nombreFantasia);
+        this.textFieldCuit.setText(proveedor.cuit);
+        this.textFieldIibb.setText(proveedor.ingresosBrutos);
+        this.textFieldEmail.setText(proveedor.email);
+        this.textFieldTelefono.setText(proveedor.telefono);
+        this.textFieldCtaCte.setText(Double.toString(proveedor.limiteCtaCte));
+        this.comboBoxTipoIVA.setSelectedItem(proveedor.tipoIVA);
+        this.inicioAct.getJFormattedTextField().setText(proveedor.inicioActividad.toString());
+        this.rubros = proveedor.rubros;
+        this.populateListRubros((ArrayList) rubros);
     }
 
 
@@ -182,13 +180,11 @@ public class Proveedores extends JFrame {
         }
     }
 
-
     void populateTipoIVA() {
         for (TipoIVA t : TipoIVA.values()) {
             this.comboBoxTipoIVA.addItem(t);
         }
     }
-
 
     void populateTableProveedores() {
         try {
@@ -222,32 +218,11 @@ public class Proveedores extends JFrame {
         }
     }
 
-
-    void populateTableProveedoresCert() {
-        try {
-            List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
-
-            proveedores.stream().forEach(x -> {
-                this.comboBoxCertProveedor.addItem(x.razonSocial);
-            });
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(
-                    pnlMain,
-                    ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }
-    }
-
-
     void populateTipoRetencion() {
         for (TipoRetencion t : TipoRetencion.values()) {
             this.comboBoxCertTipoRetencion.addItem(t);
         }
     }
-
 
     void populateListRubros(ArrayList r) {
         DefaultListModel model = new DefaultListModel();
@@ -256,11 +231,9 @@ public class Proveedores extends JFrame {
     }
     //end populate region
 
-
     //region Action Methods
     void closeModule() {
         Proveedores self = this;
-
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -280,10 +253,19 @@ public class Proveedores extends JFrame {
         });
     }
 
+    void actionSelectedRowProveedores() {
+        this.tableProveedores.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JTable target = (JTable) e.getSource();
+                populateInputs(tableProveedores.getValueAt(target.getSelectedRow(), 1).toString());
+            }
+        });
+    }
 
     void actionAgregarRubro() {
         Proveedores self = this;
-
         this.btnAgregarRubro.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -298,10 +280,8 @@ public class Proveedores extends JFrame {
         });
     }
 
-
     void actionElimarRubro() {
         Proveedores self = this;
-
         this.btnElimnarRubro.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -328,7 +308,6 @@ public class Proveedores extends JFrame {
         });
     }
 
-
     void actionGuardarProveedor() {
         Proveedores self = this;
         this.guardarButton.addActionListener(new ActionListener() {
@@ -338,7 +317,14 @@ public class Proveedores extends JFrame {
                     ProveedorDTO check = self.proveedorController.obtener(self.textFieldCuit.getText());
 
                     if (check != null) {
-                        self.proveedorController.actualizar(self.crearActualizarProveedor());
+                        String message = "Usted está a punto de editar el proveedor " + check.razonSocial + " ¿está seguro?";
+
+                        int confirmResult = JOptionPane.showConfirmDialog(pnlMain, message,
+                                "Actualizar proveedor", JOptionPane.YES_NO_OPTION
+                        );
+                        if (confirmResult == JOptionPane.YES_OPTION) {
+                            self.proveedorController.actualizar(self.crearActualizarProveedor());
+                        }
                     } else {
                         ProveedorDTO pDto = self.crearActualizarProveedor();
                         self.proveedorController.agregar(pDto);
@@ -394,7 +380,6 @@ public class Proveedores extends JFrame {
         });
     }
 
-
     void actionEliminarProveedor() {
         Proveedores self = this;
         this.eliminarButton.addActionListener(new ActionListener() {
@@ -424,94 +409,6 @@ public class Proveedores extends JFrame {
         });
     }
 
-
-    void actionGuardarCertificado() {
-        this.guardarCertButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    JOptionPane.showMessageDialog(
-                            pnlMain,
-                            "Click en Guardar Certificado",
-                            "",
-                            JOptionPane.INFORMATION_MESSAGE
-                    );
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(
-                            pnlMain,
-                            ex.getMessage(),
-                            "",
-                            JOptionPane.ERROR_MESSAGE
-                    );
-                }
-            }
-        });
-    }
-
-
-    void actionCancelarCertificado() {
-        this.cancelarCertButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    JOptionPane.showMessageDialog(
-                            pnlMain,
-                            "Click en Cancelar Certificado",
-                            "",
-                            JOptionPane.INFORMATION_MESSAGE
-                    );
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(
-                            pnlMain,
-                            ex.getMessage(),
-                            "",
-                            JOptionPane.ERROR_MESSAGE
-                    );
-                }
-            }
-        });
-    }
-
-
-    void actionEliminarCertificado() {
-        this.eliminarCertButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    JOptionPane.showMessageDialog(
-                            pnlMain,
-                            "Click en Eliminar Certificado",
-                            "",
-                            JOptionPane.INFORMATION_MESSAGE
-                    );
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(
-                            pnlMain,
-                            ex.getMessage(),
-                            "",
-                            JOptionPane.ERROR_MESSAGE
-                    );
-                }
-            }
-        });
-    }
-
-
-    void actionSelectedProveedor() {
-        Proveedores self = this;
-        this.comboBoxCertProveedor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String razonSocial = self.comboBoxCertProveedor.getSelectedItem().toString();
-                    ProveedorDTO dto = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
-                    self.textFieldCertCuit.setText(dto.cuit);
-                } catch (Exception ex) {
-
-                }
-            }
-        });
-    }
     //end action region
 
     //region Load Methods
@@ -566,6 +463,116 @@ public class Proveedores extends JFrame {
         DefaultListModel listRubrosModel = (DefaultListModel) this.listRubros.getModel();
         listRubrosModel.removeAllElements();
     }
+    //endregion proveedores
 
-    //endregion
+    //region certificados
+    void populateComboBoxProveedoresCert() {
+        for (ProveedorDTO prov : this.proveedorController.listar()
+        ) {
+            this.comboBoxCertProveedor.addItem(prov.razonSocial);
+        }
+    }
+
+    void actionGuardarCertificado() {
+        this.guardarCertButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Click en Guardar Certificado",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionCancelarCertificado() {
+        this.cancelarCertButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Click en Cancelar Certificado",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionEliminarCertificado() {
+        this.eliminarCertButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Click en Eliminar Certificado",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionSelectedCertificadoProveedor() {
+        Proveedores self = this;
+        this.comboBoxCertProveedor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String razonSocial = self.comboBoxCertProveedor.getSelectedItem().toString();
+                    ProveedorDTO dto = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
+                    self.textFieldCertCuit.setText(dto.cuit);
+                } catch (Exception ex) {
+
+                }
+            }
+        });
+    }
+
+    void populateTableProveedoresCert() {
+        try {
+            List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
+
+            proveedores.stream().forEach(x -> {
+                this.comboBoxCertProveedor.addItem(x.razonSocial);
+            });
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    pnlMain,
+                    ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
 }
