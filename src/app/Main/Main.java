@@ -39,7 +39,6 @@ public class Main extends JFrame {
         //endregion
 
         //region Register Modules
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         this.showUsuariosModule();
         this.showProveedoresModule();
         this.showDocumentosModule();
@@ -51,6 +50,7 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         Main self = new Main("Factura 2000");
     }
 
