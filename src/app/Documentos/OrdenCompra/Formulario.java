@@ -1,10 +1,7 @@
 package app.Documentos.OrdenCompra;
 
-import controllers.DocumentosController;
 import controllers.ProveedorController;
 import dto.DetalleDTO;
-import dto.OrdenCompraDTO;
-import dto.ProductoDTO;
 import dto.ProveedorDTO;
 
 import javax.swing.*;
@@ -20,7 +17,7 @@ public class Formulario extends JDialog {
     private JComboBox comboBoxItem;
     private JPanel pnlItem;
     private JLabel lblItem;
-    private JComboBox comboBox1;
+    private JComboBox comboBoxCantidad;
     private JButton btnGuardar;
     private JButton btnCancelar;
     private JComboBox comboBoxProveedor;
@@ -40,9 +37,10 @@ public class Formulario extends JDialog {
     private JPanel pnlActions;
     private List<DetalleDTO> detalle;
 
-    public Formulario() {
+    public Formulario(JFrame parent) {
+        super(parent);
         this.detalle = new ArrayList<>();
-        this.setTableSchemma();
+
         //region Settings
         this.setContentPane(this.pnlMain);
         this.setResizable(false);
@@ -52,26 +50,12 @@ public class Formulario extends JDialog {
         this.pack();
         this.positionScreen();
         this.setVisible(true);
+        this.setTableSchemma();
         //endregion
-    }
 
-    public Formulario(Integer id){
-        // code here for update ...
-    }
-
-    void populateComboBoxProveedores(){
-        try {
-
-            List<ProveedorDTO> controller = ProveedorController.getInstance().listar();
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(
-                    pnlMain,
-                    ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }
+        //region Populate
+        this.populateComboBoxProveedores();
+        //endregion
     }
 
     void setTableSchemma(){
@@ -102,6 +86,27 @@ public class Formulario extends JDialog {
                 ex.getMessage(),
                 "Error",
                 JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    void populateComboBoxProveedores(){
+        try {
+
+            List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
+
+            this.comboBoxProveedor.addItem("-- Seleccione --");
+
+            proveedores.forEach(p -> {
+                this.comboBoxProveedor.addItem(p.razonSocial);
+            });
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    pnlMain,
+                    ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
             );
         }
     }

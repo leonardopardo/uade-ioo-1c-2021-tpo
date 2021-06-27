@@ -15,7 +15,9 @@ import java.util.List;
 public class ProveedorController {
 
     private List<Proveedor> proveedores;
+
     private static ProveedorController instance;
+
     private ProveedoreService service;
 
     private ProveedorController() throws Exception {

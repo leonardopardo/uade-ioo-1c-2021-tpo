@@ -39,6 +39,7 @@ public class Main extends JFrame {
         //endregion
 
         //region Register Modules
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         this.showUsuariosModule();
         this.showProveedoresModule();
         this.showDocumentosModule();
