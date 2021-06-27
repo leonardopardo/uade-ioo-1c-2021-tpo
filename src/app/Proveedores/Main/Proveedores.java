@@ -129,7 +129,7 @@ public class Proveedores extends JFrame {
         this.populateTipoIVA();
         this.populateTableProveedores();
         this.populateTipoRetencion();
-        //this.populateComboBoxProveedoresCert();
+        this.populateComboBoxProveedoresCert();
         //endregion
 
         //region Load Elements
@@ -152,7 +152,6 @@ public class Proveedores extends JFrame {
         //region Initialize Properties
         this.rubros = new ArrayList<>();
         this.textFieldCertCuit.setEnabled(false);
-        this.proveedorController = ProveedorController.getInstance();
         //endregion
     }
 
@@ -172,7 +171,6 @@ public class Proveedores extends JFrame {
         this.rubros = proveedor.rubros;
         this.populateListRubros((ArrayList) rubros);
     }
-
 
     void populateRubros() {
         for (Rubro r : Rubro.values()) {
@@ -466,8 +464,8 @@ public class Proveedores extends JFrame {
     //endregion proveedores
 
     //region certificados
-    void populateComboBoxProveedoresCert() {
-        for (ProveedorDTO prov : this.proveedorController.listar()
+    void populateComboBoxProveedoresCert() throws Exception {
+        for (ProveedorDTO prov : ProveedorController.getInstance().listar()
         ) {
             this.comboBoxCertProveedor.addItem(prov.razonSocial);
         }
