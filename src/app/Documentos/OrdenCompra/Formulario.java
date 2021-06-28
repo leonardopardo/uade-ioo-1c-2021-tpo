@@ -4,6 +4,7 @@ import controllers.PrecioController;
 import controllers.ProveedorController;
 import dto.DetalleDTO;
 import dto.ItemDTO;
+import dto.OrdenCompraDTO;
 import dto.ProveedorDTO;
 import modelos.enums.Unidad;
 import org.jdatepicker.impl.DateComponentFormatter;
@@ -16,6 +17,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -78,6 +81,8 @@ public class Formulario extends JDialog {
         this.actionSelectedComboBoxItem();
         this.actionAgregarDetalle();
         this.actionEliminarDetalle();
+        this.actionGuardarOrden();
+        this.actionClose();
         //endregion
 
         //region Settings
@@ -168,6 +173,27 @@ public class Formulario extends JDialog {
     //endregion
 
     //region Actions
+    void actionClose(){
+        Formulario self = this;
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                int confirmResult = JOptionPane.showConfirmDialog(
+                        pnlMain,
+                        "Al cerrar esta ventana sin guardar se perderan los cambios realizados. ¿Desea continuar?",
+                        "Cerrar",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (confirmResult == JOptionPane.YES_OPTION)
+                    self.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                else
+                    self.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+            }
+        });
+    }
+
     void actionSelectedComboBoxProveedor() {
         Formulario self = this;
         this.comboBoxProveedor.addActionListener(new ActionListener() {
@@ -298,6 +324,37 @@ public class Formulario extends JDialog {
                             self.setTableSchemma();
                         }
                     }
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionGuardarOrden(){
+        Formulario self = this;
+        this.btnGuardar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String proveedorCuit = self.textFieldCuit.getText();
+
+                    LocalDate date = (LocalDate) self.datePickerfecha.getJFormattedTextField().getValue();
+
+                    if(proveedorCuit.equals(""))
+                        throw new Exception("Debe seleccionar un proveedor.");
+
+                    if(date.isBefore(LocalDate.now()))
+                        throw new Exception("La fecha no puede ser anterior al día de hoy.");
+
+                    if(self.detalle.size() == 0)
+                        throw new Exception("La orden de compra debe tener al menos un detalle.");
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
