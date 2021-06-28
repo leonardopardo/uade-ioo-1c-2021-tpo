@@ -73,6 +73,10 @@ public class Proveedor {
         this.limiteCtaCte = limiteCtaCte;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public void setCertificados(List<CertificadoExcencion> certificados) {
         this.certificados = certificados;
     }
@@ -85,24 +89,20 @@ public class Proveedor {
         return this.razonSocial;
     }
 
-    public Double getBalance() {
-        return this.balance;
+    public Integer getId() {
+        return this.id;
     }
 
-    public ProveedorCompulsaDTO toCompulsaDTO() {
-        return new ProveedorCompulsaDTO();
+    public Double getBalance() {
+        return this.balance;
     }
 
     public void agregarRubro(Rubro r) {
         this.rubros.add(r);
     }
 
-    public Integer getId() {
-        return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void agregarCertificicado(CertificadoExcencion nuevoCertif) {
+        this.certificados.add(nuevoCertif);
     }
 
     public List<CertificadoDTO> getCertificados() {
@@ -133,6 +133,10 @@ public class Proveedor {
         dto.inicioActividad = this.inicioActividad;
 
         return dto;
+    }
+
+    public ProveedorCompulsaDTO toCompulsaDTO() {
+        return new ProveedorCompulsaDTO();
     }
 
     public void reemplazarRubros(List nuevoRubros) {
