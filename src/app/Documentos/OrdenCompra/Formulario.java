@@ -73,6 +73,7 @@ public class Formulario extends JDialog {
         //region Actions
         this.actionSelectedComboBoxProveedor();
         this.actionSelectedComboBoxItem();
+        this.actionAgregarDetalle();
         //endregion
 
         //region Settings
@@ -89,7 +90,7 @@ public class Formulario extends JDialog {
     }
 
     //region Factory
-    JDatePickerImpl nuevoDatePicker(){
+    JDatePickerImpl nuevoDatePicker() {
         UtilDateModel model = new UtilDateModel();
         JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
         JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
@@ -100,14 +101,14 @@ public class Formulario extends JDialog {
         return datePicker;
     }
 
-    void appendDatePicker(JPanel panel, JDatePickerImpl picker){
+    void appendDatePicker(JPanel panel, JDatePickerImpl picker) {
         panel.setLayout(new GridLayout());
         panel.add(picker);
     }
     //endregion
 
     //region Populate
-    void populateComboBoxProveedores(){
+    void populateComboBoxProveedores() {
         try {
 
             List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
@@ -128,7 +129,7 @@ public class Formulario extends JDialog {
         }
     }
 
-    void populateComboBoxItemTitulo(){
+    void populateComboBoxItemTitulo() {
         try {
             List<ItemDTO> items = PrecioController.getInstance().listarItems();
 
@@ -148,7 +149,7 @@ public class Formulario extends JDialog {
         }
     }
 
-    void populateTablaDetalle(){
+    void populateTablaDetalle() {
         try {
 
         } catch (Exception ex) {
@@ -163,7 +164,7 @@ public class Formulario extends JDialog {
     //endregion
 
     //region Actions
-    void actionSelectedComboBoxProveedor(){
+    void actionSelectedComboBoxProveedor() {
         Formulario self = this;
         this.comboBoxProveedor.addActionListener(new ActionListener() {
             @Override
@@ -173,7 +174,7 @@ public class Formulario extends JDialog {
 
                     ProveedorDTO proveedor = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
 
-                    if(proveedor == null)
+                    if (proveedor == null)
                         self.textFieldCuit.setText("");
                     else
                         self.textFieldCuit.setText(proveedor.cuit);
@@ -190,7 +191,7 @@ public class Formulario extends JDialog {
         });
     }
 
-    void actionSelectedComboBoxItem(){
+    void actionSelectedComboBoxItem() {
         Formulario self = this;
         this.comboBoxItemTitulo.addActionListener(new ActionListener() {
             @Override
@@ -201,12 +202,54 @@ public class Formulario extends JDialog {
 
                     ItemDTO item = PrecioController.getInstance().obtenerItemPorTitulo(selectItemCod);
 
-                    if(item != null)
+                    if (item != null)
                         self.textFieldCodigoItem.setText(item.codigo);
                     else
                         self.textFieldCodigoItem.setText("");
 
-                } catch(Exception ex){
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionAgregarDetalle() {
+        Formulario self = this;
+        this.btnAgregarDetalle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+
+                    String itemCodigo = self.textFieldCodigoItem.getText();
+
+                    ItemDTO item = PrecioController.getInstance().obtenerItemPorCodigo(itemCodigo);
+
+                    Double cantidad = Double.parseDouble(self.spinnerCantidad.getValue().toString());
+
+                    Integer element = itemAgregado(itemCodigo);
+
+                    if (element >= 0) {
+                        DetalleDTO d = self.detalle.get(element);
+                        d.cantItem = cantidad;
+                        self.detalle.set(element, d);
+                    } else {
+                        DetalleDTO d = new DetalleDTO();
+                        d.codItem = itemCodigo;
+                        d.cantItem = cantidad;
+                        d.descripcion = item.titulo;
+
+                        self.detalle.add(d);
+                    }
+
+                    self.setTableSchemma();
+
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
                             ex.getMessage(),
@@ -220,8 +263,8 @@ public class Formulario extends JDialog {
     //endregion
 
     //region Settings
-    void setTableSchemma(){
-        try{
+    void setTableSchemma() {
+        try {
             String[] columns = new String[]{
                     "CÓDIGO",
                     "DESCRIPCIÓN",
@@ -230,7 +273,7 @@ public class Formulario extends JDialog {
 
             DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
 
-            this.detalle.forEach(d->{
+            this.detalle.forEach(d -> {
                 Object[] o = {
                         d.codItem,
                         d.descripcion,
@@ -251,12 +294,23 @@ public class Formulario extends JDialog {
             );
         }
     }
-    void positionScreen(){
+
+    void positionScreen() {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(
-                dim.width/2-this.getSize().width/2,
-                dim.height/2-this.getSize().height/2
+                dim.width / 2 - this.getSize().width / 2,
+                dim.height / 2 - this.getSize().height / 2
         );
+    }
+    //endregion
+
+    //region Helpers
+    Integer itemAgregado(String itemCodigo) {
+        for (DetalleDTO d : this.detalle) {
+            if (d.codItem.equals(itemCodigo))
+                return this.detalle.indexOf(d);
+        }
+        return -1;
     }
     //endregion
 
