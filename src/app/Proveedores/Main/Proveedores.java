@@ -121,6 +121,7 @@ public class Proveedores extends JFrame {
         this.actionEliminarCertificado();
         this.actionSelectedCertificadoProveedor();
         this.actionSelectedRowProveedores();
+        this.actionShowCertificados();
         //endregion
 
         //region Populate Elements
@@ -149,7 +150,6 @@ public class Proveedores extends JFrame {
         this.textFieldCertCuit.setEnabled(false);
         //endregion
     }
-
 
     //region Populate Methods
     void populateInputs(String selectedRow) throws Exception {
@@ -350,7 +350,7 @@ public class Proveedores extends JFrame {
         pDto.ingresosBrutos = this.textFieldIibb.getText();
         pDto.tipoIVA = TipoIVA.valueOf(this.comboBoxTipoIVA.getSelectedItem().toString());
         pDto.limiteCtaCte = Double.parseDouble(this.textFieldCtaCte.getText());
-        pDto.inicioActividad = LocalDate.of(this.inicioAct.getModel().getYear(), this.inicioAct.getModel().getMonth(), this.inicioAct.getModel().getDay());
+        pDto.inicioActividad = datePickerFormatter(this.inicioAct);
 
         for (int i = 0; i < this.listRubros.getModel().getSize(); i++) {
             Rubro r = Rubro.valueOf(this.listRubros.getModel().getElementAt(i).toString());
@@ -464,7 +464,7 @@ public class Proveedores extends JFrame {
     }
     //endregion proveedores
 
-    //region certificados
+    //region populate certificados
     void populateComboBoxProveedoresCert() throws Exception {
         for (ProveedorDTO prov : ProveedorController.getInstance().listar()
         ) {
@@ -472,17 +472,73 @@ public class Proveedores extends JFrame {
         }
     }
 
+    void populateTableProveedoresCert() {
+        try {
+            List<CertificadoDTO> certificados = ProveedorController.getInstance().obtenerCertificadosProveedor(this.textFieldCertCuit.getText());
+            System.out.println(this.textFieldCuit.getText());
+
+            String[] columns = new String[]{
+                    "Tipo",
+                    "Fecha Inicio",
+                    "Fecha Fin",
+            };
+
+            DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
+            if (certificados != null) {
+                certificados.stream().forEach(x -> {
+                    Object[] o = {
+                            x.tipo,
+                            x.fechaInicio,
+                            x.fechaFin,
+                    };
+
+                    tblModel.addRow(o);
+                });
+                this.tableCert.setModel(tblModel);
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    pnlMain,
+                    ex.getStackTrace(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    //region action certificados
+    void actionShowCertificados() {
+        Proveedores self = this;
+        this.comboBoxCertProveedor.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    populateTableProveedoresCert();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
     void actionGuardarCertificado() {
+        Proveedores self = this;
         this.guardarCertButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    JOptionPane.showMessageDialog(
-                            pnlMain,
-                            "Click en Guardar Certificado",
-                            "",
-                            JOptionPane.INFORMATION_MESSAGE
-                    );
+                    CertificadoDTO nuevoCertif = new CertificadoDTO();
+                    nuevoCertif.fechaInicio = datePickerFormatter(self.certifInicio);
+                    nuevoCertif.fechaFin = datePickerFormatter(self.certifFin);
+                    nuevoCertif.tipo = TipoRetencion.valueOf(self.comboBoxCertTipoRetencion.getSelectedItem().toString());
+                    String provCuit = self.textFieldCertCuit.getText();
+                    ProveedorController.getInstance().agregarCertificado(nuevoCertif, provCuit);
+                    populateTableProveedoresCert();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
@@ -557,21 +613,8 @@ public class Proveedores extends JFrame {
         });
     }
 
-    void populateTableProveedoresCert() {
-        try {
-            List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
-
-            proveedores.stream().forEach(x -> {
-                this.comboBoxCertProveedor.addItem(x.razonSocial);
-            });
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(
-                    pnlMain,
-                    ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }
+    LocalDate datePickerFormatter(JDatePickerImpl toFormat) {
+        return LocalDate.of(toFormat.getModel().getYear(), toFormat.getModel().getMonth(), toFormat.getModel().getDay());
     }
+
 }
