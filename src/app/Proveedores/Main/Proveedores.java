@@ -88,13 +88,12 @@ public class Proveedores extends JFrame {
     private JLabel lblCertFechaInicio;
     private JLabel lblCertFechaFin;
     private JPanel pnlCertFechaFin;
-    private ProveedorController proveedorController;
-    //endregion
     private JDatePickerImpl inicioAct;
     private JDatePickerImpl certifInicio;
     private JDatePickerImpl certifFin;
     private List<Rubro> rubros;
     protected static final String PROVEEDOR_EXISTENTE_EXCEPTION = "El proveedor que intenta agregar ya existe.";
+    //endregion
 
     public Proveedores(String title) throws Exception {
         super(title);
