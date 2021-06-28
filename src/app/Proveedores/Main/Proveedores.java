@@ -142,11 +142,7 @@ public class Proveedores extends JFrame {
         this.pnlCertFechaInicio.add(this.certifInicio);
         this.pnlCertFechaFin.add(this.certifFin);
         this.pnlDatePicker.add(this.inicioAct);
-
         this.loadTableCert();
-        // this.loadDatePicker(this.pnlDatePicker);
-        // this.loadDatePicker(this.pnlCertFechaInicio);
-        // this.loadDatePicker(this.pnlCertFechaFin);
         //endregion
 
         //region Initialize Properties
