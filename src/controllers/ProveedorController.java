@@ -13,6 +13,7 @@ import java.util.List;
 public class ProveedorController {
 
     private List<Proveedor> proveedores;
+    private List<CertificadoExcencion> certificados;
     private static ProveedorController instance;
     private ProveedoreService service;
 
@@ -122,13 +123,17 @@ public class ProveedorController {
     public List<CertificadoDTO> listarCertificadosPorProveedor(String cuit) {
 
         Proveedor p = this.obtenerProveedor(cuit);
-
         if (p != null)
             return p.getCertificados();
 
         return new ArrayList<>();
     }
 
+    /**
+     * @param cuit
+     * @throws Exception
+     * @tarea Dado un cuit, elimina el proveevor.
+     */
     public void eliminar(String cuit) throws Exception {
         try {
             if (this.proveedores.size() == 0) {
@@ -147,6 +152,51 @@ public class ProveedorController {
     }
 
     /**
+     * @param certifDTO
+     * @param cuitProveedor
+     * @tarea Dado un DTO certificado y un cuit de proveedor, agrega el certificado al correspondiente proveedor.
+     */
+    public void agregarCertificado(CertificadoDTO certifDTO, String cuitProveedor) {
+        try {
+            Proveedor prov = this.obtenerProveedor(cuitProveedor);
+            if (prov != null) {
+                CertificadoExcencion nuevoCertif = new CertificadoExcencion(certifDTO);
+                prov.agregarCertificicado(nuevoCertif);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * @return List<CertificadoDTO>
+     * @tarea Lista todos los certificados del dominio.
+     */
+    public List<CertificadoDTO> obtenerCertificados() {
+        List<CertificadoDTO> listaCertificados = new ArrayList<>();
+        for (Proveedor p : proveedores) {
+            for (CertificadoDTO certif : p.getCertificados()) {
+                listaCertificados.add(certif);
+            }
+        }
+        return listaCertificados;
+    }
+
+    /**
+     * @param cuitProveedor
+     * @return List<CertificadoDTO>
+     * @tarea Dado un cuit, devuelve la lista de certificados asociados al proveedor.
+     */
+    public List<CertificadoDTO> obtenerCertificadosProveedor(String cuitProveedor) {
+        for (Proveedor p : proveedores) {
+            if (p.getCuit().equals(cuitProveedor)) {
+                return p.getCertificados();
+            }
+        }
+        return null;
+    }
+
+    /**
      * @param cuit
      * @return proveedor
      * @tarea metodo privado para poder operar con objetos del dominio.
@@ -160,5 +210,4 @@ public class ProveedorController {
         }
         return null;
     }
-
 }
