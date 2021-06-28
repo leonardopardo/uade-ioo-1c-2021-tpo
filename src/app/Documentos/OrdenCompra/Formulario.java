@@ -5,6 +5,7 @@ import controllers.ProveedorController;
 import dto.DetalleDTO;
 import dto.ItemDTO;
 import dto.ProveedorDTO;
+import modelos.enums.Unidad;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -39,7 +40,7 @@ public class Formulario extends JDialog {
     private JLabel lblFecha;
     private JLabel lblCuit;
     private JLabel lblProveedor;
-    private JButton eliminarButton;
+    private JButton btnEliminarDetalle;
     private JPanel pnlTable;
     private JPanel pnlFormDetalle;
     private JPanel pnlFormCabecera;
@@ -54,6 +55,8 @@ public class Formulario extends JDialog {
         super(parent);
         this.detalle = new ArrayList<>();
         this.textFieldCuit.setEnabled(false);
+
+        this.spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 1000, 1));
 
         //region Factory
         this.datePickerfecha = this.nuevoDatePicker();
@@ -74,6 +77,7 @@ public class Formulario extends JDialog {
         this.actionSelectedComboBoxProveedor();
         this.actionSelectedComboBoxItem();
         this.actionAgregarDetalle();
+        this.actionEliminarDetalle();
         //endregion
 
         //region Settings
@@ -228,6 +232,9 @@ public class Formulario extends JDialog {
 
                     String itemCodigo = self.textFieldCodigoItem.getText();
 
+                    if (itemCodigo.equals(""))
+                        throw new Exception("Debe seleccionar un producto o servicio");
+
                     ItemDTO item = PrecioController.getInstance().obtenerItemPorCodigo(itemCodigo);
 
                     Double cantidad = Double.parseDouble(self.spinnerCantidad.getValue().toString());
@@ -260,6 +267,49 @@ public class Formulario extends JDialog {
             }
         });
     }
+
+    void actionEliminarDetalle() {
+        Formulario self = this;
+        this.btnEliminarDetalle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+
+                    int row = self.tblDetalle.getSelectedRow();
+
+                    if (row < 0)
+                        throw new Exception("Debe seleccionar una fila de la tabla");
+
+                    String value = self.tblDetalle.getModel().getValueAt(row, 0).toString();
+
+                    int itemIndex = self.itemAgregado(value);
+
+                    if (itemIndex >= 0) {
+
+                        int confirmResult = JOptionPane.showConfirmDialog(
+                                pnlMain,
+                                "¿Está seguro que desea eliminar la fila?",
+                                "Eliminar Fila",
+                                JOptionPane.YES_NO_OPTION
+                        );
+
+                        if (confirmResult == JOptionPane.YES_OPTION) {
+                            self.detalle.remove(itemIndex);
+                            self.setTableSchemma();
+                        }
+                    }
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
     //endregion
 
     //region Settings
@@ -269,6 +319,7 @@ public class Formulario extends JDialog {
                     "CÓDIGO",
                     "DESCRIPCIÓN",
                     "CANTIDAD",
+                    "UNIDAD"
             };
 
             DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
@@ -277,7 +328,8 @@ public class Formulario extends JDialog {
                 Object[] o = {
                         d.codItem,
                         d.descripcion,
-                        d.cantItem
+                        d.cantItem,
+                        Unidad.UNIDAD
                 };
 
                 tblModel.addRow(o);
