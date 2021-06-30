@@ -4,13 +4,11 @@ import app.Main.Main;
 import controllers.ProveedorController;
 import dto.CertificadoDTO;
 import dto.ProveedorDTO;
+import helpers.Helpers;
 import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
 import modelos.enums.TipoRetencion;
-import org.jdatepicker.impl.DateComponentFormatter;
-import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -19,7 +17,6 @@ import java.awt.event.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class Proveedores extends JFrame {
 
@@ -133,9 +130,9 @@ public class Proveedores extends JFrame {
         //endregion
 
         //region Load Elements
-        this.inicioAct = this.nuevoDatePicker();
-        this.certifInicio = this.nuevoDatePicker();
-        this.certifFin = this.nuevoDatePicker();
+        this.inicioAct = Helpers.nuevoDatePicker();
+        this.certifInicio = Helpers.nuevoDatePicker();
+        this.certifFin = Helpers.nuevoDatePicker();
         this.pnlDatePicker.setLayout(new GridLayout());
         this.pnlCertFechaInicio.setLayout(new GridLayout());
         this.pnlCertFechaFin.setLayout(new GridLayout());
@@ -411,15 +408,6 @@ public class Proveedores extends JFrame {
     //end action region
 
     //region Load Methods
-    JDatePickerImpl nuevoDatePicker() {
-        UtilDateModel model = new UtilDateModel();
-        JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
-        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-
-        return datePicker;
-    }
-
-
     void loadTableCert() throws Exception {
         String cuit = this.textFieldCertCuit.getText();
 
