@@ -136,7 +136,7 @@ public abstract class GenericDAO<T> {
 
             while ((line = b.readLine()) != null) {
                 JsonObject jsonObject = parser.parse(line).getAsJsonObject();
-                if (g.fromJson(jsonObject, clase).equals(obj)) {
+                if (obj.equals(g.fromJson(jsonObject, clase))) {
                     line = g.toJson(obj);
                     wasUpdate = true;
                 }
@@ -145,8 +145,6 @@ public abstract class GenericDAO<T> {
             }
             b.close();
             String inputStr = inputBuffer.toString();
-
-            System.out.println(inputStr);
 
             FileOutputStream fileOut = new FileOutputStream(archivo);
             fileOut.write(inputStr.getBytes());
