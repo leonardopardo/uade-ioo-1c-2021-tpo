@@ -1,18 +1,16 @@
 package dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrdenCompraDTO {
 
-    public int numero;
-    public LocalDateTime fecha;
+    public Integer numero;
+    public LocalDate fecha;
     public String cuitProveedor;
     public String razonSocial;
-    public String descripcion;
     public List<DetalleDTO> detalles;
-    public Double monto;
 
     public OrdenCompraDTO() {
         this.detalles = new ArrayList<>();

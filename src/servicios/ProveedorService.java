@@ -3,9 +3,9 @@ package servicios;
 import modelos.Proveedor;
 import vendor.GenericDAO;
 
-public class ProveedoreService extends GenericDAO {
+public class ProveedorService extends GenericDAO {
 
-    public ProveedoreService() throws Exception {
+    public ProveedorService() throws Exception {
         super(Proveedor.class, "./src/json/proveedores.json");
     }
 

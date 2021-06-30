@@ -1,6 +1,9 @@
 package controllers;
 
-import dto.*;
+import dto.CompulsaPrecioDTO;
+import dto.ItemDTO;
+import dto.ProveedorCompulsaDTO;
+import modelos.Detalle;
 import modelos.Item;
 import modelos.Precio;
 import modelos.enums.Rubro;
@@ -23,7 +26,7 @@ public class PrecioController {
     private ItemsService service;
     protected static final String ITEM_EXISTENTE_EXCEPTION = "El item que intenta agregar ya existe.";
 
-    private PrecioController() throws Exception{
+    private PrecioController() throws Exception {
         this.precios = new ArrayList<>();
         this.items = new ArrayList<>();
         this.itemsService = new ItemsService();
@@ -100,20 +103,16 @@ public class PrecioController {
      * @return
      */
     public List<ItemDTO> listarItems() {
-        List<ItemDTO> lista = new ArrayList<>();
+        try {
+            List<ItemDTO> items = new ArrayList<>();
+            this.items.forEach(item -> {
+                items.add(item.toDTO());
+            });
 
-        for (Item i : this.items) {
-            ItemDTO x = new ItemDTO();
-            x.codigo = i.getCodigo();
-            x.titulo = i.getTitulo();
-            x.unidad = i.getUnidad();
-            x.rubro = i.getRubro();
-            x.tipo = i.getTipoItem();
-
-            lista.add(x);
+            return items;
+        } catch (Exception ex) {
+            throw ex;
         }
-
-        return lista;
     }
 
     public void agregar(ItemDTO item) throws Exception {
@@ -123,51 +122,49 @@ public class PrecioController {
             }
 
             Item nuevoItem = new Item(item);
-
             this.service.save(nuevoItem);
             Collections.addAll(this.items, nuevoItem);
-
-//        try{
-//            List<ItemDTO> items = new ArrayList<>();
-//            this.items.forEach(item->{
-//               items.add(item.toDTO());
-//            });
-//
-//            return items;
         } catch (Exception ex) {
             throw ex;
         }
     }
 
-    public ItemDTO obtenerItemPorCodigo(String itemCodigo){
+    public ItemDTO obtenerItemPorCodigo(String itemCodigo) {
         try {
 
             ItemDTO item = null;
 
-            for (Item i: this.items) {
-                if(i.getCodigo().equals(itemCodigo))
+            for (Item i : this.items) {
+                if (i.getCodigo().equals(itemCodigo))
                     item = i.toDTO();
             }
 
             return item;
 
-        } catch (Exception ex){
+        } catch (Exception ex) {
             throw ex;
         }
     }
 
-    public ItemDTO obtenerItemPorTitulo(String itemTitulo){
+    public ItemDTO obtenerItemPorTitulo(String itemTitulo) {
         try {
             ItemDTO item = null;
 
-            for (Item i: this.items) {
-                if(i.getTitulo().equals(itemTitulo))
+            for (Item i : this.items) {
+                if (i.getTitulo().equals(itemTitulo))
                     item = i.toDTO();
             }
 
             return item;
         } catch (Exception ex) {
             throw ex;
+        }
+    }
+
+    public void setItemEnDetalle(String codigo, Detalle detalle) {
+        for (Item i : this.items) {
+            if(i.getCodigo().equals(codigo))
+                detalle.setItem(i);
         }
     }
 }

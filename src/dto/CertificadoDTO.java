@@ -8,4 +8,5 @@ public class CertificadoDTO {
     public TipoRetencion tipo;
     public LocalDate fechaInicio;
     public LocalDate fechaFin;
+    public Float alicuota;
 }

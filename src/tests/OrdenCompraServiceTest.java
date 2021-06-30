@@ -6,6 +6,7 @@ import dto.OrdenCompraDTO;
 import org.junit.jupiter.api.Test;
 import servicios.OrdenCompraService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,9 +33,7 @@ public class OrdenCompraServiceTest {
         OrdenCompraDTO ordenCompraDTO = new OrdenCompraDTO();
         ordenCompraDTO.numero = service.getProximoNumero();
         ordenCompraDTO.cuitProveedor = "23385247249";
-        ordenCompraDTO.monto = 1000.0;
-        ordenCompraDTO.fecha = LocalDateTime.now();
-        ordenCompraDTO.descripcion = "Descripcion de la orden compra";
+        ordenCompraDTO.fecha = LocalDate.now();
 
 
         DetalleDTO detalleDTO1 = new DetalleDTO();

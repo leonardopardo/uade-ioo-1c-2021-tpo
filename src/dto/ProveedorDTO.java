@@ -20,7 +20,8 @@ public class ProveedorDTO {
     public LocalDate inicioActividad;
     public String ingresosBrutos;
     public List<Rubro> rubros;
-    public double limiteCtaCte;
+    public Double limiteCtaCte;
+    public Double balance;
 
     public ProveedorDTO() {
         this.rubros = new ArrayList<>();

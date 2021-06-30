@@ -88,13 +88,12 @@ public class Proveedores extends JFrame {
     private JLabel lblCertFechaInicio;
     private JLabel lblCertFechaFin;
     private JPanel pnlCertFechaFin;
-    private ProveedorController proveedorController;
-    //endregion
     private JDatePickerImpl inicioAct;
     private JDatePickerImpl certifInicio;
     private JDatePickerImpl certifFin;
     private List<Rubro> rubros;
     protected static final String PROVEEDOR_EXISTENTE_EXCEPTION = "El proveedor que intenta agregar ya existe.";
+    //endregion
 
     public Proveedores(String title) throws Exception {
         super(title);
@@ -122,6 +121,7 @@ public class Proveedores extends JFrame {
         this.actionEliminarCertificado();
         this.actionSelectedCertificadoProveedor();
         this.actionSelectedRowProveedores();
+        this.actionShowCertificados();
         //endregion
 
         //region Populate Elements
@@ -129,7 +129,7 @@ public class Proveedores extends JFrame {
         this.populateTipoIVA();
         this.populateTableProveedores();
         this.populateTipoRetencion();
-        //this.populateComboBoxProveedoresCert();
+        this.populateComboBoxProveedoresCert();
         //endregion
 
         //region Load Elements
@@ -142,24 +142,18 @@ public class Proveedores extends JFrame {
         this.pnlCertFechaInicio.add(this.certifInicio);
         this.pnlCertFechaFin.add(this.certifFin);
         this.pnlDatePicker.add(this.inicioAct);
-
         this.loadTableCert();
-        // this.loadDatePicker(this.pnlDatePicker);
-        // this.loadDatePicker(this.pnlCertFechaInicio);
-        // this.loadDatePicker(this.pnlCertFechaFin);
         //endregion
 
         //region Initialize Properties
         this.rubros = new ArrayList<>();
         this.textFieldCertCuit.setEnabled(false);
-        this.proveedorController = ProveedorController.getInstance();
         //endregion
     }
 
-
     //region Populate Methods
-    void populateInputs(String selectedRow) {
-        ProveedorDTO proveedor = this.proveedorController.obtener(selectedRow);
+    void populateInputs(String selectedRow) throws Exception {
+        ProveedorDTO proveedor = ProveedorController.getInstance().obtener(selectedRow);
         this.textFieldRazonSocial.setText(proveedor.razonSocial);
         this.textFieldNombreFantasia.setText(proveedor.nombreFantasia);
         this.textFieldCuit.setText(proveedor.cuit);
@@ -172,7 +166,6 @@ public class Proveedores extends JFrame {
         this.rubros = proveedor.rubros;
         this.populateListRubros((ArrayList) rubros);
     }
-
 
     void populateRubros() {
         for (Rubro r : Rubro.values()) {
@@ -259,7 +252,11 @@ public class Proveedores extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 JTable target = (JTable) e.getSource();
-                populateInputs(tableProveedores.getValueAt(target.getSelectedRow(), 1).toString());
+                try {
+                    populateInputs(tableProveedores.getValueAt(target.getSelectedRow(), 1).toString());
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         });
     }
@@ -314,7 +311,8 @@ public class Proveedores extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ProveedorDTO check = self.proveedorController.obtener(self.textFieldCuit.getText());
+                    ProveedorController pController = ProveedorController.getInstance();
+                    ProveedorDTO check = pController.obtener(self.textFieldCuit.getText());
 
                     if (check != null) {
                         String message = "Usted está a punto de editar el proveedor " + check.razonSocial + " ¿está seguro?";
@@ -323,17 +321,17 @@ public class Proveedores extends JFrame {
                                 "Actualizar proveedor", JOptionPane.YES_NO_OPTION
                         );
                         if (confirmResult == JOptionPane.YES_OPTION) {
-                            self.proveedorController.actualizar(self.crearActualizarProveedor());
+                            pController.actualizar(self.crearActualizarProveedor());
                         }
                     } else {
                         ProveedorDTO pDto = self.crearActualizarProveedor();
-                        self.proveedorController.agregar(pDto);
+                        pController.agregar(pDto);
                     }
                     self.populateTableProveedores();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
-                            ex.getMessage(),
+                            ex.getStackTrace(),
                             "Error",
                             JOptionPane.ERROR_MESSAGE
                     );
@@ -352,7 +350,7 @@ public class Proveedores extends JFrame {
         pDto.ingresosBrutos = this.textFieldIibb.getText();
         pDto.tipoIVA = TipoIVA.valueOf(this.comboBoxTipoIVA.getSelectedItem().toString());
         pDto.limiteCtaCte = Double.parseDouble(this.textFieldCtaCte.getText());
-        pDto.inicioActividad = LocalDate.of(this.inicioAct.getModel().getYear(), this.inicioAct.getModel().getMonth(), this.inicioAct.getModel().getDay());
+        pDto.inicioActividad = datePickerFormatter(this.inicioAct);
 
         for (int i = 0; i < this.listRubros.getModel().getSize(); i++) {
             Rubro r = Rubro.valueOf(this.listRubros.getModel().getElementAt(i).toString());
@@ -386,6 +384,7 @@ public class Proveedores extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    ProveedorController pController = ProveedorController.getInstance();
                     String razonSocial = self.textFieldRazonSocial.getText();
                     String cuit = self.textFieldCuit.getText();
 
@@ -393,7 +392,7 @@ public class Proveedores extends JFrame {
                             "Eliminar proveedor", JOptionPane.YES_NO_OPTION
                     );
                     if (confirmResult == JOptionPane.YES_OPTION) {
-                        self.proveedorController.eliminar(cuit);
+                        pController.eliminar(cuit);
                         self.populateTableProveedores();
                     }
 
@@ -465,25 +464,81 @@ public class Proveedores extends JFrame {
     }
     //endregion proveedores
 
-    //region certificados
-    void populateComboBoxProveedoresCert() {
-        for (ProveedorDTO prov : this.proveedorController.listar()
+    //region populate certificados
+    void populateComboBoxProveedoresCert() throws Exception {
+        for (ProveedorDTO prov : ProveedorController.getInstance().listar()
         ) {
             this.comboBoxCertProveedor.addItem(prov.razonSocial);
         }
     }
 
+    void populateTableProveedoresCert() {
+        try {
+            List<CertificadoDTO> certificados = ProveedorController.getInstance().obtenerCertificadosProveedor(this.textFieldCertCuit.getText());
+            System.out.println(this.textFieldCuit.getText());
+
+            String[] columns = new String[]{
+                    "Tipo",
+                    "Fecha Inicio",
+                    "Fecha Fin",
+            };
+
+            DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
+            if (certificados != null) {
+                certificados.stream().forEach(x -> {
+                    Object[] o = {
+                            x.tipo,
+                            x.fechaInicio,
+                            x.fechaFin,
+                    };
+
+                    tblModel.addRow(o);
+                });
+                this.tableCert.setModel(tblModel);
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    pnlMain,
+                    ex.getStackTrace(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    //region action certificados
+    void actionShowCertificados() {
+        Proveedores self = this;
+        this.comboBoxCertProveedor.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    populateTableProveedoresCert();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
     void actionGuardarCertificado() {
+        Proveedores self = this;
         this.guardarCertButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    JOptionPane.showMessageDialog(
-                            pnlMain,
-                            "Click en Guardar Certificado",
-                            "",
-                            JOptionPane.INFORMATION_MESSAGE
-                    );
+                    CertificadoDTO nuevoCertif = new CertificadoDTO();
+                    nuevoCertif.fechaInicio = datePickerFormatter(self.certifInicio);
+                    nuevoCertif.fechaFin = datePickerFormatter(self.certifFin);
+                    nuevoCertif.tipo = TipoRetencion.valueOf(self.comboBoxCertTipoRetencion.getSelectedItem().toString());
+                    String provCuit = self.textFieldCertCuit.getText();
+                    ProveedorController.getInstance().agregarCertificado(nuevoCertif, provCuit);
+                    populateTableProveedoresCert();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
@@ -558,21 +613,8 @@ public class Proveedores extends JFrame {
         });
     }
 
-    void populateTableProveedoresCert() {
-        try {
-            List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
-
-            proveedores.stream().forEach(x -> {
-                this.comboBoxCertProveedor.addItem(x.razonSocial);
-            });
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(
-                    pnlMain,
-                    ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }
+    LocalDate datePickerFormatter(JDatePickerImpl toFormat) {
+        return LocalDate.of(toFormat.getModel().getYear(), toFormat.getModel().getMonth(), toFormat.getModel().getDay());
     }
+
 }
