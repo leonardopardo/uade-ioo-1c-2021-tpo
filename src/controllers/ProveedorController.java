@@ -65,7 +65,7 @@ public class ProveedorController {
      * @param dto
      * @tarea Dado un ProveedorDTO y un proveedor existente, se actualizan las propiedades del mismo.
      */
-    public void actualizar(ProveedorDTO dto) {
+    public void actualizar(ProveedorDTO dto) throws Exception {
 
         try {
             Proveedor nuevoProveedor = obtenerProveedor(dto.cuit);
@@ -79,6 +79,8 @@ public class ProveedorController {
             nuevoProveedor.setLimiteCtaCte(dto.limiteCtaCte);
             nuevoProveedor.setTelefono(dto.telefono);
             nuevoProveedor.setRazonSocial(dto.razonSocial);
+
+            this.service.update(nuevoProveedor);
         } catch (Exception ex) {
             throw ex;
         }
@@ -163,6 +165,7 @@ public class ProveedorController {
             if (prov != null) {
                 CertificadoExcencion nuevoCertif = new CertificadoExcencion(certifDTO);
                 prov.agregarCertificicado(nuevoCertif);
+                this.service.update(prov);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -212,9 +215,9 @@ public class ProveedorController {
         return null;
     }
 
-    public void setProveedorEnOc(String cuit, OrdenCompra oc){
-        for (Proveedor p: this.proveedores) {
-            if(p.getCuit().equals(cuit)){
+    public void setProveedorEnOc(String cuit, OrdenCompra oc) {
+        for (Proveedor p : this.proveedores) {
+            if (p.getCuit().equals(cuit)) {
                 oc.setProveedor(p);
                 return;
             }
