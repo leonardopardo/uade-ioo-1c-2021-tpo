@@ -347,7 +347,7 @@ public class Proveedores extends JFrame {
         pDto.ingresosBrutos = this.textFieldIibb.getText();
         pDto.tipoIVA = TipoIVA.valueOf(this.comboBoxTipoIVA.getSelectedItem().toString());
         pDto.limiteCtaCte = Double.parseDouble(this.textFieldCtaCte.getText());
-        pDto.inicioActividad = datePickerFormatter(this.inicioAct);
+        pDto.inicioActividad = Helpers.datePickerFormatter(this.inicioAct);
 
         for (int i = 0; i < this.listRubros.getModel().getSize(); i++) {
             Rubro r = Rubro.valueOf(this.listRubros.getModel().getElementAt(i).toString());
