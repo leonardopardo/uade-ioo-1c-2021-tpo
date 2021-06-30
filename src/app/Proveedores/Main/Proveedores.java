@@ -432,7 +432,6 @@ public class Proveedores extends JFrame {
                 tblModel.addRow(o);
             });
         }
-
         this.tableCert.setModel(tblModel);
     }
 
@@ -521,8 +520,8 @@ public class Proveedores extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     CertificadoDTO nuevoCertif = new CertificadoDTO();
-                    nuevoCertif.fechaInicio = datePickerFormatter(self.certifInicio);
-                    nuevoCertif.fechaFin = datePickerFormatter(self.certifFin);
+                    nuevoCertif.fechaInicio = Helpers.datePickerFormatter(self.certifInicio);
+                    nuevoCertif.fechaFin = Helpers.datePickerFormatter(self.certifFin);
                     nuevoCertif.tipo = TipoRetencion.valueOf(self.comboBoxCertTipoRetencion.getSelectedItem().toString());
                     String provCuit = self.textFieldCertCuit.getText();
                     ProveedorController.getInstance().agregarCertificado(nuevoCertif, provCuit);
@@ -595,14 +594,8 @@ public class Proveedores extends JFrame {
                     ProveedorDTO dto = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
                     self.textFieldCertCuit.setText(dto.cuit);
                 } catch (Exception ex) {
-
                 }
             }
         });
     }
-
-    LocalDate datePickerFormatter(JDatePickerImpl toFormat) {
-        return LocalDate.of(toFormat.getModel().getYear(), toFormat.getModel().getMonth(), toFormat.getModel().getDay());
-    }
-
 }
