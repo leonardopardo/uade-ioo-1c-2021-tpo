@@ -2,7 +2,7 @@ package controllers;
 
 import dto.CertificadoDTO;
 import dto.ProveedorDTO;
-import dto.ProveedorUIDTO;
+import modelos.CertificadoExcencion;
 import modelos.Proveedor;
 import modelos.enums.Rubro;
 import servicios.ProveedoreService;
@@ -60,6 +60,29 @@ public class ProveedorController {
     }
 
     /**
+     * @param dto
+     * @tarea Dado un ProveedorDTO y un proveedor existente, se actualizan las propiedades del mismo.
+     */
+    public void actualizar(ProveedorDTO dto) {
+
+        try {
+            Proveedor nuevoProveedor = obtenerProveedor(dto.cuit);
+
+            nuevoProveedor.reemplazarRubros(dto.rubros);
+            nuevoProveedor.setCuit(dto.cuit);
+            nuevoProveedor.setEmail(dto.email);
+            nuevoProveedor.setTipoIVA(dto.tipoIVA);
+            nuevoProveedor.setNombreFantasia(dto.nombreFantasia);
+            nuevoProveedor.setIngresosBrutos(dto.ingresosBrutos);
+            nuevoProveedor.setLimiteCtaCte(dto.limiteCtaCte);
+            nuevoProveedor.setTelefono(dto.telefono);
+            nuevoProveedor.setRazonSocial(dto.razonSocial);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    /**
      * @param razonSocial
      * @return ProveedorDTO
      * @tarea Dado una razonSocial, en caso de que exista un proveedor con dicha razonSocial, devuelve un objeto ProveedorDTO, si no null.
@@ -77,15 +100,14 @@ public class ProveedorController {
      * @return ArrayList<ProveedorDTO>
      * @tarea Lista todos los proveedores del dominio como objetos DTO.
      */
-    public List<ProveedorUIDTO> listar() {
+    public List<ProveedorDTO> listar() {
 
-        List<ProveedorUIDTO> lista = new ArrayList<>();
+        List<ProveedorDTO> lista = new ArrayList<>();
 
         for (Proveedor p : this.proveedores) {
-            ProveedorUIDTO x = new ProveedorUIDTO();
+            ProveedorDTO x = new ProveedorDTO();
             x.razonSocial = p.getRazonSocial();
             x.cuit = p.getCuit();
-
             lista.add(x);
         }
 

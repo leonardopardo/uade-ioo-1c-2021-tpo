@@ -38,49 +38,40 @@ public class DocumentosController {
         return instance;
     }
 
+    public void agregarOrdenCompra(OrdenCompraDTO dto){
+        try {
 
-    // TODO -> Resolver linea 52
-
-    /**
-     * @param dto
-     * @throws Exception
-     * @tarea Dado un DTO OrdenCompra, crea un objeto del dominio.
-     */
-    public void agregarOrdenCompra(OrdenCompraDTO dto) throws Exception {
-        OrdenCompra oc = new OrdenCompra(dto);
-        this.ordenesCompra.add(oc);
-
-        //oc.setProveedor(this.pController.obtener(dto.cuitProveedor));
-        oc.setNumero(ordenCompraService.getProximoNumero());
-
-        for (DetalleDTO d : dto.detalles) {
-            Detalle nuevoDetalle = new Detalle();
-            nuevoDetalle.setCantidad(d.cantItem);
+        } catch (Exception ex) {
+            throw ex;
         }
     }
 
     public List<OrdenCompraDTO> listarOrdenes() {
-        List<OrdenCompraDTO> ordenes = new ArrayList<>();
-
-        for (OrdenCompra op : this.ordenesCompra) {
-            OrdenCompraDTO o = op.toDTO();
-            ordenes.add(o);
-        }
-
-        return ordenes;
-    }
-
-    public List<OrdenCompraDTO> listarOrdenes(String cuit){
-        List<OrdenCompraDTO> ordenes = new ArrayList<>();
-
-        for (OrdenCompra op : this.ordenesCompra) {
-            if(op.getProveedorCuit().equals(cuit)){
+        try {
+            List<OrdenCompraDTO> ordenes = new ArrayList<>();
+            for (OrdenCompra op : this.ordenesCompra) {
                 OrdenCompraDTO o = op.toDTO();
                 ordenes.add(o);
             }
+            return ordenes;
+        } catch (Exception ex) {
+            throw ex;
         }
+    }
 
-        return ordenes;
+    public List<OrdenCompraDTO> listarOrdenes(String cuit){
+        try {
+            List<OrdenCompraDTO> ordenes = new ArrayList<>();
+            for (OrdenCompra op : this.ordenesCompra) {
+                if(op.getProveedorCuit().equals(cuit)){
+                    OrdenCompraDTO o = op.toDTO();
+                    ordenes.add(o);
+                }
+            }
+            return ordenes;
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
 }

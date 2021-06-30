@@ -1,11 +1,11 @@
 package app.Documentos.Main;
 
+import app.Documentos.OrdenCompra.Formulario;
 import app.Main.Main;
 import controllers.DocumentosController;
 import controllers.ProveedorController;
 import dto.OrdenCompraDTO;
 import dto.ProveedorDTO;
-import dto.ProveedorUIDTO;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -31,7 +31,6 @@ public class Documentos extends JFrame{
     private JPanel pnlFactura;
     private JTable tableOrdenesCompra;
     private JButton btnNuevaOrden;
-    private JButton btnCancelar;
     private JComboBox comboBoxOCProveedores;
     private JButton btnFiltrarOC;
     private JPanel pnlOCform;
@@ -39,41 +38,47 @@ public class Documentos extends JFrame{
     private JPanel pnlOCActions;
     private JLabel lblOCProveedores;
     private JPanel pnlOCFormProveedores;
-    private JPanel pnlOCFormFechaInicio;
-    private JPanel pnlOCFormFechaFin;
-    private JPanel pnlOCFormFechaInicioDP;
-    private JPanel pnlOCFormFechaFinDP;
+    private JPanel pnlOCFormFechaDesde;
+    private JPanel pnlOCFormFechaHasta;
+    private JPanel pnlOCFormFechaDesdeDP;
+    private JPanel pnlOCFormFechaHastaDP;
     private JTextField textFieldOCFormCUIT;
     private JPanel pnlOCFormCUIT;
     private JButton eliminarButton;
-
+    private JButton limpiarFiltroButton;
+    private JComboBox comboBox1;
+    private JTextField textField1;
+    private JTable table1;
+    private JButton guardarButton;
+    private JButton eliminarButton1;
+    private JButton filtrarButton;
+    private JButton limpiarFiltroButton1;
     private JDatePickerImpl opFechaInicio;
     private JDatePickerImpl opFechaFin;
 
-    public static void main(String[] args) throws Exception {
-        Documentos self = new Documentos("Factura 2000");
-    }
+    public Documentos(String title){
 
-    public Documentos(String title) throws Exception{
         super(title);
 
         //region Settings
-        this.setResizable(false);
         this.setContentPane(this.pnlMain);
+        this.setSize(pnlMain.getPreferredSize());
+        this.setResizable(false);
+        this.positionScreen();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
-        this.setSize(pnlMain.getPreferredSize());
-        this.setBackground(Color.WHITE);
+        //endregion
 
+        //region Default Values
         this.textFieldOCFormCUIT.setEnabled(false);
         //endregion
 
         //region Factory Elements
         this.opFechaInicio = this.nuevoDatePicker();
-        this.appendDatePicker(this.pnlOCFormFechaInicioDP, opFechaInicio);
+        this.appendDatePicker(this.pnlOCFormFechaDesdeDP, opFechaInicio);
 
         this.opFechaFin = this.nuevoDatePicker();
-        this.appendDatePicker(this.pnlOCFormFechaFinDP, opFechaFin);
+        this.appendDatePicker(this.pnlOCFormFechaHastaDP, opFechaFin);
         //endregion
 
         //region Populate
@@ -84,6 +89,7 @@ public class Documentos extends JFrame{
         //region Register Actions
         this.closeModule();
         this.actionSelectedOCProveedor();
+        this.actionNuevaOrden();
         //endregion
     }
 
@@ -105,7 +111,7 @@ public class Documentos extends JFrame{
     //region Populate
     void populateOCComboBoxProveedores(){
         try {
-            List<ProveedorUIDTO> proveedores = ProveedorController.getInstance().listar();
+            List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
 
             this.comboBoxOCProveedores.addItem("-- Seleccione --");
             proveedores.stream().forEach(x -> {
@@ -175,8 +181,39 @@ public class Documentos extends JFrame{
         });
     }
 
-    void actionFilterOCTAble(){
+    void actionFilterOC() {
 
+    }
+
+    void actionEliminarOC() {
+
+    }
+
+    void actionCancelarOC() {
+
+    }
+
+    void actionNuevaOrden() {
+
+        Documentos self = this;
+
+        this.btnNuevaOrden.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+
+                    Formulario frmOrdenCompra = new Formulario(self);
+
+                } catch(Exception ex){
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
     }
 
     void actionSelectedOCProveedor(){
@@ -209,6 +246,16 @@ public class Documentos extends JFrame{
                 }
             }
         });
+    }
+    //endregion
+
+    //region Load
+    void positionScreen(){
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(
+                dim.width/2-this.getSize().width/2,
+                dim.height/2-this.getSize().height/2
+        );
     }
     //endregion
 }

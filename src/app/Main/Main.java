@@ -26,12 +26,17 @@ public class Main extends JFrame {
     public Main(String title) throws Exception {
         super(title);
 
+        //region Settings
         this.setResizable(false);
         this.setContentPane(this.pnlMain);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
         this.setSize(pnlMain.getPreferredSize());
         this.setBackground(Color.WHITE);
+
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        //endregion
 
         //region Register Modules
         this.showUsuariosModule();
@@ -45,6 +50,7 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         Main self = new Main("Factura 2000");
     }
 
@@ -134,6 +140,7 @@ public class Main extends JFrame {
     }
     //endregion
 
+    //region Actions
     void closeModule() {
 
         Main self = this;
@@ -146,4 +153,5 @@ public class Main extends JFrame {
             }
         });
     }
+    //endregion
 }

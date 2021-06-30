@@ -11,6 +11,7 @@ import java.util.List;
 public class OrdenPagoController {
 
     private List<OrdenPago> ordenesPago;
+
     private static OrdenPagoController instance;
 
     private OrdenPagoController() {
