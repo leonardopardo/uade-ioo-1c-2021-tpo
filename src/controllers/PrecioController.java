@@ -23,7 +23,6 @@ public class PrecioController {
     private PrecioService precioService;
 
     public static PrecioController instance;
-    private ItemsService service;
     protected static final String ITEM_EXISTENTE_EXCEPTION = "El item que intenta agregar ya existe.";
 
     private PrecioController() throws Exception {
@@ -122,7 +121,7 @@ public class PrecioController {
             }
 
             Item nuevoItem = new Item(item);
-            this.service.save(nuevoItem);
+            this.itemsService.save(nuevoItem);
             Collections.addAll(this.items, nuevoItem);
         } catch (Exception ex) {
             throw ex;

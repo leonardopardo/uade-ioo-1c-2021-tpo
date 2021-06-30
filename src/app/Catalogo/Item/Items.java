@@ -15,7 +15,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
 
@@ -38,38 +37,22 @@ public class Items extends JPanel {
     private JLabel lblTipo;
     private JLabel lblRubro;
     private JLabel lblUnidad;
-    private JLabel lblFin;
-    private JLabel lblInicio;
-    private JPanel pnlFecha;
-    private JPanel pnlDatePickerInicio;
-    private JPanel pnlDatePickerFin;
     private PrecioController precioController;
-    private JDatePickerImpl fieldInicio;
-    private JDatePickerImpl fieldFin;
     private DefaultTableModel tblModel;
 
     public Items() throws Exception{
 
         this.add(this.pnlMain);
-        this.pnlFecha.setVisible(false);
 
         this.populateTableItems();
         this.populateComboRubro();
         this.populateComboTipo();
         this.populateComboUnidad();
-        this.actionSelectedTipo();
+//        this.actionSelectedTipo();
 
         this.actionGuardarItem();
         this.actionEliminarItem();
         this.actionCancelarItem();
-
-        this.fieldInicio = this.nuevoDatePicker();
-        this.pnlDatePickerInicio.setLayout(new GridLayout());
-        this.pnlDatePickerInicio.add(this.fieldInicio);
-
-        this.fieldFin = this.nuevoDatePicker();
-        this.pnlDatePickerFin.setLayout(new GridLayout());
-        this.pnlDatePickerFin.add(this.fieldFin);
 
         this.precioController = PrecioController.getInstance();
     }
@@ -138,24 +121,24 @@ public class Items extends JPanel {
         this.comboBoxRubro.setModel(comboBoxModel);
     }
 
-    void actionSelectedTipo(){
-
-        Items self = this;
-
-        this.comboBoxTipo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String value = self.comboBoxTipo.getSelectedItem().toString();
-
-                if(value.equals(TipoItem.SERVICIO.name())){
-                    self.pnlFecha.setVisible(true);
-                } else {
-                    self.pnlFecha.setVisible(false);
-                }
-
-            }
-        });
-    }
+//    void actionSelectedTipo(){
+//
+//        Items self = this;
+//
+//        this.comboBoxTipo.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String value = self.comboBoxTipo.getSelectedItem().toString();
+//
+//                if(value.equals(TipoItem.SERVICIO.name())){
+//                    self.pnlFecha.setVisible(true);
+//                } else {
+//                    self.pnlFecha.setVisible(false);
+//                }
+//
+//            }
+//        });
+//    }
 
     void actionGuardarItem() {
         Items self = this;
@@ -170,8 +153,6 @@ public class Items extends JPanel {
                     iDto.rubro = Rubro.valueOf(self.comboBoxRubro.getSelectedItem().toString());
                     iDto.unidad = Unidad.valueOf(self.comboBoxUnidad.getSelectedItem().toString());
                     iDto.tipo = TipoItem.valueOf(self.comboBoxTipo.getSelectedItem().toString());
-                    iDto.inicio = LocalDate.of(self.fieldInicio.getModel().getYear(), self.fieldInicio.getModel().getMonth(), self.fieldInicio.getModel().getDay());
-                    iDto.fin = LocalDate.of(self.fieldFin.getModel().getYear(), self.fieldFin.getModel().getMonth(), self.fieldFin.getModel().getDay());
 
                     self.precioController.agregar(iDto);
                     tblModel.addRow(new Object[]{iDto.codigo, iDto.titulo, iDto.unidad, iDto.rubro, iDto.tipo});
@@ -227,14 +208,6 @@ public class Items extends JPanel {
                 }
             }
         });
-    }
-
-    JDatePickerImpl nuevoDatePicker() {
-        UtilDateModel model = new UtilDateModel();
-        JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
-        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-
-        return datePicker;
     }
 }
 
