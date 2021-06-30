@@ -3,9 +3,10 @@ package controllers;
 import dto.CertificadoDTO;
 import dto.ProveedorDTO;
 import modelos.CertificadoExcencion;
+import modelos.OrdenCompra;
 import modelos.Proveedor;
 import modelos.enums.Rubro;
-import servicios.ProveedoreService;
+import servicios.ProveedorService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +16,10 @@ public class ProveedorController {
     private List<Proveedor> proveedores;
     private List<CertificadoExcencion> certificados;
     private static ProveedorController instance;
-    private ProveedoreService service;
+    private ProveedorService service;
 
     private ProveedorController() throws Exception {
-        this.service = new ProveedoreService();
+        this.service = new ProveedorService();
         this.proveedores = this.service.getAll();
     }
 
@@ -209,5 +210,14 @@ public class ProveedorController {
             }
         }
         return null;
+    }
+
+    public void setProveedorEnOc(String cuit, OrdenCompra oc){
+        for (Proveedor p: this.proveedores) {
+            if(p.getCuit().equals(cuit)){
+                oc.setProveedor(p);
+                return;
+            }
+        }
     }
 }

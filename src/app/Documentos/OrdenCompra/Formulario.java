@@ -1,11 +1,13 @@
 package app.Documentos.OrdenCompra;
 
+import controllers.DocumentosController;
 import controllers.PrecioController;
 import controllers.ProveedorController;
 import dto.DetalleDTO;
 import dto.ItemDTO;
 import dto.OrdenCompraDTO;
 import dto.ProveedorDTO;
+import helpers.Helpers;
 import modelos.enums.Unidad;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -54,11 +56,13 @@ public class Formulario extends JDialog {
     private List<DetalleDTO> detalle;
     private JDatePickerImpl datePickerfecha;
 
+    private Boolean guardarOrdenFlag;
+
     public Formulario(JFrame parent) {
         super(parent);
         this.detalle = new ArrayList<>();
         this.textFieldCuit.setEnabled(false);
-
+        this.guardarOrdenFlag = false;
         this.spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 1000, 1));
 
         //region Factory
@@ -173,23 +177,25 @@ public class Formulario extends JDialog {
     //endregion
 
     //region Actions
-    void actionClose(){
+    void actionClose() {
         Formulario self = this;
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                int confirmResult = JOptionPane.showConfirmDialog(
-                        pnlMain,
-                        "Al cerrar esta ventana sin guardar se perderan los cambios realizados. ¿Desea continuar?",
-                        "Cerrar",
-                        JOptionPane.YES_NO_OPTION
-                );
+                if (self.guardarOrdenFlag) {
+                    int confirmResult = JOptionPane.showConfirmDialog(
+                            pnlMain,
+                            "Al cerrar esta ventana sin guardar se perderan los cambios realizados. ¿Desea continuar?",
+                            "Cerrar",
+                            JOptionPane.YES_NO_OPTION
+                    );
 
-                if (confirmResult == JOptionPane.YES_OPTION)
-                    self.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-                else
-                    self.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+                    if (confirmResult == JOptionPane.YES_OPTION)
+                        self.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                    else
+                        self.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+                }
             }
         });
     }
@@ -337,7 +343,7 @@ public class Formulario extends JDialog {
         });
     }
 
-    void actionGuardarOrden(){
+    void actionGuardarOrden() {
         Formulario self = this;
         this.btnGuardar.addActionListener(new ActionListener() {
             @Override
@@ -345,16 +351,20 @@ public class Formulario extends JDialog {
                 try {
                     String proveedorCuit = self.textFieldCuit.getText();
 
-                    LocalDate date = (LocalDate) self.datePickerfecha.getJFormattedTextField().getValue();
+                    LocalDate date = Helpers.datePickerFormatter(self.datePickerfecha);
 
-                    if(proveedorCuit.equals(""))
+                    if (proveedorCuit.equals(""))
                         throw new Exception("Debe seleccionar un proveedor.");
 
-                    if(date.isBefore(LocalDate.now()))
+                    if (date.isBefore(LocalDate.now()))
                         throw new Exception("La fecha no puede ser anterior al día de hoy.");
 
-                    if(self.detalle.size() == 0)
+                    if (self.detalle.size() == 0)
                         throw new Exception("La orden de compra debe tener al menos un detalle.");
+
+                    self.guardarOrdenFlag = true;
+
+                    DocumentosController.getInstance().agregarOrdenCompra(self.valuesToDto());
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
@@ -422,5 +432,15 @@ public class Formulario extends JDialog {
         return -1;
     }
     //endregion
+
+    OrdenCompraDTO valuesToDto(){
+        OrdenCompraDTO dto = new OrdenCompraDTO();
+        dto.cuitProveedor = this.textFieldCuit.getText();
+        dto.razonSocial = this.comboBoxProveedor.getSelectedItem().toString();
+        dto.fecha = Helpers.datePickerFormatter(this.datePickerfecha);
+        dto.detalles = this.detalle;
+
+        return dto;
+    }
 
 }

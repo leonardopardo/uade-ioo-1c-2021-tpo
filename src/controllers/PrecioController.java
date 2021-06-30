@@ -3,6 +3,7 @@ package controllers;
 import dto.CompulsaPrecioDTO;
 import dto.ItemDTO;
 import dto.ProveedorCompulsaDTO;
+import modelos.Detalle;
 import modelos.Item;
 import modelos.Precio;
 import modelos.enums.Rubro;
@@ -25,7 +26,7 @@ public class PrecioController {
 
     public static PrecioController instance;
 
-    private PrecioController() throws Exception{
+    private PrecioController() throws Exception {
         this.precios = new ArrayList<>();
         this.items = new ArrayList<>();
         this.itemsService = new ItemsService();
@@ -102,10 +103,10 @@ public class PrecioController {
      * @return
      */
     public List<ItemDTO> listarItems() {
-        try{
+        try {
             List<ItemDTO> items = new ArrayList<>();
-            this.items.forEach(item->{
-               items.add(item.toDTO());
+            this.items.forEach(item -> {
+                items.add(item.toDTO());
             });
 
             return items;
@@ -114,35 +115,42 @@ public class PrecioController {
         }
     }
 
-    public ItemDTO obtenerItemPorCodigo(String itemCodigo){
+    public ItemDTO obtenerItemPorCodigo(String itemCodigo) {
         try {
 
             ItemDTO item = null;
 
-            for (Item i: this.items) {
-                if(i.getCodigo().equals(itemCodigo))
+            for (Item i : this.items) {
+                if (i.getCodigo().equals(itemCodigo))
                     item = i.toDTO();
             }
 
             return item;
 
-        } catch (Exception ex){
+        } catch (Exception ex) {
             throw ex;
         }
     }
 
-    public ItemDTO obtenerItemPorTitulo(String itemTitulo){
+    public ItemDTO obtenerItemPorTitulo(String itemTitulo) {
         try {
             ItemDTO item = null;
 
-            for (Item i: this.items) {
-                if(i.getTitulo().equals(itemTitulo))
+            for (Item i : this.items) {
+                if (i.getTitulo().equals(itemTitulo))
                     item = i.toDTO();
             }
 
             return item;
         } catch (Exception ex) {
             throw ex;
+        }
+    }
+
+    public void setItemEnDetalle(String codigo, Detalle detalle) {
+        for (Item i : this.items) {
+            if(i.getCodigo().equals(codigo))
+                detalle.setItem(i);
         }
     }
 }

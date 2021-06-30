@@ -14,7 +14,9 @@ public class Detalle {
     private Double iva;
 
     public Detalle(DetalleDTO detalle){
-
+        this.cantidad = detalle.cantItem;
+        this.precioUnitario = detalle.precioUnidad;
+        this.iva = detalle.iva;
     }
 
     //region Getters

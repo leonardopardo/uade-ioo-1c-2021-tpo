@@ -2,21 +2,14 @@ package modelos;
 
 import dto.OrdenCompraDTO;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrdenCompra extends Documento {
 
-    private Integer numero;
-    private LocalDateTime fecha;
-    private String descripcion;
-    private List<Detalle> detalles;
-    private Proveedor proveedor;
-
     public OrdenCompra(OrdenCompraDTO dto) {
         this.fecha = dto.fecha;
-        this.descripcion = dto.descripcion;
         this.detalles = new ArrayList<Detalle>();
     }
 
@@ -36,7 +29,7 @@ public class OrdenCompra extends Documento {
         return this.numero;
     }
 
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return this.fecha;
     }
 
@@ -60,7 +53,6 @@ public class OrdenCompra extends Documento {
         OrdenCompraDTO o = new OrdenCompraDTO();
         o.fecha = this.fecha;
         o.numero = this.numero;
-        o.descripcion = this.descripcion;
         o.cuitProveedor = this.proveedor.getCuit();
         o.razonSocial = this.proveedor.getRazonSocial();
 
