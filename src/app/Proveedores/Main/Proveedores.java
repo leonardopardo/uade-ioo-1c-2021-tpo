@@ -14,7 +14,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -462,8 +461,6 @@ public class Proveedores extends JFrame {
     void populateTableProveedoresCert() {
         try {
             List<CertificadoDTO> certificados = ProveedorController.getInstance().obtenerCertificadosProveedor(this.textFieldCertCuit.getText());
-            System.out.println(this.textFieldCuit.getText());
-
             String[] columns = new String[]{
                     "Tipo",
                     "Fecha Inicio",
@@ -497,8 +494,9 @@ public class Proveedores extends JFrame {
     //region action certificados
     void actionShowCertificados() {
         Proveedores self = this;
-        this.comboBoxCertProveedor.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        this.comboBoxCertProveedor.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
                 try {
                     populateTableProveedoresCert();
                 } catch (Exception ex) {
