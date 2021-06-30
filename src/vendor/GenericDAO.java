@@ -113,7 +113,6 @@ public abstract class GenericDAO<T> {
             b.close();
             String inputStr = inputBuffer.toString();
 
-            System.out.println(inputStr);
 
             FileOutputStream fileOut = new FileOutputStream(archivo);
             fileOut.write(inputStr.getBytes());
