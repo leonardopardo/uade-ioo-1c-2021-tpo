@@ -143,4 +143,43 @@ public class Proveedor {
         this.rubros = nuevoRubros;
     }
 
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        final Proveedor other = (Proveedor) obj;
+
+        if (!this.cuit.equals(other.getCuit())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Proveedor{" +
+                "id=" + id +
+                ", razonSocial='" + razonSocial + '\'' +
+                ", cuit='" + cuit + '\'' +
+                ", tipoIVA=" + tipoIVA +
+                ", nombreFantasia='" + nombreFantasia + '\'' +
+                ", email='" + email + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", inicioActividad=" + inicioActividad +
+                ", ingresosBrutos='" + ingresosBrutos + '\'' +
+                ", rubros=" + rubros +
+                ", limiteCtaCte=" + limiteCtaCte +
+                ", certificados=" + certificados +
+                ", balance=" + balance +
+                '}';
+    }
+
 }
