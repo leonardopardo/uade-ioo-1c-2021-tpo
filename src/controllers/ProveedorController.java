@@ -215,6 +215,12 @@ public class ProveedorController {
         return null;
     }
 
+
+    /**
+     * @param cuit
+     * @param oc
+     * @tarea Dado un cuit y una orden de compra, la orden de compra es asignada al correspondiente proveedor.
+     */
     public void setProveedorEnOc(String cuit, OrdenCompra oc) {
         for (Proveedor p : this.proveedores) {
             if (p.getCuit().equals(cuit)) {

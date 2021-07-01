@@ -14,6 +14,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,6 +90,8 @@ public class Proveedores extends JFrame {
     private JDatePickerImpl certifFin;
     private List<Rubro> rubros;
     protected static final String PROVEEDOR_EXISTENTE_EXCEPTION = "El proveedor que intenta agregar ya existe.";
+    protected static final String FECHA_VENCIMIENTO_POSTERIOR_INICIO = "La fecha de vencimiento del certificado debe ser posterior a la fecha de emisión.";
+    protected static final String CERTIFICAD_EXISTENTE = "El certificado que está intentando agregar ya existe.";
     //endregion
 
     public Proveedores(String title) throws Exception {
@@ -518,10 +521,22 @@ public class Proveedores extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     CertificadoDTO nuevoCertif = new CertificadoDTO();
-                    nuevoCertif.fechaInicio = Helpers.datePickerFormatter(self.certifInicio);
-                    nuevoCertif.fechaFin = Helpers.datePickerFormatter(self.certifFin);
-                    nuevoCertif.tipo = TipoRetencion.valueOf(self.comboBoxCertTipoRetencion.getSelectedItem().toString());
+                    LocalDate startDate = Helpers.datePickerFormatter(self.certifInicio);
+                    nuevoCertif.fechaInicio = startDate;
+                    LocalDate endDate = Helpers.datePickerFormatter(self.certifFin);
+
+                    if (endDate.isBefore(startDate)) {
+                        throw new Exception(FECHA_VENCIMIENTO_POSTERIOR_INICIO);
+                    }
+
                     String provCuit = self.textFieldCertCuit.getText();
+                    nuevoCertif.tipo = TipoRetencion.valueOf(self.comboBoxCertTipoRetencion.getSelectedItem().toString());
+
+                    if (ProveedorController.getInstance().existeCertificado(provCuit, nuevoCertif)) {
+                        throw new Exception(CERTIFICAD_EXISTENTE);
+                    }
+
+                    nuevoCertif.fechaFin = endDate;
                     ProveedorController.getInstance().agregarCertificado(nuevoCertif, provCuit);
                     populateTableProveedoresCert();
                 } catch (Exception ex) {
