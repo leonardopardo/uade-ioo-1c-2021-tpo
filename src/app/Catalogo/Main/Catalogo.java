@@ -1,5 +1,7 @@
 package app.Catalogo.Main;
 
+import app.Catalogo.Item.Items;
+import app.Catalogo.Precio.Precio;
 import app.Main.Main;
 import app.Proveedores.Main.Proveedores;
 
@@ -18,17 +20,23 @@ public class Catalogo extends JFrame{
     private JPanel pnlIcon;
     private JPanel pnlTitle;
 
-    public Catalogo(String title){
+    public Catalogo(String title) throws Exception {
         super(title);
 
         //region Settings
-        this.setResizable(false);
+        this.setResizable(true);
         this.setContentPane(this.pnlMain);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
         this.setSize(pnlMain.getPreferredSize());
         this.setBackground(Color.WHITE);
+
         //endregion
+
+        this.tabbedPane1.setComponentAt(0, new Items());
+
+        this.tabbedPane1.setComponentAt(1, new Precio());
+
 
         //region Register Actions
         this.closeModule();
