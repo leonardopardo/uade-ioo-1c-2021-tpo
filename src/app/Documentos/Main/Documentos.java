@@ -21,7 +21,7 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Properties;
 
-public class Documentos extends JFrame{
+public class Documentos extends JFrame implements ActionListener{
     private JPanel pnlMain;
     private JPanel pnlHeader;
     private JPanel pnlBody;
@@ -48,13 +48,14 @@ public class Documentos extends JFrame{
     private JButton limpiarFiltroButton;
     private JComboBox comboBox1;
     private JTextField textField1;
-    private JTable table1;
+    private JTable tableFacturas;
     private JButton guardarButton;
     private JButton eliminarButton1;
     private JButton filtrarButton;
     private JButton limpiarFiltroButton1;
     private JDatePickerImpl opFechaInicio;
     private JDatePickerImpl opFechaFin;
+    private Formulario frmOrdenCompra;
 
     public Documentos(String title){
 
@@ -88,9 +89,11 @@ public class Documentos extends JFrame{
 
         //region Register Actions
         this.closeModule();
+        //this.closeFrmOrdenCompra();
         this.actionSelectedOCProveedor();
         this.actionNuevaOrden();
         //endregion
+
     }
 
     //region Factory
@@ -202,7 +205,7 @@ public class Documentos extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 try{
 
-                    Formulario frmOrdenCompra = new Formulario(self);
+                    self.frmOrdenCompra = new Formulario(self);
 
                 } catch(Exception ex){
                     JOptionPane.showMessageDialog(
@@ -256,6 +259,11 @@ public class Documentos extends JFrame{
                 dim.width/2-this.getSize().width/2,
                 dim.height/2-this.getSize().height/2
         );
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
     //endregion
 }
