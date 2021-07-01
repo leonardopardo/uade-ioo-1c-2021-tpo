@@ -1,5 +1,6 @@
 package app.Documentos.OrdenCompra;
 
+import app.Documentos.Main.Documentos;
 import controllers.DocumentosController;
 import controllers.PrecioController;
 import controllers.ProveedorController;
@@ -364,7 +365,9 @@ public class Formulario extends JDialog {
 
                     self.guardarOrdenFlag = true;
 
-                    DocumentosController.getInstance().agregarOrdenCompra(self.valuesToDto());
+                    //DocumentosController.getInstance().agregarOrdenCompra(self.valuesToDto());
+
+                    self.dispose();
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
@@ -442,5 +445,4 @@ public class Formulario extends JDialog {
 
         return dto;
     }
-
 }

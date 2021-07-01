@@ -11,20 +11,19 @@ import servicios.ItemsService;
 import servicios.PrecioService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class PrecioController {
 
     private List<Precio> precios;
-
     private List<Item> items;
-
     private ItemsService itemsService;
-
     private PrecioService precioService;
 
     public static PrecioController instance;
+    protected static final String ITEM_EXISTENTE_EXCEPTION = "El item que intenta agregar ya existe.";
 
     private PrecioController() throws Exception {
         this.precios = new ArrayList<>();
@@ -110,6 +109,20 @@ public class PrecioController {
             });
 
             return items;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public void agregar(ItemDTO item) throws Exception {
+        try {
+            if (this.items.contains(item)) {
+                throw new Exception(ITEM_EXISTENTE_EXCEPTION);
+            }
+
+            Item nuevoItem = new Item(item);
+            this.itemsService.save(nuevoItem);
+            Collections.addAll(this.items, nuevoItem);
         } catch (Exception ex) {
             throw ex;
         }

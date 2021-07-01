@@ -418,7 +418,7 @@
                         <properties/>
                         <border type="none"/>
                         <children>
-                          <component id="d5cee" class="javax.swing.JTable" binding="table1" default-binding="true">
+                          <component id="d5cee" class="javax.swing.JTable" binding="tableFacturas">
                             <constraints/>
                             <properties/>
                           </component>

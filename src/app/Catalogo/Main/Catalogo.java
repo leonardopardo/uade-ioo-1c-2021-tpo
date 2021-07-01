@@ -1,5 +1,6 @@
 package app.Catalogo.Main;
 
+import app.Catalogo.Item.Items;
 import app.Main.Main;
 import app.Proveedores.Main.Proveedores;
 
@@ -8,7 +9,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class Catalogo extends JFrame{
+public class Catalogo extends JFrame {
     private JPanel pnlMain;
     private JPanel pnlHeader;
     private JPanel pnlBody;
@@ -18,7 +19,7 @@ public class Catalogo extends JFrame{
     private JPanel pnlIcon;
     private JPanel pnlTitle;
 
-    public Catalogo(String title){
+    public Catalogo(String title) throws Exception {
         super(title);
 
         //region Settings
@@ -29,6 +30,8 @@ public class Catalogo extends JFrame{
         this.setSize(pnlMain.getPreferredSize());
         this.setBackground(Color.WHITE);
         //endregion
+
+        this.tabbedPane1.setComponentAt(0, new Items());
 
         //region Register Actions
         this.closeModule();
