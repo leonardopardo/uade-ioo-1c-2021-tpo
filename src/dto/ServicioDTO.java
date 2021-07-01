@@ -3,6 +3,7 @@ package dto;
 import modelos.enums.Rubro;
 import modelos.enums.Unidad;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ServicioDTO {
@@ -12,7 +13,7 @@ public class ServicioDTO {
     public String descripcion;
     public Unidad unidad;
     public Rubro rubro;
-    public LocalDateTime inicio;
+    public LocalDate inicio;
     public LocalDateTime fin;
 
 }
