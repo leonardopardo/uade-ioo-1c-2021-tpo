@@ -3,7 +3,6 @@ package controllers;
 import dto.CertificadoDTO;
 import dto.ProveedorDTO;
 import modelos.CertificadoExcencion;
-import modelos.OrdenCompra;
 import modelos.Proveedor;
 import modelos.enums.Rubro;
 import servicios.ProveedorService;
@@ -30,6 +29,11 @@ public class ProveedorController {
         return instance;
     }
 
+    /**
+     * @param proveedor
+     * @throws Exception
+     * @tarea Dado un proveedor dto el mismo construye el objeto proveedor del dominio y lo agrega a la lista y servicio.
+     */
     public void agregar(ProveedorDTO proveedor) throws Exception {
         try {
             Proveedor nuevoProveedor = new Proveedor(proveedor);
@@ -201,6 +205,25 @@ public class ProveedorController {
     }
 
     /**
+     * @param provCuit
+     * @param nuevoCertificado
+     * @return Boolean
+     * @tarea Dado un cuit y un certificado dto, este mismo corrobora si el certificado existe.
+     */
+    public boolean existeCertificado(String provCuit, CertificadoDTO nuevoCertificado) {
+        for (Proveedor p : this.proveedores) {
+            if (p.getCuit().equals(provCuit)) {
+                for (CertificadoDTO c : p.getCertificados()) {
+                    if (c.fechaInicio.equals(nuevoCertificado.fechaInicio) && c.tipo.equals(nuevoCertificado.tipo)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * @param cuit
      * @return proveedor
      * @tarea metodo privado para poder operar con objetos del dominio.
@@ -215,18 +238,4 @@ public class ProveedorController {
         return null;
     }
 
-
-    /**
-     * @param cuit
-     * @param oc
-     * @tarea Dado un cuit y una orden de compra, la orden de compra es asignada al correspondiente proveedor.
-     */
-    public void setProveedorEnOc(String cuit, OrdenCompra oc) {
-        for (Proveedor p : this.proveedores) {
-            if (p.getCuit().equals(cuit)) {
-                oc.setProveedor(p);
-                return;
-            }
-        }
-    }
 }
