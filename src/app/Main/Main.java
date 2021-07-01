@@ -101,7 +101,12 @@ public class Main extends JFrame {
                 try {
                     Documentos d = new Documentos("Documentos");
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         });
