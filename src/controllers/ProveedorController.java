@@ -1,10 +1,12 @@
 package controllers;
 
 import dto.CertificadoDTO;
+import dto.DetalleDTO;
+import dto.OrdenCompraDTO;
 import dto.ProveedorDTO;
-import modelos.CertificadoExcencion;
-import modelos.Proveedor;
+import modelos.*;
 import modelos.enums.Rubro;
+import servicios.OrdenCompraService;
 import servicios.ProveedorService;
 
 import java.util.ArrayList;
@@ -12,14 +14,18 @@ import java.util.List;
 
 public class ProveedorController {
 
-    private List<Proveedor> proveedores;
-    private List<CertificadoExcencion> certificados;
     private static ProveedorController instance;
-    private ProveedorService service;
+    private PrecioController precController;
+    private ProveedorService proveedorService;
+    private OrdenCompraService ordenCompraService;
+    private List<Proveedor> proveedores;
+
 
     private ProveedorController() throws Exception {
-        this.service = new ProveedorService();
-        this.proveedores = this.service.getAll();
+        this.proveedorService = new ProveedorService();
+        this.proveedores = this.proveedorService.getAll();
+        this.ordenCompraService = new OrdenCompraService();
+        this.precController = PrecioController.getInstance();
     }
 
     public static ProveedorController getInstance() throws Exception {
@@ -42,8 +48,8 @@ public class ProveedorController {
                 nuevoProveedor.agregarRubro(r);
             }
 
-            nuevoProveedor.setId(this.service.getProximoId());
-            this.service.save(nuevoProveedor);
+            nuevoProveedor.setId(this.proveedorService.getProximoId());
+            this.proveedorService.save(nuevoProveedor);
             this.proveedores.add(nuevoProveedor);
 
         } catch (Exception ex) {
@@ -63,31 +69,6 @@ public class ProveedorController {
             }
         }
         return null;
-    }
-
-    /**
-     * @param dto
-     * @tarea Dado un ProveedorDTO y un proveedor existente, se actualizan las propiedades del mismo.
-     */
-    public void actualizar(ProveedorDTO dto) throws Exception {
-
-        try {
-            Proveedor nuevoProveedor = obtenerProveedor(dto.cuit);
-
-            nuevoProveedor.reemplazarRubros(dto.rubros);
-            nuevoProveedor.setCuit(dto.cuit);
-            nuevoProveedor.setEmail(dto.email);
-            nuevoProveedor.setTipoIVA(dto.tipoIVA);
-            nuevoProveedor.setNombreFantasia(dto.nombreFantasia);
-            nuevoProveedor.setIngresosBrutos(dto.ingresosBrutos);
-            nuevoProveedor.setLimiteCtaCte(dto.limiteCtaCte);
-            nuevoProveedor.setTelefono(dto.telefono);
-            nuevoProveedor.setRazonSocial(dto.razonSocial);
-
-            this.service.update(nuevoProveedor);
-        } catch (Exception ex) {
-            throw ex;
-        }
     }
 
     /**
@@ -123,17 +104,28 @@ public class ProveedorController {
     }
 
     /**
-     * @param cuit
-     * @return List<CertificadoDTO>
-     * @tarea Lista los certificados como DTO de un provedor en particular.
+     * @param dto
+     * @tarea Dado un ProveedorDTO y un proveedor existente, se actualizan las propiedades del mismo.
      */
-    public List<CertificadoDTO> listarCertificadosPorProveedor(String cuit) {
+    public void actualizar(ProveedorDTO dto) throws Exception {
 
-        Proveedor p = this.obtenerProveedor(cuit);
-        if (p != null)
-            return p.getCertificados();
+        try {
+            Proveedor nuevoProveedor = obtenerProveedor(dto.cuit);
 
-        return new ArrayList<>();
+            nuevoProveedor.reemplazarRubros(dto.rubros);
+            nuevoProveedor.setCuit(dto.cuit);
+            nuevoProveedor.setEmail(dto.email);
+            nuevoProveedor.setTipoIVA(dto.tipoIVA);
+            nuevoProveedor.setNombreFantasia(dto.nombreFantasia);
+            nuevoProveedor.setIngresosBrutos(dto.ingresosBrutos);
+            nuevoProveedor.setLimiteCtaCte(dto.limiteCtaCte);
+            nuevoProveedor.setTelefono(dto.telefono);
+            nuevoProveedor.setRazonSocial(dto.razonSocial);
+
+            this.proveedorService.update(nuevoProveedor);
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
     /**
@@ -148,7 +140,7 @@ public class ProveedorController {
             }
             for (Proveedor p : this.proveedores) {
                 if (p.getCuit().equals(cuit)) {
-                    this.service.delete(p.getId());
+                    this.proveedorService.delete(p.getId());
                     this.proveedores.remove(p);
                     break;
                 }
@@ -169,7 +161,7 @@ public class ProveedorController {
             if (prov != null) {
                 CertificadoExcencion nuevoCertif = new CertificadoExcencion(certifDTO);
                 prov.agregarCertificicado(nuevoCertif);
-                this.service.update(prov);
+                this.proveedorService.update(prov);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -205,6 +197,20 @@ public class ProveedorController {
     }
 
     /**
+     * @param cuit
+     * @return List<CertificadoDTO>
+     * @tarea Lista los certificados como DTO de un provedor en particular.
+     */
+    public List<CertificadoDTO> listarCertificadosPorProveedor(String cuit) {
+
+        Proveedor p = this.obtenerProveedor(cuit);
+        if (p != null)
+            return p.getCertificados();
+
+        return new ArrayList<>();
+    }
+
+    /**
      * @param provCuit
      * @param nuevoCertificado
      * @return Boolean
@@ -224,6 +230,32 @@ public class ProveedorController {
     }
 
     /**
+     * @param dto
+     * @tarea Dada una orden de compra, la asigna al correspondiente proveedor.
+     */
+    public void agregarOrdenCompra(OrdenCompraDTO dto) throws Exception {
+        try {
+            OrdenCompra oc = new OrdenCompra(dto);
+
+            oc.setNumero(this.ordenCompraService.getProximoNumero());
+
+            for (DetalleDTO d : dto.detalles) {
+                Detalle nuevoDetalle = new Detalle(d);
+                this.precController.setItemEnDetalle(d.codItem, nuevoDetalle);
+                oc.setDetalle(nuevoDetalle);
+            }
+
+
+            this.ordenCompraService.save(oc);
+
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    // private region
+
+    /**
      * @param cuit
      * @return proveedor
      * @tarea metodo privado para poder operar con objetos del dominio.
@@ -238,4 +270,48 @@ public class ProveedorController {
         return null;
     }
 
+
+    // region Ordenes Compra
+
+    /**
+     * @return List<OrdenCompraDTO>
+     * @ Lista todas las ordenes de compra del dominio
+     */
+    public List<OrdenCompraDTO> listarOrdenes() {
+        try {
+            List<OrdenCompraDTO> ordenes = new ArrayList<>();
+
+            for (Proveedor prov : this.proveedores) {
+                for (OrdenCompra oc : prov.getOrdenesCompra()) {
+                    OrdenCompraDTO o = oc.toDTO();
+                    ordenes.add(o);
+                }
+            }
+            return ordenes;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    /**
+     * @param cuit
+     * @return List<OrdenCompraDTO>
+     * @tarea Dado un cuit, construye una lista de ordenes de compra dto.
+     */
+    public List<OrdenCompraDTO> listarOrdenes(String cuit) {
+        try {
+            List<OrdenCompraDTO> ordenes = new ArrayList<>();
+            Proveedor prov = this.obtenerProveedor(cuit);
+
+            for (OrdenCompra oc : prov.getOrdenesCompra()) {
+                if (oc.getProveedorCuit().equals(cuit)) {
+                    OrdenCompraDTO o = oc.toDTO();
+                    ordenes.add(o);
+                }
+            }
+            return ordenes;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
 }

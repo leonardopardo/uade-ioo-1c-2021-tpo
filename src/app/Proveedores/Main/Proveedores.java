@@ -20,6 +20,7 @@ import java.util.List;
 
 public class Proveedores extends JFrame {
 
+
     //region UI Elements
     private JPanel pnlMain;
     private JPanel pnlHeader;
@@ -118,7 +119,6 @@ public class Proveedores extends JFrame {
         this.actionGuardarCertificado();
         this.actionCancelarCertificado();
         this.actionEliminarCertificado();
-        this.actionSelectedCertificadoProveedor();
         this.actionSelectedRowProveedores();
         this.actionShowCertificados();
         //endregion
@@ -463,6 +463,7 @@ public class Proveedores extends JFrame {
 
     void populateTableProveedoresCert() {
         try {
+            System.out.println(this.textFieldCertCuit.getText());
             List<CertificadoDTO> certificados = ProveedorController.getInstance().obtenerCertificadosProveedor(this.textFieldCertCuit.getText());
             String[] columns = new String[]{
                     "Tipo",
@@ -497,10 +498,13 @@ public class Proveedores extends JFrame {
     //region action certificados
     void actionShowCertificados() {
         Proveedores self = this;
-        this.comboBoxCertProveedor.addItemListener(new ItemListener() {
+        this.comboBoxCertProveedor.addActionListener(new ActionListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 try {
+                    String razonSocial = self.comboBoxCertProveedor.getSelectedItem().toString();
+                    ProveedorDTO dto = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
+                    self.textFieldCertCuit.setText(dto.cuit);
                     populateTableProveedoresCert();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
@@ -592,21 +596,6 @@ public class Proveedores extends JFrame {
                             "",
                             JOptionPane.ERROR_MESSAGE
                     );
-                }
-            }
-        });
-    }
-
-    void actionSelectedCertificadoProveedor() {
-        Proveedores self = this;
-        this.comboBoxCertProveedor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String razonSocial = self.comboBoxCertProveedor.getSelectedItem().toString();
-                    ProveedorDTO dto = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
-                    self.textFieldCertCuit.setText(dto.cuit);
-                } catch (Exception ex) {
                 }
             }
         });
