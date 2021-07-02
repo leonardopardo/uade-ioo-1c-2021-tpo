@@ -236,38 +236,19 @@ public class ProveedorController {
     public void agregarOrdenCompra(OrdenCompraDTO dto) throws Exception {
         try {
             OrdenCompra oc = new OrdenCompra(dto);
-
             oc.setNumero(this.ordenCompraService.getProximoNumero());
+            Proveedor prov = this.obtenerProveedor(dto.cuitProveedor);
 
             for (DetalleDTO d : dto.detalles) {
                 Detalle nuevoDetalle = new Detalle(d);
                 this.precController.setItemEnDetalle(d.codItem, nuevoDetalle);
                 oc.setDetalle(nuevoDetalle);
             }
-
-
+            prov.setOrdenCompra(dto);
             this.ordenCompraService.save(oc);
-
         } catch (Exception ex) {
             throw ex;
         }
-    }
-
-    // private region
-
-    /**
-     * @param cuit
-     * @return proveedor
-     * @tarea metodo privado para poder operar con objetos del dominio.
-     * @comment El metodo es privado ya que devuelve un objeto del dominio.
-     */
-    private Proveedor obtenerProveedor(String cuit) {
-        for (Proveedor proveedor : this.proveedores) {
-            if (proveedor.getCuit().equals(cuit)) {
-                return proveedor;
-            }
-        }
-        return null;
     }
 
 
@@ -313,5 +294,22 @@ public class ProveedorController {
         } catch (Exception ex) {
             throw ex;
         }
+    }
+
+    // Private region
+
+    /**
+     * @param cuit
+     * @return proveedor
+     * @tarea metodo privado para poder operar con objetos del dominio.
+     * @comment El metodo es privado ya que devuelve un objeto del dominio.
+     */
+    private Proveedor obtenerProveedor(String cuit) {
+        for (Proveedor proveedor : this.proveedores) {
+            if (proveedor.getCuit().equals(cuit)) {
+                return proveedor;
+            }
+        }
+        return null;
     }
 }
