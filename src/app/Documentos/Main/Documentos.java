@@ -2,7 +2,6 @@ package app.Documentos.Main;
 
 import app.Documentos.OrdenCompra.Formulario;
 import app.Main.Main;
-import controllers.DocumentosController;
 import controllers.ProveedorController;
 import dto.OrdenCompraDTO;
 import dto.ProveedorDTO;
@@ -133,7 +132,7 @@ public class Documentos extends JFrame implements ActionListener{
 
     void populateOCTable(){
         try {
-            List<OrdenCompraDTO> ordenes = DocumentosController.getInstance().listarOrdenes();
+            List<OrdenCompraDTO> ordenes = ProveedorController.getInstance().listarOrdenes();
 
             String[] columns = new String[]{
                     "NUMERO",

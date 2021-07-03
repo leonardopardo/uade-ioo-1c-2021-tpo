@@ -1,13 +1,12 @@
 package tests;
 
-import controllers.DocumentosController;
+import controllers.ProveedorController;
 import dto.DetalleDTO;
 import dto.OrdenCompraDTO;
 import org.junit.jupiter.api.Test;
 import servicios.OrdenCompraService;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -28,11 +27,11 @@ public class OrdenCompraServiceTest {
     @Test
     public void test_puede_agregar_orden_compra() throws Exception {
         OrdenCompraService service = new OrdenCompraService();
-        DocumentosController controller = DocumentosController.getInstance();
+        ProveedorController controller = ProveedorController.getInstance();
 
         OrdenCompraDTO ordenCompraDTO = new OrdenCompraDTO();
         ordenCompraDTO.numero = service.getProximoNumero();
-        ordenCompraDTO.cuitProveedor = "23385247249";
+        ordenCompraDTO.cuitProveedor = "30708931345";
         ordenCompraDTO.fecha = LocalDate.now();
 
 

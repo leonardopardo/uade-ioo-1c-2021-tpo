@@ -455,6 +455,7 @@ public class Proveedores extends JFrame {
 
     //region populate certificados
     void populateComboBoxProveedoresCert() throws Exception {
+        this.comboBoxCertProveedor.addItem("-- Seleccione un proveedor --");
         for (ProveedorDTO prov : ProveedorController.getInstance().listar()
         ) {
             this.comboBoxCertProveedor.addItem(prov.razonSocial);
@@ -463,7 +464,6 @@ public class Proveedores extends JFrame {
 
     void populateTableProveedoresCert() {
         try {
-            System.out.println(this.textFieldCertCuit.getText());
             List<CertificadoDTO> certificados = ProveedorController.getInstance().obtenerCertificadosProveedor(this.textFieldCertCuit.getText());
             String[] columns = new String[]{
                     "Tipo",
@@ -504,7 +504,9 @@ public class Proveedores extends JFrame {
                 try {
                     String razonSocial = self.comboBoxCertProveedor.getSelectedItem().toString();
                     ProveedorDTO dto = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
-                    self.textFieldCertCuit.setText(dto.cuit);
+                    if (dto != null) {
+                        self.textFieldCertCuit.setText(dto.cuit);
+                    }
                     populateTableProveedoresCert();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
