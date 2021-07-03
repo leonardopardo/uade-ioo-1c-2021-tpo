@@ -1,10 +1,12 @@
 package app.Pagos;
 
+import app.Documentos.OrdenCompra.Formulario;
 import app.Main.Main;
-import app.Proveedores.Main.Proveedores;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -20,9 +22,23 @@ public class Ordenes extends JFrame{
     private JPanel pnlTable;
     private JTable tablePagos;
     private JPanel pnlActions;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
+    private JButton btnNuevaOrden;
+    private JButton btnEliminar;
+    private JButton btnFiltrar;
+    private JComboBox comboBoxProveedores;
+    private JTextField textField1;
+    private JButton btnLimpiarFiltro;
+    private JPanel pnlFrmProveedor;
+    private JPanel pnlFrmCUIT;
+    private JPanel pnlFRMFechaDesde;
+    private JPanel pnlFRMFechaHasta;
+    private JLabel lblFechaDesde;
+    private JPanel pnlContainerFechaDesde;
+    private JLabel lblFechaHasta;
+    private JPanel pnlContainerFechaHasta;
+    private JLabel lblProveedores;
+
+    private Ordenes self;
 
     public Ordenes(String title){
         super(title);
@@ -35,7 +51,30 @@ public class Ordenes extends JFrame{
 
         //region Register Actions
         this.closeModule();
+        this.positionScreen();
+        this.actionNuevaOrden();
         //endregion
+
+        this.self = this;
+    }
+
+    void actionNuevaOrden(){
+        Ordenes self = this;
+        this.btnNuevaOrden.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    NuevoPago frmNuevoPago = new NuevoPago(self);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
     }
 
     void closeModule() {
@@ -53,5 +92,13 @@ public class Ordenes extends JFrame{
                 }
             }
         });
+    }
+
+    void positionScreen(){
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(
+                dim.width/2-this.getSize().width/2,
+                dim.height/2-this.getSize().height/2
+        );
     }
 }

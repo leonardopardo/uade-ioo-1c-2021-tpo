@@ -218,7 +218,7 @@ public class Proveedores extends JFrame {
 
     void populateListRubros(ArrayList r) {
         DefaultListModel model = new DefaultListModel();
-        model.addAll(r);
+        //model.addAll(r);
         this.listRubros.setModel(model);
     }
     //end populate region

@@ -70,6 +70,7 @@ public class Usuarios extends JFrame {
         this.selectedRow();
         this.guardarAction();
         this.eliminarAction();
+        this.positionScreen();
         //endregion
     }
 
@@ -300,5 +301,13 @@ public class Usuarios extends JFrame {
         }
 
         return false;
+    }
+
+    void positionScreen(){
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(
+                dim.width/2-this.getSize().width/2,
+                dim.height/2-this.getSize().height/2
+        );
     }
 }
