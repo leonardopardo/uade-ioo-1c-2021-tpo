@@ -1,6 +1,7 @@
 package modelos;
 
 import dto.CertificadoDTO;
+import dto.OrdenCompraDTO;
 import dto.ProveedorCompulsaDTO;
 import dto.ProveedorDTO;
 import modelos.enums.Rubro;
@@ -21,10 +22,12 @@ public class Proveedor {
     private String telefono;
     private LocalDate inicioActividad;
     private String ingresosBrutos;
-    private List<Rubro> rubros;
     private Double limiteCtaCte;
-    private List<CertificadoExcencion> certificados;
     private Double balance;
+    private List<CertificadoExcencion> certificados;
+    private List<Rubro> rubros;
+    private List<OrdenCompra> ordenesCompra;
+    private List<Factura> facturas;
 
     public Proveedor(ProveedorDTO p) {
         this.razonSocial = p.razonSocial;
@@ -39,6 +42,8 @@ public class Proveedor {
 
         this.rubros = new ArrayList<>();
         this.certificados = new ArrayList<>();
+        this.ordenesCompra = new ArrayList<>();
+        this.facturas = new ArrayList<>();
     }
 
     public void setRazonSocial(String razonSocial) {
@@ -81,6 +86,11 @@ public class Proveedor {
         this.certificados = certificados;
     }
 
+    public void setOrdenCompra(OrdenCompraDTO oc) {
+        OrdenCompra nuevaOC = new OrdenCompra(oc);
+        this.ordenesCompra.add(nuevaOC);
+    }
+
     public String getCuit() {
         return this.cuit;
     }
@@ -91,18 +101,6 @@ public class Proveedor {
 
     public Integer getId() {
         return this.id;
-    }
-
-    public Double getBalance() {
-        return this.balance;
-    }
-
-    public void agregarRubro(Rubro r) {
-        this.rubros.add(r);
-    }
-
-    public void agregarCertificicado(CertificadoExcencion nuevoCertif) {
-        this.certificados.add(nuevoCertif);
     }
 
     public List<CertificadoDTO> getCertificados() {
@@ -117,6 +115,22 @@ public class Proveedor {
         }
 
         return list;
+    }
+
+    public Double getBalance() {
+        return this.balance;
+    }
+
+    public void agregarRubro(Rubro r) {
+        this.rubros.add(r);
+    }
+
+    public void agregarCertificicado(CertificadoExcencion nuevoCertif) {
+        this.certificados.add(nuevoCertif);
+    }
+
+    public void reemplazarRubros(List nuevoRubros) {
+        this.rubros = nuevoRubros;
     }
 
     public ProveedorDTO toDTO() {
@@ -137,10 +151,6 @@ public class Proveedor {
 
     public ProveedorCompulsaDTO toCompulsaDTO() {
         return new ProveedorCompulsaDTO();
-    }
-
-    public void reemplazarRubros(List nuevoRubros) {
-        this.rubros = nuevoRubros;
     }
 
 
@@ -182,4 +192,7 @@ public class Proveedor {
                 '}';
     }
 
+    public List<OrdenCompra> getOrdenesCompra() {
+        return this.ordenesCompra;
+    }
 }
