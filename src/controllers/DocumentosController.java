@@ -57,8 +57,6 @@ public class DocumentosController {
                 oc.setDetalle(nuevoDetalle);
             }
 
-            this.proveedorController.setProveedorEnOc(dto.cuitProveedor, oc);
-
             this.ordenesCompra.add(oc);
 
             this.ordenCompraService.save(oc);

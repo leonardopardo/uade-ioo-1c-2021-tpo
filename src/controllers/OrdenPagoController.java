@@ -15,6 +15,7 @@ public class OrdenPagoController {
     private static OrdenPagoController instance;
 
     private OrdenPagoController() {
+
         this.ordenesPago = new ArrayList<OrdenPago>();
     }
 

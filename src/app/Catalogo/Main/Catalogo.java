@@ -31,10 +31,16 @@ public class Catalogo extends JFrame {
         this.setBackground(Color.WHITE);
         //endregion
 
-        this.tabbedPane1.setComponentAt(0, new Items());
+        int w = this.pnlMain.getPreferredSize().width;
+        int h = this.pnlMain.getPreferredSize().height;
+
+        JPanel itemsPanel = new Items();
+        itemsPanel.setSize(new Dimension(w, h));
+        this.tabbedPane1.setComponentAt(0, itemsPanel);
 
         //region Register Actions
         this.closeModule();
+        this.positionScreen();
         //endregion
     }
 
@@ -61,5 +67,13 @@ public class Catalogo extends JFrame {
 
             }
         });
+    }
+
+    void positionScreen(){
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(
+                dim.width/2-this.getSize().width/2,
+                dim.height/2-this.getSize().height/2
+        );
     }
 }
