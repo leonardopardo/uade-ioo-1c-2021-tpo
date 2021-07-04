@@ -6,6 +6,7 @@ import dto.ProveedorCompulsaDTO;
 import dto.ProveedorDTO;
 import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
+import servicios.OrdenCompraService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,8 +29,9 @@ public class Proveedor {
     private List<Rubro> rubros;
     private List<OrdenCompra> ordenesCompra;
     private List<Factura> facturas;
+    private OrdenCompraService ocService;
 
-    public Proveedor(ProveedorDTO p) {
+    public Proveedor(ProveedorDTO p) throws Exception {
         this.razonSocial = p.razonSocial;
         this.cuit = p.cuit;
         this.tipoIVA = p.tipoIVA;
@@ -39,6 +41,7 @@ public class Proveedor {
         this.inicioActividad = p.inicioActividad;
         this.ingresosBrutos = p.ingresosBrutos;
         this.limiteCtaCte = p.limiteCtaCte;
+        this.ocService = new OrdenCompraService();
 
         this.rubros = new ArrayList<>();
         this.certificados = new ArrayList<>();
@@ -103,6 +106,10 @@ public class Proveedor {
         return this.id;
     }
 
+    public List<OrdenCompra> getOrdenesCompra() {
+        return this.ordenesCompra;
+    }
+
     public List<CertificadoDTO> getCertificados() {
         List<CertificadoDTO> list = new ArrayList<>();
         for (CertificadoExcencion c : this.certificados) {
@@ -153,7 +160,6 @@ public class Proveedor {
         return new ProveedorCompulsaDTO();
     }
 
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -190,9 +196,5 @@ public class Proveedor {
                 ", certificados=" + certificados +
                 ", balance=" + balance +
                 '}';
-    }
-
-    public List<OrdenCompra> getOrdenesCompra() {
-        return this.ordenesCompra;
     }
 }
