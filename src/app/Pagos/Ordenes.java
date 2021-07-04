@@ -118,7 +118,8 @@ public class Ordenes extends JFrame{
                     "FECHA",
                     "RAZON SOCIAL",
                     "CUIT",
-                    "MONTO"
+                    "MONTO",
+                    "ESTADO"
             };
 
             DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
@@ -127,9 +128,10 @@ public class Ordenes extends JFrame{
                 Object[] o = {
                         x.numero,
                         x.fecha,
-                        x.nombreProveedor,
+                        x.nombreProveedor.toUpperCase(),
                         x.cuitProveedor,
-                        x.importeTotal
+                        x.importeTotal,
+                        x.estado
                 };
 
                 tblModel.addRow(o);
