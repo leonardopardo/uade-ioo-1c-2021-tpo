@@ -2,8 +2,10 @@ package app.Pagos;
 
 import controllers.ProveedorController;
 import dto.ProveedorDTO;
+import helpers.Helpers;
 import modelos.enums.EstadoPago;
 import modelos.enums.TipoPago;
+import org.jdatepicker.impl.JDatePickerImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +20,7 @@ public class NuevoPago extends JDialog implements ActionListener {
     private JPanel pnlHeader;
     private JLabel lblCuit;
     private JLabel lblProveedor;
-    private JPanel pnlFechaContainer;
+    private JPanel pnlContainerFecha;
     private JLabel lblFechaPago;
     private JPanel pnlFormProveedor;
     private JPanel pnlFormCuit;
@@ -26,6 +28,8 @@ public class NuevoPago extends JDialog implements ActionListener {
     private JLabel lblEstado;
     private JComboBox comboBoxEstadoPago;
     private JPanel pnlEstadoPago;
+    private JButton button1;
+    private JDatePickerImpl datePickerFecha;
 
     public NuevoPago(JFrame parent) {
         super(parent);
@@ -113,6 +117,9 @@ public class NuevoPago extends JDialog implements ActionListener {
         this.populateComboBoxProveedores();
         this.populateComboBoxEstadoPago();
         this.textFieldCUIT.setEditable(false);
+
+        this.datePickerFecha = Helpers.nuevoDatePicker();
+        Helpers.appendDatePicker(this.pnlContainerFecha, this.datePickerFecha);
 
         this.setContentPane(this.pnlMain);
         this.setResizable(false);
