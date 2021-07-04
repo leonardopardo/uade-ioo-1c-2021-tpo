@@ -28,7 +28,14 @@ public class NuevoPago extends JDialog implements ActionListener {
     private JLabel lblEstado;
     private JComboBox comboBoxEstadoPago;
     private JPanel pnlEstadoPago;
+    private JButton btnGuardar;
+    private JButton cancelarButton;
     private JButton button1;
+    private JList listFacturasImpagas;
+    private JList listFacturasAPagar;
+    private JButton button2;
+    private JButton button3;
+    private JButton button4;
     private JDatePickerImpl datePickerFecha;
 
     public NuevoPago(JFrame parent) {
