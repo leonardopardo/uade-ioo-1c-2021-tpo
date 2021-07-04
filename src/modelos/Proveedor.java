@@ -1,12 +1,10 @@
 package modelos;
 
 import dto.CertificadoDTO;
-import dto.OrdenCompraDTO;
 import dto.ProveedorCompulsaDTO;
 import dto.ProveedorDTO;
 import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
-import servicios.OrdenCompraService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,7 +27,6 @@ public class Proveedor {
     private List<Rubro> rubros;
     private List<OrdenCompra> ordenesCompra;
     private List<Factura> facturas;
-    private OrdenCompraService ocService;
 
     public Proveedor(ProveedorDTO p) throws Exception {
         this.razonSocial = p.razonSocial;
@@ -41,7 +38,6 @@ public class Proveedor {
         this.inicioActividad = p.inicioActividad;
         this.ingresosBrutos = p.ingresosBrutos;
         this.limiteCtaCte = p.limiteCtaCte;
-        this.ocService = new OrdenCompraService();
 
         this.rubros = new ArrayList<>();
         this.certificados = new ArrayList<>();
@@ -89,8 +85,7 @@ public class Proveedor {
         this.certificados = certificados;
     }
 
-    public void setOrdenCompra(OrdenCompraDTO oc) {
-        OrdenCompra nuevaOC = new OrdenCompra(oc);
+    public void setOrdenCompra(OrdenCompra nuevaOC) {
         this.ordenesCompra.add(nuevaOC);
     }
 

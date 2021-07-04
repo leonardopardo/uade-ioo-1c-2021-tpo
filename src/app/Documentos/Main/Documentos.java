@@ -13,10 +13,7 @@ import org.jdatepicker.impl.UtilDateModel;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.List;
 import java.util.Properties;
 
@@ -84,12 +81,14 @@ public class Documentos extends JFrame {
         //region Populate
         this.populateOCComboBoxProveedores();
         this.populateOCTable();
+        this.actionSelectedRowOrdenesCompra();
         //endregion
 
         //region Register Actions
         this.closeModule();
         this.actionSelectedOCProveedor();
         this.actionNuevaOrden();
+        this.actionEliminarOrden();
         //endregion
 
     }
@@ -184,9 +183,7 @@ public class Documentos extends JFrame {
 
 
     void actionNuevaOrden() {
-
         Documentos self = this;
-
         this.btnNuevaOrden.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -206,10 +203,39 @@ public class Documentos extends JFrame {
         });
     }
 
-    void actionSelectedOCProveedor() {
+    void actionSelectedRowOrdenesCompra() {
+        this.tableOrdenesCompra.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JTable target = (JTable) e.getSource();
+                try {
+                    System.out.println(tableOrdenesCompra.getValueAt(target.getSelectedRow(), 0).toString());
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+    }
 
+    void actionEliminarOrden() {
         Documentos self = this;
+        this.eliminarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    ProveedorController pController = ProveedorController.getInstance();
+                    //Integer numeroOrden = self.
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
 
+    }
+
+    void actionSelectedOCProveedor() {
+        Documentos self = this;
         this.comboBoxOCProveedores.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -6,7 +6,6 @@ import dto.OrdenCompraDTO;
 import dto.ProveedorDTO;
 import modelos.*;
 import modelos.enums.Rubro;
-import servicios.OrdenCompraService;
 import servicios.ProveedorService;
 
 import java.util.ArrayList;
@@ -17,14 +16,13 @@ public class ProveedorController {
     private static ProveedorController instance;
     private PrecioController precController;
     private ProveedorService proveedorService;
-    private OrdenCompraService ordenCompraService;
     private List<Proveedor> proveedores;
+    private List<OrdenCompra> ordenes;
 
 
     private ProveedorController() throws Exception {
         this.proveedorService = new ProveedorService();
         this.proveedores = this.proveedorService.getAll();
-        this.ordenCompraService = new OrdenCompraService();
         this.precController = PrecioController.getInstance();
     }
 
@@ -236,16 +234,16 @@ public class ProveedorController {
     public void agregarOrdenCompra(OrdenCompraDTO dto) throws Exception {
         try {
             OrdenCompra oc = new OrdenCompra(dto);
-            oc.setNumero(this.ordenCompraService.getProximoNumero());
             Proveedor prov = this.obtenerProveedor(dto.cuitProveedor);
+            oc.setNumero(prov.getOrdenesCompra().size() + 1);
 
             for (DetalleDTO d : dto.detalles) {
                 Detalle nuevoDetalle = new Detalle(d);
                 this.precController.setItemEnDetalle(d.codItem, nuevoDetalle);
                 oc.setDetalle(nuevoDetalle);
             }
-            prov.setOrdenCompra(dto);
-            this.ordenCompraService.save(oc);
+            prov.setOrdenCompra(oc);
+            this.proveedorService.update(prov);
         } catch (Exception ex) {
             throw ex;
         }
@@ -259,10 +257,9 @@ public class ProveedorController {
      */
     public List<OrdenCompraDTO> listarOrdenes() throws Exception {
         try {
-            List<OrdenCompra> ordenes = this.ordenCompraService.getAll();
             List<OrdenCompraDTO> ordenesDTO = new ArrayList<>();
-            for (OrdenCompra ord : ordenes) {
-                ordenesDTO.add(ord.toDTO());
+            for (OrdenCompra oc : this.ordenes) {
+                ordenesDTO.add(oc.toDTO());
             }
             return ordenesDTO;
         } catch (Exception ex) {
@@ -293,17 +290,6 @@ public class ProveedorController {
     }
 
     // Private region
-
-    /**
-     * @tarea Al no tener persistencia en las listas de los modelos, utilizamos este metodo al inicializar la app para popular el array de cada proveedor.
-     */
-    private void setOrdenesCompra() throws Exception {
-        List<OrdenCompra> ordenes = this.ordenCompraService.getAll();
-        for (OrdenCompra oc : ordenes) {
-            Proveedor prov = this.obtenerProveedor(oc.getProveedorCuit());
-            prov.setOrdenCompra(oc.toDTO());
-        }
-    }
 
     /**
      * @param cuit
