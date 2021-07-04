@@ -251,24 +251,20 @@ public class ProveedorController {
         }
     }
 
-
     // region Ordenes Compra
 
     /**
      * @return List<OrdenCompraDTO>
      * @ Lista todas las ordenes de compra del dominio
      */
-    public List<OrdenCompraDTO> listarOrdenes() {
+    public List<OrdenCompraDTO> listarOrdenes() throws Exception {
         try {
-            List<OrdenCompraDTO> ordenes = new ArrayList<>();
-
-            for (Proveedor prov : this.proveedores) {
-                for (OrdenCompra oc : prov.getOrdenesCompra()) {
-                    OrdenCompraDTO o = oc.toDTO();
-                    ordenes.add(o);
-                }
+            List<OrdenCompra> ordenes = this.ordenCompraService.getAll();
+            List<OrdenCompraDTO> ordenesDTO = new ArrayList<>();
+            for (OrdenCompra ord : ordenes) {
+                ordenesDTO.add(ord.toDTO());
             }
-            return ordenes;
+            return ordenesDTO;
         } catch (Exception ex) {
             throw ex;
         }
@@ -279,7 +275,7 @@ public class ProveedorController {
      * @return List<OrdenCompraDTO>
      * @tarea Dado un cuit, construye una lista de ordenes de compra dto.
      */
-    public List<OrdenCompraDTO> listarOrdenes(String cuit) {
+    public List<OrdenCompraDTO> listarOrdenes(String cuit) throws Exception {
         try {
             List<OrdenCompraDTO> ordenes = new ArrayList<>();
             Proveedor prov = this.obtenerProveedor(cuit);
@@ -297,6 +293,17 @@ public class ProveedorController {
     }
 
     // Private region
+
+    /**
+     * @tarea Al no tener persistencia en las listas de los modelos, utilizamos este metodo al inicializar la app para popular el array de cada proveedor.
+     */
+    private void setOrdenesCompra() throws Exception {
+        List<OrdenCompra> ordenes = this.ordenCompraService.getAll();
+        for (OrdenCompra oc : ordenes) {
+            Proveedor prov = this.obtenerProveedor(oc.getProveedorCuit());
+            prov.setOrdenCompra(oc.toDTO());
+        }
+    }
 
     /**
      * @param cuit

@@ -20,7 +20,7 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Properties;
 
-public class Documentos extends JFrame implements ActionListener{
+public class Documentos extends JFrame {
     private JPanel pnlMain;
     private JPanel pnlHeader;
     private JPanel pnlBody;
@@ -56,7 +56,7 @@ public class Documentos extends JFrame implements ActionListener{
     private JDatePickerImpl opFechaFin;
     private Formulario frmOrdenCompra;
 
-    public Documentos(String title){
+    public Documentos(String title) {
 
         super(title);
 
@@ -88,7 +88,6 @@ public class Documentos extends JFrame implements ActionListener{
 
         //region Register Actions
         this.closeModule();
-        //this.closeFrmOrdenCompra();
         this.actionSelectedOCProveedor();
         this.actionNuevaOrden();
         //endregion
@@ -96,7 +95,7 @@ public class Documentos extends JFrame implements ActionListener{
     }
 
     //region Factory
-    JDatePickerImpl nuevoDatePicker(){
+    JDatePickerImpl nuevoDatePicker() {
         UtilDateModel model = new UtilDateModel();
         JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
         JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
@@ -104,14 +103,14 @@ public class Documentos extends JFrame implements ActionListener{
         return datePicker;
     }
 
-    void appendDatePicker(JPanel panel, JDatePickerImpl picker){
+    void appendDatePicker(JPanel panel, JDatePickerImpl picker) {
         panel.setLayout(new GridLayout());
         panel.add(picker);
     }
     //endregion
 
     //region Populate
-    void populateOCComboBoxProveedores(){
+    void populateOCComboBoxProveedores() {
         try {
             List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
 
@@ -130,7 +129,7 @@ public class Documentos extends JFrame implements ActionListener{
         }
     }
 
-    void populateOCTable(){
+    void populateOCTable() {
         try {
             List<OrdenCompraDTO> ordenes = ProveedorController.getInstance().listarOrdenes();
 
@@ -183,17 +182,6 @@ public class Documentos extends JFrame implements ActionListener{
         });
     }
 
-    void actionFilterOC() {
-
-    }
-
-    void actionEliminarOC() {
-
-    }
-
-    void actionCancelarOC() {
-
-    }
 
     void actionNuevaOrden() {
 
@@ -202,11 +190,11 @@ public class Documentos extends JFrame implements ActionListener{
         this.btnNuevaOrden.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
+                try {
 
                     self.frmOrdenCompra = new Formulario(self);
 
-                } catch(Exception ex){
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
                             ex.getMessage(),
@@ -218,7 +206,7 @@ public class Documentos extends JFrame implements ActionListener{
         });
     }
 
-    void actionSelectedOCProveedor(){
+    void actionSelectedOCProveedor() {
 
         Documentos self = this;
 
@@ -226,19 +214,16 @@ public class Documentos extends JFrame implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-
-                    JComboBox element = (JComboBox) e.getSource();
-                    String razonSocial = element.getSelectedItem().toString();
-
+                    String razonSocial = self.comboBoxOCProveedores.getSelectedItem().toString();
                     ProveedorDTO dto = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
 
-                    if(dto != null){
+                    if (dto != null) {
                         self.textFieldOCFormCUIT.setText(dto.cuit);
                     } else {
                         self.textFieldOCFormCUIT.setText("");
                     }
 
-                } catch(Exception ex) {
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
                             ex.getMessage(),
@@ -252,17 +237,13 @@ public class Documentos extends JFrame implements ActionListener{
     //endregion
 
     //region Load
-    void positionScreen(){
+    void positionScreen() {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(
-                dim.width/2-this.getSize().width/2,
-                dim.height/2-this.getSize().height/2
+                dim.width / 2 - this.getSize().width / 2,
+                dim.height / 2 - this.getSize().height / 2
         );
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
     //endregion
 }
