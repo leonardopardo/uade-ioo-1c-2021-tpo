@@ -1,14 +1,23 @@
 package app.Pagos;
 
-import app.Documentos.OrdenCompra.Formulario;
 import app.Main.Main;
+import controllers.OrdenPagoController;
+import controllers.ProveedorController;
+import dto.OrdenPagoDTO;
+import dto.ProveedorDTO;
+import helpers.Helpers;
+import org.jdatepicker.impl.JDatePickerImpl;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ordenes extends JFrame{
     private JPanel pnlMain;
@@ -26,7 +35,7 @@ public class Ordenes extends JFrame{
     private JButton btnEliminar;
     private JButton btnFiltrar;
     private JComboBox comboBoxProveedores;
-    private JTextField textField1;
+    private JTextField textFieldCUIT;
     private JButton btnLimpiarFiltro;
     private JPanel pnlFrmProveedor;
     private JPanel pnlFrmCUIT;
@@ -37,25 +46,222 @@ public class Ordenes extends JFrame{
     private JLabel lblFechaHasta;
     private JPanel pnlContainerFechaHasta;
     private JLabel lblProveedores;
-
-    private Ordenes self;
+    private JLabel lblCUIT;
+    private JButton btnActualizarOrden;
+    private JDatePickerImpl datePickerFechaDesde;
+    private JDatePickerImpl datePickerFechaHasta;
+    private List<OrdenPagoDTO> ordenes;
 
     public Ordenes(String title){
         super(title);
+
+        //region Settings
         this.setResizable(false);
         this.setContentPane(this.pnlMain);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
         this.setSize(pnlMain.getPreferredSize());
         this.setBackground(Color.WHITE);
+        this.ordenes = new ArrayList<>();
+        //endregion
 
         //region Register Actions
         this.closeModule();
         this.positionScreen();
         this.actionNuevaOrden();
+        this.actionEliminarOrden();
+        this.actionActualizarOrden();
+        this.actionFiltrar();
+        this.actionLimpiarFiltros();
+        this.onChangeComboBoxProveedor();
         //endregion
 
-        this.self = this;
+        //region Populate
+        this.populateComboBoxProveedores();
+        this.populateTable();
+        //endregion
+
+        //region Default Values
+        textFieldCUIT.setEditable(false);
+
+        this.datePickerFechaDesde = Helpers.nuevoDatePicker();
+        Helpers.appendDatePicker(this.pnlContainerFechaDesde, this.datePickerFechaDesde);
+
+        this.datePickerFechaHasta = Helpers.nuevoDatePicker();
+        Helpers.appendDatePicker(this.pnlContainerFechaHasta, this.datePickerFechaHasta);
+        //endregion
+    }
+
+    //region Populate
+    void populateComboBoxProveedores(){
+        try {
+            List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
+
+            this.comboBoxProveedores.addItem("-- Seleccione --");
+            proveedores.stream().forEach(x -> {
+                this.comboBoxProveedores.addItem(x.razonSocial);
+            });
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    pnlMain,
+                    ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    void populateTable(){
+        try {
+            String[] columns = new String[]{
+                    "NUMERO",
+                    "FECHA",
+                    "RAZON SOCIAL",
+                    "CUIT",
+                    "MONTO"
+            };
+
+            DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
+
+            this.ordenes.stream().forEach(x -> {
+                Object[] o = {
+                        x.numero,
+                        x.fecha,
+                        x.nombreProveedor,
+                        x.cuitProveedor,
+                        x.importeTotal
+                };
+
+                tblModel.addRow(o);
+            });
+
+            this.tablePagos.setModel(tblModel);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    pnlMain,
+                    ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    //endregion
+
+    //region Actions
+    void closeModule() {
+        Ordenes self = this;
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                try {
+                    Main m = null;
+                    m = new Main("Main");
+                    m.setVisible(true);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void onChangeComboBoxProveedor(){
+        Ordenes self = this;
+        this.comboBoxProveedores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    String razonSocial = self.comboBoxProveedores.getSelectedItem().toString();
+
+                    ProveedorDTO proveedor = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
+
+                    if(proveedor != null)
+                        self.textFieldCUIT.setText(proveedor.cuit);
+                    else
+                        self.textFieldCUIT.setText("");
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionFiltrar(){
+        Ordenes self = this;
+        this.btnFiltrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+
+                    String cuit = self.textFieldCUIT.getText();
+
+                    LocalDate fechaDesde = Helpers.datePickerFormatter(self.datePickerFechaDesde);
+
+                    LocalDate fechaHasta = Helpers.datePickerFormatter(self.datePickerFechaHasta);
+
+                    OrdenPagoController controller = OrdenPagoController.getInstance();
+
+                    if(fechaDesde != null && fechaHasta != null && fechaHasta.isBefore(fechaDesde))
+                        throw new Exception("La fecha 'hasta' no puede ser anterior a la fecha 'desde'");
+
+                    if(cuit != null && fechaDesde == null && fechaHasta == null){
+                        self.ordenes = controller.ordenesPagoEmitidas(cuit);
+                    } else if (cuit == null && fechaDesde != null && fechaHasta == null){
+                        self.ordenes = controller.ordenesPagoEmitidas(fechaDesde, LocalDate.now());
+                    } else if (cuit == null && fechaDesde == null && fechaHasta != null){
+                        self.ordenes = controller.ordenesPagoEmitidas(LocalDate.now(), fechaHasta);
+                    } else if (cuit == null && fechaDesde != null && fechaHasta != null){
+                        self.ordenes = controller.ordenesPagoEmitidas(fechaDesde, fechaHasta, cuit);
+                    }
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionLimpiarFiltros(){
+        Ordenes self = this;
+
+        this.btnLimpiarFiltro.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    self.datePickerFechaDesde.getJFormattedTextField().setText(null);
+                    self.datePickerFechaHasta.getJFormattedTextField().setText(null);
+                    self.textFieldCUIT.setText("");
+                    self.comboBoxProveedores.setSelectedIndex(0);
+
+                    self.ordenes = OrdenPagoController.getInstance().ordenesPagoEmitidas();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
     }
 
     void actionNuevaOrden(){
@@ -77,18 +283,78 @@ public class Ordenes extends JFrame{
         });
     }
 
-    void closeModule() {
+    void actionActualizarOrden(){
         Ordenes self = this;
-        this.addWindowListener(new WindowAdapter() {
+        this.btnActualizarOrden.addActionListener(new ActionListener() {
             @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
+            public void actionPerformed(ActionEvent e) {
                 try {
-                    Main m = null;
-                    m = new Main("Main");
-                    m.setVisible(true);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+
+                    Integer row = self.tablePagos.getSelectedRow();
+
+                    if(row < 0)
+                        throw new Exception("ATENCIÓN! Debe seleccionar la Orden que desea actualizar.");
+
+                    Integer ordenNumero = Integer.parseInt(self.tablePagos.getValueAt(self.tablePagos.getSelectedRow(), 0).toString());
+
+                    NuevoPago frmNuevoPago = new NuevoPago(self, ordenNumero);
+
+                } catch (Exception ex){
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionEliminarOrden(){
+        Ordenes self = this;
+        this.btnEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+
+                    if(self.tablePagos.getSelectedRow() < 0)
+                        throw new Exception("ATENCIÓN! Debe seleccionar la Orden que desea eliminar.");
+
+                    String op = self.tablePagos.getValueAt(self.tablePagos.getSelectedRow(), 0).toString();
+
+                    int confirmResult = JOptionPane.showConfirmDialog(
+                            pnlMain,
+                            "ATENCIÓN. Esta acción no puede deshacerse. ¿Desea continuar?",
+                            "Cerrar",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE
+                    );
+
+                    if (confirmResult == JOptionPane.YES_OPTION){
+
+                        boolean result = OrdenPagoController.getInstance().eliminarOrdenPago(Integer.parseInt(op));
+
+                        if(result){
+                            JOptionPane.showMessageDialog(
+                                    pnlMain,
+                                    "ATENCIÓN! El registro se eliminó correctamente.",
+                                    "Registro Eliminado",
+                                    JOptionPane.INFORMATION_MESSAGE
+                            );
+                        } else {
+                            throw new Exception("Ocurrió un error al tratar de eliminar al registro.");
+                        }
+
+                    }
+
+                } catch(Exception ex){
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         });
@@ -101,4 +367,5 @@ public class Ordenes extends JFrame{
                 dim.height/2-this.getSize().height/2
         );
     }
+    //endregion
 }

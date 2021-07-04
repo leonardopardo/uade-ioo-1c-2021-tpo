@@ -18,6 +18,7 @@ public class Catalogo extends JFrame {
     private JLabel lblTitle;
     private JPanel pnlIcon;
     private JPanel pnlTitle;
+    private JPanel pnlItems;
 
     public Catalogo(String title) throws Exception {
         super(title);
@@ -36,7 +37,8 @@ public class Catalogo extends JFrame {
 
         JPanel itemsPanel = new Items();
         itemsPanel.setSize(new Dimension(w, h));
-        this.tabbedPane1.setComponentAt(0, itemsPanel);
+        this.pnlItems.setLayout(new GridLayout());
+        this.pnlItems.add(itemsPanel, BorderLayout.CENTER);
 
         //region Register Actions
         this.closeModule();
