@@ -3,6 +3,7 @@ package controllers;
 import dto.*;
 import modelos.OrdenPago;
 import modelos.enums.EstadoPago;
+import servicios.OrdenPagoService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,9 +15,12 @@ public class OrdenPagoController {
 
     private static OrdenPagoController instance;
 
-    private OrdenPagoController() {
+    private OrdenPagoService service;
 
-        this.ordenesPago = new ArrayList<OrdenPago>();
+    private OrdenPagoController() throws Exception {
+
+        this.service = new OrdenPagoService();
+        this.ordenesPago = this.service.getAll();
     }
 
     public static OrdenPagoController getInstance() throws Exception {
@@ -178,5 +182,34 @@ public class OrdenPagoController {
         dto.razonSocial = ProveedorController.getInstance().obtener(cuit).razonSocial;
 
         return dto;
+    }
+
+    /**
+     * @param numero
+     * @return
+     * @throws Exception
+     * @tarea Recibe un identificador de registro y lo elimina en la capa de persistencia.
+     */
+    public boolean eliminarOrdenPago(int numero) throws Exception {
+        return true;
+    }
+
+    /**
+     * @param numero
+     * @return
+     * @throws Exception
+     * @tarea Recibido el número de Orden de Pago retororna esta, null en caso contrario.
+     */
+    private OrdenPago obtenerOrden(int numero) throws Exception {
+        OrdenPago orden = null;
+
+        for (OrdenPago op : this.ordenesPago) {
+            if (op.getNumero().equals(numero)) {
+                orden = op;
+                break;
+            }
+        }
+
+        return orden;
     }
 }

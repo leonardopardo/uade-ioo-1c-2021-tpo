@@ -5,6 +5,8 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.Properties;
 
@@ -23,5 +25,10 @@ public class Helpers {
         JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
 
         return datePicker;
+    }
+
+    public static void appendDatePicker(JPanel panel, JDatePickerImpl picker){
+        panel.setLayout(new GridLayout());
+        panel.add(picker);
     }
 }
