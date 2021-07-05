@@ -160,6 +160,7 @@ public class PrecioController {
         }
     }
 
+    // detalle no puede existir acá!!!           >>!<<
     public void setItemEnDetalle(String codigo, Detalle detalle) {
         for (Item i : this.items) {
             if(i.getCodigo().equals(codigo))

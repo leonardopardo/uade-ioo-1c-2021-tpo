@@ -20,7 +20,6 @@ import java.util.List;
 
 public class Proveedores extends JFrame {
 
-
     //region UI Elements
     private JPanel pnlMain;
     private JPanel pnlHeader;
@@ -221,9 +220,9 @@ public class Proveedores extends JFrame {
         //model.addAll(r);
         this.listRubros.setModel(model);
     }
-    //end populate region
+    //endregion
 
-    //region Action Methods
+    //region Action
     void closeModule() {
         Proveedores self = this;
         this.addWindowListener(new WindowAdapter() {
@@ -406,8 +405,7 @@ public class Proveedores extends JFrame {
             }
         });
     }
-
-    //end action region
+    //endregion
 
     //region Load Methods
     void loadTableCert() throws Exception {
@@ -437,7 +435,6 @@ public class Proveedores extends JFrame {
         this.tableCert.setModel(tblModel);
     }
 
-
     // clear inputs
     void clearInputs() {
         this.textFieldRazonSocial.setText("");
@@ -453,7 +450,8 @@ public class Proveedores extends JFrame {
     }
     //endregion proveedores
 
-    //region populate certificados
+    //region Certificados
+    //region Certificados Populate
     void populateComboBoxProveedoresCert() throws Exception {
         this.comboBoxCertProveedor.addItem("-- Seleccione un proveedor --");
         for (ProveedorDTO prov : ProveedorController.getInstance().listar()
@@ -494,8 +492,10 @@ public class Proveedores extends JFrame {
             );
         }
     }
+    //endregion
 
-    //region action certificados
+
+    //region Certificados Actions
     void actionShowCertificados() {
         Proveedores self = this;
         this.comboBoxCertProveedor.addActionListener(new ActionListener() {
@@ -602,4 +602,6 @@ public class Proveedores extends JFrame {
             }
         });
     }
+    //endregion
+    //endregion
 }

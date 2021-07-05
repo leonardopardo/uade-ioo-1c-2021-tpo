@@ -2,9 +2,12 @@ package app.Documentos.Main;
 
 import app.Documentos.OrdenCompra.Formulario;
 import app.Main.Main;
+import controllers.DocumentoController;
+import controllers.OrdenPagoController;
 import controllers.ProveedorController;
 import dto.OrdenCompraDTO;
 import dto.ProveedorDTO;
+import helpers.Helpers;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -14,10 +17,11 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
 
-public class Documentos extends JFrame {
+public class Documentos extends JFrame implements ActionListener{
     private JPanel pnlMain;
     private JPanel pnlHeader;
     private JPanel pnlBody;
@@ -49,13 +53,23 @@ public class Documentos extends JFrame {
     private JButton eliminarButton1;
     private JButton filtrarButton;
     private JButton limpiarFiltroButton1;
-    private JDatePickerImpl opFechaInicio;
-    private JDatePickerImpl opFechaFin;
-    private Formulario frmOrdenCompra;
+    private JDatePickerImpl ocFechaDesde;
+    private JDatePickerImpl ocFechaHasta;
+    private JDialog frmOrdenCompra;
+    private List<OrdenCompraDTO> ordenes;
 
-    public Documentos(String title) {
+    public Documentos(String title) throws Exception {
 
         super(title);
+
+        //region Register Actions
+        this.closeModule();
+        this.actionSelectedOCProveedor();
+        this.actionSelectedRowOrdenesCompra();
+        this.actionNuevaOrden();
+        this.actionEliminarOrden();
+        this.actionOnClickBtnFiltrarOC();
+        //endregion
 
         //region Settings
         this.setContentPane(this.pnlMain);
@@ -68,45 +82,23 @@ public class Documentos extends JFrame {
 
         //region Default Values
         this.textFieldOCFormCUIT.setEnabled(false);
+        this.ordenes = DocumentoController.getInstance().listarOrdenes();
         //endregion
 
         //region Factory Elements
-        this.opFechaInicio = this.nuevoDatePicker();
-        this.appendDatePicker(this.pnlOCFormFechaDesdeDP, opFechaInicio);
+        this.ocFechaDesde = Helpers.nuevoDatePicker();
+        Helpers.appendDatePicker(this.pnlOCFormFechaDesdeDP, this.ocFechaDesde);
 
-        this.opFechaFin = this.nuevoDatePicker();
-        this.appendDatePicker(this.pnlOCFormFechaHastaDP, opFechaFin);
+        this.ocFechaHasta = Helpers.nuevoDatePicker();
+        Helpers.appendDatePicker(this.pnlOCFormFechaHastaDP, this.ocFechaHasta);
         //endregion
 
         //region Populate
         this.populateOCComboBoxProveedores();
         this.populateOCTable();
-        this.actionSelectedRowOrdenesCompra();
-        //endregion
-
-        //region Register Actions
-        this.closeModule();
-        this.actionSelectedOCProveedor();
-        this.actionNuevaOrden();
-        this.actionEliminarOrden();
         //endregion
 
     }
-
-    //region Factory
-    JDatePickerImpl nuevoDatePicker() {
-        UtilDateModel model = new UtilDateModel();
-        JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
-        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-
-        return datePicker;
-    }
-
-    void appendDatePicker(JPanel panel, JDatePickerImpl picker) {
-        panel.setLayout(new GridLayout());
-        panel.add(picker);
-    }
-    //endregion
 
     //region Populate
     void populateOCComboBoxProveedores() {
@@ -130,7 +122,7 @@ public class Documentos extends JFrame {
 
     void populateOCTable() {
         try {
-            List<OrdenCompraDTO> ordenes = ProveedorController.getInstance().listarOrdenes();
+            List<OrdenCompraDTO> ordenes = this.ordenes;
 
             String[] columns = new String[]{
                     "NUMERO",
@@ -146,9 +138,8 @@ public class Documentos extends JFrame {
                         x.numero,
                         x.fecha,
                         x.razonSocial.toUpperCase(),
-                        x.cuitProveedor
+                        x.cuit
                 };
-
                 tblModel.addRow(o);
             });
 
@@ -181,16 +172,14 @@ public class Documentos extends JFrame {
         });
     }
 
-
     void actionNuevaOrden() {
         Documentos self = this;
         this.btnNuevaOrden.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-
                     self.frmOrdenCompra = new Formulario(self);
-
+                    self.populateOCTable();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
@@ -260,6 +249,49 @@ public class Documentos extends JFrame {
             }
         });
     }
+
+    void actionOnClickBtnFiltrarOC(){
+        Documentos self = this;
+        this.btnFiltrarOC.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String cuit = self.textFieldOCFormCUIT.getText();
+
+                    LocalDate fechaDesde = Helpers.datePickerFormatter(self.ocFechaDesde);
+
+                    LocalDate fechaHasta = Helpers.datePickerFormatter(self.ocFechaHasta);
+
+                    DocumentoController controller = DocumentoController.getInstance();
+
+                    if(fechaDesde != null && fechaHasta != null && fechaHasta.isBefore(fechaDesde))
+                        throw new Exception("La fecha 'hasta' no puede ser anterior a la fecha 'desde'");
+
+                    if(cuit != null && fechaDesde == null && fechaHasta == null){
+                        self.ordenes = controller.listarOrdenes(cuit);
+                    } else if (cuit == null && fechaDesde != null && fechaHasta == null){
+                        self.ordenes = controller.listarOrdenes(fechaDesde, LocalDate.now());
+                    } else if (cuit == null && fechaDesde == null && fechaHasta != null){
+                        self.ordenes = controller.listarOrdenes(LocalDate.now(), fechaHasta);
+                    } else if (cuit == null && fechaDesde != null && fechaHasta != null){
+                        self.ordenes = controller.listarOrdenes(cuit, fechaDesde, fechaHasta);
+                    } else if (fechaDesde != null && fechaHasta != null && fechaDesde.equals(fechaHasta)){
+                        self.ordenes = controller.listarOrdenes(cuit, fechaDesde);
+                    }
+
+                    self.populateOCTable();
+
+                } catch (Exception ex){
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
     //endregion
 
     //region Load
@@ -271,5 +303,9 @@ public class Documentos extends JFrame {
         );
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
     //endregion
 }

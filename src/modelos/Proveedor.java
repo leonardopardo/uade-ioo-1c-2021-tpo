@@ -45,6 +45,7 @@ public class Proveedor {
         this.facturas = new ArrayList<>();
     }
 
+    //region Setters
     public void setRazonSocial(String razonSocial) {
         this.razonSocial = razonSocial;
     }
@@ -88,7 +89,9 @@ public class Proveedor {
     public void setOrdenCompra(OrdenCompra nuevaOC) {
         this.ordenesCompra.add(nuevaOC);
     }
+    //endregion
 
+    //region Getters
     public String getCuit() {
         return this.cuit;
     }
@@ -122,6 +125,7 @@ public class Proveedor {
     public Double getBalance() {
         return this.balance;
     }
+    //endregion
 
     public void agregarRubro(Rubro r) {
         this.rubros.add(r);
@@ -135,6 +139,7 @@ public class Proveedor {
         this.rubros = nuevoRubros;
     }
 
+    //region DTO's
     public ProveedorDTO toDTO() {
         ProveedorDTO dto = new ProveedorDTO();
         dto.razonSocial = this.razonSocial;
@@ -154,6 +159,7 @@ public class Proveedor {
     public ProveedorCompulsaDTO toCompulsaDTO() {
         return new ProveedorCompulsaDTO();
     }
+    //endregion
 
     @Override
     public boolean equals(Object obj) {
