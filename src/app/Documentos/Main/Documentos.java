@@ -293,20 +293,20 @@ public class Documentos extends JFrame {
 
                     if (!cuit.equals("") && fechaDesde == null && fechaHasta == null) { // si viene cuit y no vienen fechas
                         self.ordenes = controller.listarOrdenes(cuit);
-                    } else if (cuit.equals("") && fechaDesde != null && fechaHasta == null) { // si viene solo fecha desde
-                        self.ordenes = controller.listarOrdenes(fechaDesde, LocalDate.MAX);
-                    } else if (cuit.equals("") && fechaDesde == null && fechaHasta != null) { // si viene solo fecha hasta
-                        self.ordenes = controller.listarOrdenes(LocalDate.MIN, fechaHasta);
                     } else if (!cuit.equals("") && fechaDesde == null && fechaHasta != null) { // si viene cuit y fecha hasta
-                        self.ordenes = controller.listarOrdenes(LocalDate.MIN, fechaHasta);
+                        self.ordenes = controller.listarOrdenes(cuit, LocalDate.MIN, fechaHasta);
                     } else if(!cuit.equals("") && fechaDesde != null && fechaHasta == null) { // si viene cuit y fecha desde
                         self.ordenes = controller.listarOrdenes(cuit, fechaDesde, LocalDate.MAX);
-                    } else if (cuit.equals("") && fechaDesde != null && fechaHasta != null) { // si viene fecha desde y fecha hasta
-                        self.ordenes = controller.listarOrdenes(fechaDesde, fechaHasta);
                     } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null) { // si viene el cuit y las dos fechas
                         self.ordenes = controller.listarOrdenes(cuit, fechaDesde, fechaHasta);
                     } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null && fechaDesde.equals(fechaHasta)) { // si viene las fechas son iguales
                         self.ordenes = controller.listarOrdenes(cuit, fechaDesde);
+                    } else if (cuit.equals("") && fechaDesde != null && fechaHasta != null) { // si viene fecha desde y fecha hasta
+                        self.ordenes = controller.listarOrdenes(fechaDesde, fechaHasta);
+                    } else if (cuit.equals("") && fechaDesde != null && fechaHasta == null) { // si viene solo fecha desde
+                        self.ordenes = controller.listarOrdenes(fechaDesde, LocalDate.MAX);
+                    } else if (cuit.equals("") && fechaDesde == null && fechaHasta != null) { // si viene solo fecha hasta
+                        self.ordenes = controller.listarOrdenes(LocalDate.MIN, fechaHasta);
                     } else if (cuit.equals("") && fechaDesde != null && fechaHasta != null && fechaDesde.equals(fechaHasta)) {
                         self.ordenes = controller.listarOrdenes(fechaDesde);
                     } else {
