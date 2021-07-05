@@ -112,7 +112,13 @@ public class DocumentoController {
     }
 
     public List<OrdenCompraDTO> listarOrdenes(String cuit, LocalDate fechaDesde, LocalDate fechaHasta) {
-        return new ArrayList<>();
+        List<OrdenCompraDTO> ordenesDTO = new ArrayList<>();
+        for (OrdenCompra o : this.ordenes) {
+            if (o.getProveedor().getCuit().equals(cuit) && o.getFecha().isAfter(fechaDesde) && o.getFecha().isBefore(fechaHasta)) {
+                ordenesDTO.add(o.toDTO());
+            }
+        }
+        return ordenesDTO;
     }
 
     public void agregarOrden(OrdenCompraDTO dto) throws Exception {

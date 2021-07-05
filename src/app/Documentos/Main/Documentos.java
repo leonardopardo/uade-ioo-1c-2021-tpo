@@ -2,6 +2,7 @@ package app.Documentos.Main;
 
 import app.Documentos.OrdenCompra.Formulario;
 import app.Main.Main;
+import app.Pagos.Ordenes;
 import controllers.DocumentoController;
 import controllers.OrdenPagoController;
 import controllers.ProveedorController;
@@ -21,7 +22,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
 
-public class Documentos extends JFrame implements ActionListener{
+public class Documentos extends JFrame {
     private JPanel pnlMain;
     private JPanel pnlHeader;
     private JPanel pnlBody;
@@ -45,7 +46,7 @@ public class Documentos extends JFrame implements ActionListener{
     private JTextField textFieldOCFormCUIT;
     private JPanel pnlOCFormCUIT;
     private JButton eliminarButton;
-    private JButton limpiarFiltroButton;
+    private JButton btnLimpiarFiltros;
     private JComboBox comboBox1;
     private JTextField textField1;
     private JTable tableFacturas;
@@ -69,6 +70,7 @@ public class Documentos extends JFrame implements ActionListener{
         this.actionNuevaOrden();
         this.actionEliminarOrden();
         this.actionOnClickBtnFiltrarOC();
+        this.actionLimpiarFiltros();
         //endregion
 
         //region Settings
@@ -250,7 +252,7 @@ public class Documentos extends JFrame implements ActionListener{
         });
     }
 
-    void actionOnClickBtnFiltrarOC(){
+    void actionOnClickBtnFiltrarOC() {
         Documentos self = this;
         this.btnFiltrarOC.addActionListener(new ActionListener() {
             @Override
@@ -258,30 +260,65 @@ public class Documentos extends JFrame implements ActionListener{
                 try {
                     String cuit = self.textFieldOCFormCUIT.getText();
 
-                    LocalDate fechaDesde = Helpers.datePickerFormatter(self.ocFechaDesde);
+                    LocalDate fechaDesde = null;
 
-                    LocalDate fechaHasta = Helpers.datePickerFormatter(self.ocFechaHasta);
+                    LocalDate fechaHasta = null;
+
+                    if(self.ocFechaDesde.getJFormattedTextField().getValue() != null)
+                        fechaDesde = Helpers.datePickerFormatter(self.ocFechaDesde);
+
+                    if(self.ocFechaHasta.getJFormattedTextField().getValue() != null)
+                        fechaHasta = Helpers.datePickerFormatter(self.ocFechaHasta);
 
                     DocumentoController controller = DocumentoController.getInstance();
 
-                    if(fechaDesde != null && fechaHasta != null && fechaHasta.isBefore(fechaDesde))
-                        throw new Exception("La fecha 'hasta' no puede ser anterior a la fecha 'desde'");
-
-                    if(cuit != null && fechaDesde == null && fechaHasta == null){
+                    if (!cuit.equals("") && fechaDesde == null && fechaHasta == null) { // si viene cuit y no vienen fechas OK! <<<<<
                         self.ordenes = controller.listarOrdenes(cuit);
-                    } else if (cuit == null && fechaDesde != null && fechaHasta == null){
-                        self.ordenes = controller.listarOrdenes(fechaDesde, LocalDate.now());
-                    } else if (cuit == null && fechaDesde == null && fechaHasta != null){
-                        self.ordenes = controller.listarOrdenes(LocalDate.now(), fechaHasta);
-                    } else if (cuit == null && fechaDesde != null && fechaHasta != null){
+                    } else if (cuit.equals("") && fechaDesde != null && fechaHasta == null) { // si viene solo fecha desde
+                        self.ordenes = controller.listarOrdenes(fechaDesde, LocalDate.MAX);
+                    } else if (cuit.equals("") && fechaDesde == null && fechaHasta != null) { // si viene solo fecha hasta
+                        self.ordenes = controller.listarOrdenes(LocalDate.MIN, fechaHasta);
+                    } else if (cuit.equals("") && fechaDesde != null && fechaHasta != null) { // si viene fecha desde y fecha hasta
                         self.ordenes = controller.listarOrdenes(cuit, fechaDesde, fechaHasta);
-                    } else if (fechaDesde != null && fechaHasta != null && fechaDesde.equals(fechaHasta)){
+                    } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null) {
+                        self.ordenes = controller.listarOrdenes(cuit, fechaDesde, fechaHasta);
+                    } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null && fechaDesde.equals(fechaHasta)) { // si viene las fechas son iguales OK! <<<<<
                         self.ordenes = controller.listarOrdenes(cuit, fechaDesde);
+                    } else if (cuit.equals("") && fechaDesde != null && fechaHasta != null && fechaDesde.equals(fechaHasta)) {
+                        self.ordenes = controller.listarOrdenes(fechaDesde);
                     }
 
                     self.populateOCTable();
 
-                } catch (Exception ex){
+                    self.actionLimpiarFiltros();
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionLimpiarFiltros() {
+        Documentos self = this;
+
+        this.btnLimpiarFiltros.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    self.ocFechaDesde.getJFormattedTextField().setValue(null);
+                    self.ocFechaHasta.getJFormattedTextField().setValue(null);
+                    self.textFieldOCFormCUIT.setText("");
+                    self.comboBoxOCProveedores.setSelectedIndex(0);
+
+                    self.ordenes = DocumentoController.getInstance().listarOrdenes();
+                    self.populateOCTable();
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
                             ex.getMessage(),
@@ -301,11 +338,6 @@ public class Documentos extends JFrame implements ActionListener{
                 dim.width / 2 - this.getSize().width / 2,
                 dim.height / 2 - this.getSize().height / 2
         );
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
     //endregion
 }

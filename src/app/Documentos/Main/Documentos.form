@@ -262,7 +262,7 @@
                           <text value="Eliminar"/>
                         </properties>
                       </component>
-                      <component id="cad11" class="javax.swing.JButton" binding="limpiarFiltroButton" default-binding="true">
+                      <component id="cad11" class="javax.swing.JButton" binding="btnLimpiarFiltros">
                         <constraints>
                           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
