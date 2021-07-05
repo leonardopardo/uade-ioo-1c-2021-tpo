@@ -9,6 +9,7 @@ import controllers.ProveedorController;
 import dto.OrdenCompraDTO;
 import dto.ProveedorDTO;
 import helpers.Helpers;
+import modelos.Factura;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -50,14 +51,18 @@ public class Documentos extends JFrame {
     private JComboBox comboBox1;
     private JTextField textField1;
     private JTable tableFacturas;
-    private JButton guardarButton;
-    private JButton eliminarButton1;
-    private JButton filtrarButton;
-    private JButton limpiarFiltroButton1;
+    private JButton btnNuevaFactura;
+    private JButton btnEliminarFactura;
+    private JButton btnFiltrarFacturas;
+    private JButton btnLimpiarFiltroFacturas;
+    private JButton modificarOrdenButton;
+    private JButton modificarFacturaButton;
     private JDatePickerImpl ocFechaDesde;
     private JDatePickerImpl ocFechaHasta;
     private JDialog frmOrdenCompra;
+    private JDialog frmFactura;
     private List<OrdenCompraDTO> ordenes;
+    private List<Factura> facturas;
 
     public Documentos(String title) throws Exception {
 
@@ -71,6 +76,8 @@ public class Documentos extends JFrame {
         this.actionEliminarOrden();
         this.actionOnClickBtnFiltrarOC();
         this.actionLimpiarFiltros();
+
+        this.actionNuevaFactura();
         //endregion
 
         //region Settings
@@ -101,6 +108,8 @@ public class Documentos extends JFrame {
         //endregion
 
     }
+
+    //region Ordenes
 
     //region Populate
     void populateOCComboBoxProveedores() {
@@ -259,8 +268,6 @@ public class Documentos extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
 
-                    self.ordenes = null;
-
                     String cuit = self.textFieldOCFormCUIT.getText();
 
                     LocalDate fechaDesde = null;
@@ -282,6 +289,8 @@ public class Documentos extends JFrame {
 
                     DocumentoController controller = DocumentoController.getInstance();
 
+                    self.ordenes = null;
+
                     if (!cuit.equals("") && fechaDesde == null && fechaHasta == null) { // si viene cuit y no vienen fechas
                         self.ordenes = controller.listarOrdenes(cuit);
                     } else if (cuit.equals("") && fechaDesde != null && fechaHasta == null) { // si viene solo fecha desde
@@ -293,7 +302,7 @@ public class Documentos extends JFrame {
                     } else if(!cuit.equals("") && fechaDesde != null && fechaHasta == null) { // si viene cuit y fecha desde
                         self.ordenes = controller.listarOrdenes(cuit, fechaDesde, LocalDate.MAX);
                     } else if (cuit.equals("") && fechaDesde != null && fechaHasta != null) { // si viene fecha desde y fecha hasta
-                        self.ordenes = controller.listarOrdenes(cuit, fechaDesde, fechaHasta);
+                        self.ordenes = controller.listarOrdenes(fechaDesde, fechaHasta);
                     } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null) { // si viene el cuit y las dos fechas
                         self.ordenes = controller.listarOrdenes(cuit, fechaDesde, fechaHasta);
                     } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null && fechaDesde.equals(fechaHasta)) { // si viene las fechas son iguales
@@ -335,6 +344,29 @@ public class Documentos extends JFrame {
                     self.ordenes = DocumentoController.getInstance().listarOrdenes();
                     self.populateOCTable();
                 } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+    //endregion
+
+    //endregion
+
+    //region Facturas
+    void actionNuevaFactura(){
+        Documentos self = this;
+        this.btnNuevaFactura.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    self.frmFactura = new app.Documentos.Factura.Formulario(self);
+                } catch (Exception ex){
                     JOptionPane.showMessageDialog(
                             pnlMain,
                             ex.getMessage(),
