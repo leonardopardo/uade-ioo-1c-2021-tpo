@@ -258,6 +258,9 @@ public class Documentos extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+
+                    self.ordenes = null;
+
                     String cuit = self.textFieldOCFormCUIT.getText();
 
                     LocalDate fechaDesde = null;
@@ -270,22 +273,35 @@ public class Documentos extends JFrame {
                     if(self.ocFechaHasta.getJFormattedTextField().getValue() != null)
                         fechaHasta = Helpers.datePickerFormatter(self.ocFechaHasta);
 
+                    if(fechaDesde != null
+                            && fechaHasta != null
+                            && !(fechaDesde.isBefore(fechaHasta) || fechaDesde.equals(fechaHasta))){
+
+                        throw new Exception("La fecha desde no puede ser mayor que la fecha hasta.");
+                    }
+
                     DocumentoController controller = DocumentoController.getInstance();
 
-                    if (!cuit.equals("") && fechaDesde == null && fechaHasta == null) { // si viene cuit y no vienen fechas OK! <<<<<
+                    if (!cuit.equals("") && fechaDesde == null && fechaHasta == null) { // si viene cuit y no vienen fechas
                         self.ordenes = controller.listarOrdenes(cuit);
                     } else if (cuit.equals("") && fechaDesde != null && fechaHasta == null) { // si viene solo fecha desde
                         self.ordenes = controller.listarOrdenes(fechaDesde, LocalDate.MAX);
                     } else if (cuit.equals("") && fechaDesde == null && fechaHasta != null) { // si viene solo fecha hasta
                         self.ordenes = controller.listarOrdenes(LocalDate.MIN, fechaHasta);
+                    } else if (!cuit.equals("") && fechaDesde == null && fechaHasta != null) { // si viene cuit y fecha hasta
+                        self.ordenes = controller.listarOrdenes(LocalDate.MIN, fechaHasta);
+                    } else if(!cuit.equals("") && fechaDesde != null && fechaHasta == null) { // si viene cuit y fecha desde
+                        self.ordenes = controller.listarOrdenes(cuit, fechaDesde, LocalDate.MAX);
                     } else if (cuit.equals("") && fechaDesde != null && fechaHasta != null) { // si viene fecha desde y fecha hasta
                         self.ordenes = controller.listarOrdenes(cuit, fechaDesde, fechaHasta);
-                    } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null) {
+                    } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null) { // si viene el cuit y las dos fechas
                         self.ordenes = controller.listarOrdenes(cuit, fechaDesde, fechaHasta);
-                    } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null && fechaDesde.equals(fechaHasta)) { // si viene las fechas son iguales OK! <<<<<
+                    } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null && fechaDesde.equals(fechaHasta)) { // si viene las fechas son iguales
                         self.ordenes = controller.listarOrdenes(cuit, fechaDesde);
                     } else if (cuit.equals("") && fechaDesde != null && fechaHasta != null && fechaDesde.equals(fechaHasta)) {
                         self.ordenes = controller.listarOrdenes(fechaDesde);
+                    } else {
+                        self.ordenes = controller.listarOrdenes(); // no viene nada
                     }
 
                     self.populateOCTable();

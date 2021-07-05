@@ -94,7 +94,8 @@ public class DocumentoController {
     public List<OrdenCompraDTO> listarOrdenes(LocalDate fechaDesde, LocalDate fechaHasta) {
         List<OrdenCompraDTO> ordenesDTO = new ArrayList<>();
         for (OrdenCompra o : this.ordenes) {
-            if (o.getFecha().isAfter(fechaDesde) && o.getFecha().isBefore(fechaHasta)) {
+            if ((o.getFecha().isAfter(fechaDesde) || o.getFecha().equals(fechaDesde))
+                    && (o.getFecha().isBefore(fechaHasta) || o.getFecha().equals(fechaHasta))) {
                 ordenesDTO.add(o.toDTO());
             }
         }
@@ -114,7 +115,9 @@ public class DocumentoController {
     public List<OrdenCompraDTO> listarOrdenes(String cuit, LocalDate fechaDesde, LocalDate fechaHasta) {
         List<OrdenCompraDTO> ordenesDTO = new ArrayList<>();
         for (OrdenCompra o : this.ordenes) {
-            if (o.getProveedor().getCuit().equals(cuit) && o.getFecha().isAfter(fechaDesde) && o.getFecha().isBefore(fechaHasta)) {
+            if (o.getProveedor().getCuit().equals(cuit)
+                    && (o.getFecha().isAfter(fechaDesde) || o.getFecha().equals(fechaDesde))
+                    && (o.getFecha().isBefore(fechaHasta)|| o.getFecha().equals(fechaHasta) )) {
                 ordenesDTO.add(o.toDTO());
             }
         }
@@ -147,7 +150,6 @@ public class DocumentoController {
         this.ordenService.delete(orden.getNumero());
     }
     //endregion
-
 
     //region Private Methods
     private Proveedor obtenerProveedor(String cuit) {
