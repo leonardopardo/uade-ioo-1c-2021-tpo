@@ -1,6 +1,7 @@
 package app.Catalogo.Main;
 
 import app.Catalogo.Item.Items;
+import app.Catalogo.Precio.Precio;
 import app.Main.Main;
 import app.Proveedores.Main.Proveedores;
 
@@ -19,6 +20,7 @@ public class Catalogo extends JFrame {
     private JPanel pnlIcon;
     private JPanel pnlTitle;
     private JPanel pnlItems;
+    private JPanel pnlPrecio;
 
     public Catalogo(String title) throws Exception {
         super(title);
@@ -39,6 +41,12 @@ public class Catalogo extends JFrame {
         itemsPanel.setSize(new Dimension(w, h));
         this.pnlItems.setLayout(new GridLayout());
         this.pnlItems.add(itemsPanel, BorderLayout.CENTER);
+
+        JPanel precioPanel = new Precio();
+        precioPanel.setSize(new Dimension(w, h));
+        this.pnlPrecio.setLayout(new GridLayout());
+        this.pnlPrecio.add(precioPanel, BorderLayout.CENTER);
+
 
         //region Register Actions
         this.closeModule();
