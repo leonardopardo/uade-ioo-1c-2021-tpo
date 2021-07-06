@@ -133,7 +133,7 @@ public class Productos extends JFrame {
     }
 
     void loadComboBoxTipo() {
-            this.comboBoxTipoItem.addItem("-- Seleccione --");
+        this.comboBoxTipoItem.addItem("-- Seleccione --");
         for (TipoItem t : TipoItem.values()) {
             this.comboBoxTipoItem.addItem(t);
         }
@@ -147,7 +147,8 @@ public class Productos extends JFrame {
     }
 
     void loadComboBoxUnidad() {
-            this.comboBoxUnidadItem.addItem("-- Seleccione --");;
+        this.comboBoxUnidadItem.addItem("-- Seleccione --");
+        ;
         for (Unidad u : Unidad.values()) {
             this.comboBoxUnidadItem.addItem(u);
         }
@@ -187,7 +188,7 @@ public class Productos extends JFrame {
         }
     }
 
-    void loadTablePrecios(){
+    void loadTablePrecios() {
         try {
 
             String[] columns = new String[]{
@@ -272,16 +273,20 @@ public class Productos extends JFrame {
         this.btnNuevoPrecio.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                self.nuevoPrecio = new Precios(self);
+                try {
+                    self.nuevoPrecio = new Precios(self);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         });
     }
 
-    void actionOnClickModificarPrecio(){
+    void actionOnClickModificarPrecio() {
 
     }
 
-    void actionOnClickEliminarPrecio(){
+    void actionOnClickEliminarPrecio() {
         Productos self = this;
         this.btnEliminarPrecio.addActionListener(new ActionListener() {
             @Override
@@ -294,11 +299,18 @@ public class Productos extends JFrame {
 
                     String cuitProveedor = self.tablePrecios.getValueAt(row, 2).toString();
 
-                    PrecioController.getInstance().eliminar(codigoItem, cuitProveedor);
+                    int confirmResult = JOptionPane.showConfirmDialog(
+                            pnlMain,
+                            "¿Está seguro que desea eliminar el registro?",
+                            "Cerrar",
+                            JOptionPane.YES_NO_OPTION
+                    );
 
-                    self.precios.remove(row);
-
-                    self.loadTablePrecios();
+                    if (confirmResult == JOptionPane.YES_OPTION) {
+                        PrecioController.getInstance().eliminar(codigoItem, cuitProveedor);
+                        self.precios.remove(row);
+                        self.loadTablePrecios();
+                    }
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
@@ -312,11 +324,11 @@ public class Productos extends JFrame {
         });
     }
 
-    void actionOnClickFiltrarPrecios(){
+    void actionOnClickFiltrarPrecios() {
 
     }
 
-    void actionOnClickLimpiarFiltroPrecios(){
+    void actionOnClickLimpiarFiltroPrecios() {
 
     }
 
@@ -395,6 +407,7 @@ public class Productos extends JFrame {
                 dim.height / 2 - this.getSize().height / 2
         );
     }
+
     void closeModule() {
         this.addWindowListener(new WindowAdapter() {
             @Override

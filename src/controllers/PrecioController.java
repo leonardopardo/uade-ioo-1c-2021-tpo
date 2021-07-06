@@ -20,7 +20,6 @@ public class PrecioController {
     private ItemsService itemsService;
     private PrecioService precioService;
 
-
     public static PrecioController instance;
 
     //region Exceptions
@@ -155,16 +154,24 @@ public class PrecioController {
         }
     }
 
-    public void actualizar(PrecioDTO precio) throws Exception{
+    public void actualizar(PrecioDTO precio) throws Exception {
 
     }
 
-    public void eliminar(ItemDTO item){
+    public void eliminar(ItemDTO item) {
 
     }
 
-    public void eliminar(String codigoItem, String cuitProveedor){
-
+    public void eliminar(String codigoItem, String cuitProveedor) throws Exception{
+        try {
+            Precio precio = this.obtenerPrecio(codigoItem, cuitProveedor);
+            if(precio != null){
+                this.precioService.delete(precio.getId());
+                this.precios.remove(precio);
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
     //endregion
 
@@ -246,6 +253,16 @@ public class PrecioController {
         });
 
         return titulo.get();
+    }
+
+    private Precio obtenerPrecio(String itemCodigo, String cuitProveedor) {
+        for (Precio p : this.precios) {
+            if(p.getProveedor().getCuit().equals(cuitProveedor) && p.getItem().getCodigo().equals(itemCodigo)){
+                return p;
+            }
+        }
+
+        return null;
     }
     //endregion
 }

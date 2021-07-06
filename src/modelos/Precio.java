@@ -14,6 +14,10 @@ public class Precio {
         this.precio = precio.precio;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public Item getItem() {
         return this.item;
     }

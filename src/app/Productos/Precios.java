@@ -136,6 +136,10 @@ public class Precios extends JDialog {
 
                     PrecioController.getInstance().agregar(precio);
 
+                    Productos parent = (Productos) self.getParent();
+                    parent.loadPrecios();
+                    parent.loadTablePrecios();
+
                     self.dispose();
 
                 } catch (Exception ex) {
