@@ -21,12 +21,14 @@ public class Proveedor {
     private String telefono;
     private LocalDate inicioActividad;
     private String ingresosBrutos;
-    private List<Rubro> rubros;
     private Double limiteCtaCte;
-    private List<CertificadoExcencion> certificados;
     private Double balance;
+    private List<CertificadoExcencion> certificados;
+    private List<Rubro> rubros;
+    private List<OrdenCompra> ordenesCompra;
+    private List<Factura> facturas;
 
-    public Proveedor(ProveedorDTO p) {
+    public Proveedor(ProveedorDTO p) throws Exception {
         this.razonSocial = p.razonSocial;
         this.cuit = p.cuit;
         this.tipoIVA = p.tipoIVA;
@@ -39,8 +41,11 @@ public class Proveedor {
 
         this.rubros = new ArrayList<>();
         this.certificados = new ArrayList<>();
+        this.ordenesCompra = new ArrayList<>();
+        this.facturas = new ArrayList<>();
     }
 
+    //region Setters
     public void setRazonSocial(String razonSocial) {
         this.razonSocial = razonSocial;
     }
@@ -81,6 +86,12 @@ public class Proveedor {
         this.certificados = certificados;
     }
 
+    public void setOrdenCompra(OrdenCompra nuevaOC) {
+        this.ordenesCompra.add(nuevaOC);
+    }
+    //endregion
+
+    //region Getters
     public String getCuit() {
         return this.cuit;
     }
@@ -93,16 +104,8 @@ public class Proveedor {
         return this.id;
     }
 
-    public Double getBalance() {
-        return this.balance;
-    }
-
-    public void agregarRubro(Rubro r) {
-        this.rubros.add(r);
-    }
-
-    public void agregarCertificicado(CertificadoExcencion nuevoCertif) {
-        this.certificados.add(nuevoCertif);
+    public List<OrdenCompra> getOrdenesCompra() {
+        return this.ordenesCompra;
     }
 
     public List<CertificadoDTO> getCertificados() {
@@ -119,6 +122,24 @@ public class Proveedor {
         return list;
     }
 
+    public Double getBalance() {
+        return this.balance;
+    }
+    //endregion
+
+    public void agregarRubro(Rubro r) {
+        this.rubros.add(r);
+    }
+
+    public void agregarCertificicado(CertificadoExcencion nuevoCertif) {
+        this.certificados.add(nuevoCertif);
+    }
+
+    public void reemplazarRubros(List nuevoRubros) {
+        this.rubros = nuevoRubros;
+    }
+
+    //region DTO's
     public ProveedorDTO toDTO() {
         ProveedorDTO dto = new ProveedorDTO();
         dto.razonSocial = this.razonSocial;
@@ -138,11 +159,7 @@ public class Proveedor {
     public ProveedorCompulsaDTO toCompulsaDTO() {
         return new ProveedorCompulsaDTO();
     }
-
-    public void reemplazarRubros(List nuevoRubros) {
-        this.rubros = nuevoRubros;
-    }
-
+    //endregion
 
     @Override
     public boolean equals(Object obj) {
@@ -181,5 +198,4 @@ public class Proveedor {
                 ", balance=" + balance +
                 '}';
     }
-
 }

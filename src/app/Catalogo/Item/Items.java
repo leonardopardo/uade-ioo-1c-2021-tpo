@@ -10,6 +10,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class Items extends JPanel {
@@ -26,27 +28,38 @@ public class Items extends JPanel {
     private JComboBox comboBoxTipo;
     private JComboBox comboBoxRubro;
     private JComboBox comboBoxUnidad;
-    private JTextField textFieldInicio;
-    private JTextField textFieldFin;
     private JLabel lblCodigo;
     private JLabel lblTitulo;
     private JLabel lblTipo;
     private JLabel lblRubro;
     private JLabel lblUnidad;
-    private JLabel lblFin;
-    private JLabel lblInicio;
-    private JPanel pnlFecha;
+    private PrecioController precioController;
+    private DefaultTableModel tblModel;
 
     public Items() throws Exception{
 
         this.add(this.pnlMain);
-        this.pnlFecha.setVisible(false);
 
-        populateTableItems();
-        populateComboRubro();
-        populateComboTipo();
-        populateComboUnidad();
-        actionSelectedTipo();
+        this.populateTableItems();
+        this.populateComboRubro();
+        this.populateComboTipo();
+        this.populateComboUnidad();
+
+        this.actionGuardar();
+        this.actionEliminarItem();
+        this.actionCancelarItem();
+        this.actionSelectedRowItems();
+
+        this.precioController = PrecioController.getInstance();
+    }
+
+    void populateInputs(String selectedRow) throws Exception {
+        ItemDTO item = PrecioController.getInstance().obtenerItemPorTitulo(selectedRow);
+        this.textFieldCodigo.setText(item.codigo);
+        this.textFieldTitulo.setText(item.titulo);
+        this.comboBoxRubro.setSelectedItem(item.rubro);
+        this.comboBoxUnidad.setSelectedItem(item.unidad);
+        this.comboBoxTipo.setSelectedItem(item.tipo);
     }
 
     void populateTableItems() {
@@ -62,7 +75,7 @@ public class Items extends JPanel {
                     "tipo".toUpperCase()
             };
 
-            DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
+            this.tblModel = new DefaultTableModel(columns, 0);
 
             items.stream().forEach(x -> {
                 Object[] o = {
@@ -113,21 +126,104 @@ public class Items extends JPanel {
         this.comboBoxRubro.setModel(comboBoxModel);
     }
 
-    void actionSelectedTipo(){
+    void actionSelectedRowItems() {
+        this.tableItems.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JTable target = (JTable) e.getSource();
+                try {
+                    populateInputs(tableItems.getValueAt(target.getSelectedRow(), 1).toString());
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+    }
 
+    void actionGuardar() {
         Items self = this;
-
-        this.comboBoxTipo.addActionListener(new ActionListener() {
+        this.guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String value = self.comboBoxTipo.getSelectedItem().toString();
+                try {
+                    PrecioController pController = PrecioController.getInstance();
+                    ItemDTO check = pController.obtenerItemPorCodigo(self.textFieldCodigo.getText());
 
-                if(value.equals(TipoItem.SERVICIO.name())){
-                    self.pnlFecha.setVisible(true);
-                } else {
-                    self.pnlFecha.setVisible(false);
+                    if (check != null) {
+                        String message = "Usted está a punto de editar el item " + check.titulo + " ¿está seguro?";
+
+                        int confirmResult = JOptionPane.showConfirmDialog(pnlMain, message,
+                                "Actualizar item", JOptionPane.YES_NO_OPTION
+                        );
+                        if (confirmResult == JOptionPane.YES_OPTION) {
+                            pController.actualizar(self.crearActualizarItem());
+                        }
+                    } else {
+                        ItemDTO iDto = self.crearActualizarItem();
+                        pController.agregar(iDto);
+                    }
+                    self.populateTableItems();
+
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Item guardado",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getStackTrace(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                 }
+            }
+        });
+    }
 
+    ItemDTO crearActualizarItem() {
+        ItemDTO iDto = new ItemDTO();
+        iDto.codigo = this.textFieldCodigo.getText();
+        iDto.titulo = this.textFieldTitulo.getText();
+        iDto.rubro = Rubro.valueOf(this.comboBoxRubro.getSelectedItem().toString());
+        iDto.unidad = Unidad.valueOf(this.comboBoxUnidad.getSelectedItem().toString());
+        iDto.tipo = TipoItem.valueOf(this.comboBoxTipo.getSelectedItem().toString());
+
+        return iDto;
+    }
+
+    void actionCancelarItem() {
+        this.cancelarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textFieldCodigo.setText("");
+                textFieldTitulo.setText("");
+                JOptionPane.showMessageDialog(
+                        pnlMain,
+                        "Item cancelado",
+                        "",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
+    }
+
+    void actionEliminarItem() {
+        this.eliminarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(tableItems.getSelectedRow() != -1) {
+                    tblModel.removeRow(tableItems.getSelectedRow());
+
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            "Item eliminado",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                }
             }
         });
     }

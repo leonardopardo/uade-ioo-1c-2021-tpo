@@ -6,8 +6,6 @@ import modelos.enums.Rubro;
 import modelos.enums.TipoItem;
 import modelos.enums.Unidad;
 
-import java.time.LocalDateTime;
-
 public class Item {
 
     private Integer id;
@@ -16,8 +14,6 @@ public class Item {
     private String descripcion;
     private Unidad unidad;
     private Rubro rubro;
-    private LocalDateTime inicio;
-    private LocalDateTime fin;
     private TipoItem tipoItem;
     private AlicuotaIVA alicuotaIVA;
 
@@ -27,8 +23,6 @@ public class Item {
         this.tipoItem = item.tipo;
         this.unidad = item.unidad;
         this.rubro = item.rubro;
-        this.inicio = item.inicio;
-        this.fin = item.fin;
         this.alicuotaIVA = item.alicuotaIVA;
     }
 
@@ -41,28 +35,40 @@ public class Item {
         return codigo;
     }
 
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
     public String getTitulo() {
         return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getDescripcion() {
         return descripcion;
     }
 
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public Unidad getUnidad() {
         return unidad;
+    }
+
+    public void setUnidad(Unidad unidad) {
+        this.unidad = unidad;
     }
 
     public Rubro getRubro() {
         return rubro;
     }
 
-    public LocalDateTime getInicio() {
-        return inicio;
-    }
-
-    public LocalDateTime getFin() {
-        return fin;
+    public void setRubro(Rubro rubro) {
+        this.rubro = rubro;
     }
 
     public TipoItem getTipoItem() {
@@ -82,8 +88,6 @@ public class Item {
         dto.tipo = this.tipoItem;
         dto.unidad = this.unidad;
         dto.rubro = this.rubro;
-        dto.inicio = this.inicio;
-        dto.fin = this.fin;
         dto.alicuotaIVA = this.alicuotaIVA;
 
         return dto;

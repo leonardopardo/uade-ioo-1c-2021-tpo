@@ -4,13 +4,11 @@ import app.Main.Main;
 import controllers.ProveedorController;
 import dto.CertificadoDTO;
 import dto.ProveedorDTO;
+import helpers.Helpers;
 import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
 import modelos.enums.TipoRetencion;
-import org.jdatepicker.impl.DateComponentFormatter;
-import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -19,7 +17,6 @@ import java.awt.event.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class Proveedores extends JFrame {
 
@@ -93,6 +90,8 @@ public class Proveedores extends JFrame {
     private JDatePickerImpl certifFin;
     private List<Rubro> rubros;
     protected static final String PROVEEDOR_EXISTENTE_EXCEPTION = "El proveedor que intenta agregar ya existe.";
+    protected static final String FECHA_VENCIMIENTO_POSTERIOR_INICIO = "La fecha de vencimiento del certificado debe ser posterior a la fecha de emisión.";
+    protected static final String CERTIFICAD_EXISTENTE = "El certificado que está intentando agregar ya existe.";
     //endregion
 
     public Proveedores(String title) throws Exception {
@@ -119,7 +118,6 @@ public class Proveedores extends JFrame {
         this.actionGuardarCertificado();
         this.actionCancelarCertificado();
         this.actionEliminarCertificado();
-        this.actionSelectedCertificadoProveedor();
         this.actionSelectedRowProveedores();
         this.actionShowCertificados();
         //endregion
@@ -133,9 +131,9 @@ public class Proveedores extends JFrame {
         //endregion
 
         //region Load Elements
-        this.inicioAct = this.nuevoDatePicker();
-        this.certifInicio = this.nuevoDatePicker();
-        this.certifFin = this.nuevoDatePicker();
+        this.inicioAct = Helpers.nuevoDatePicker();
+        this.certifInicio = Helpers.nuevoDatePicker();
+        this.certifFin = Helpers.nuevoDatePicker();
         this.pnlDatePicker.setLayout(new GridLayout());
         this.pnlCertFechaInicio.setLayout(new GridLayout());
         this.pnlCertFechaFin.setLayout(new GridLayout());
@@ -219,12 +217,12 @@ public class Proveedores extends JFrame {
 
     void populateListRubros(ArrayList r) {
         DefaultListModel model = new DefaultListModel();
-        model.addAll(r);
+        //model.addAll(r);
         this.listRubros.setModel(model);
     }
-    //end populate region
+    //endregion
 
-    //region Action Methods
+    //region Action
     void closeModule() {
         Proveedores self = this;
         this.addWindowListener(new WindowAdapter() {
@@ -350,7 +348,7 @@ public class Proveedores extends JFrame {
         pDto.ingresosBrutos = this.textFieldIibb.getText();
         pDto.tipoIVA = TipoIVA.valueOf(this.comboBoxTipoIVA.getSelectedItem().toString());
         pDto.limiteCtaCte = Double.parseDouble(this.textFieldCtaCte.getText());
-        pDto.inicioActividad = datePickerFormatter(this.inicioAct);
+        pDto.inicioActividad = Helpers.datePickerFormatter(this.inicioAct);
 
         for (int i = 0; i < this.listRubros.getModel().getSize(); i++) {
             Rubro r = Rubro.valueOf(this.listRubros.getModel().getElementAt(i).toString());
@@ -407,19 +405,9 @@ public class Proveedores extends JFrame {
             }
         });
     }
-
-    //end action region
+    //endregion
 
     //region Load Methods
-    JDatePickerImpl nuevoDatePicker() {
-        UtilDateModel model = new UtilDateModel();
-        JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties());
-        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-
-        return datePicker;
-    }
-
-
     void loadTableCert() throws Exception {
         String cuit = this.textFieldCertCuit.getText();
 
@@ -444,10 +432,8 @@ public class Proveedores extends JFrame {
                 tblModel.addRow(o);
             });
         }
-
         this.tableCert.setModel(tblModel);
     }
-
 
     // clear inputs
     void clearInputs() {
@@ -464,8 +450,10 @@ public class Proveedores extends JFrame {
     }
     //endregion proveedores
 
-    //region populate certificados
+    //region Certificados
+    //region Certificados Populate
     void populateComboBoxProveedoresCert() throws Exception {
+        this.comboBoxCertProveedor.addItem("-- Seleccione un proveedor --");
         for (ProveedorDTO prov : ProveedorController.getInstance().listar()
         ) {
             this.comboBoxCertProveedor.addItem(prov.razonSocial);
@@ -475,8 +463,6 @@ public class Proveedores extends JFrame {
     void populateTableProveedoresCert() {
         try {
             List<CertificadoDTO> certificados = ProveedorController.getInstance().obtenerCertificadosProveedor(this.textFieldCertCuit.getText());
-            System.out.println(this.textFieldCuit.getText());
-
             String[] columns = new String[]{
                     "Tipo",
                     "Fecha Inicio",
@@ -506,13 +492,21 @@ public class Proveedores extends JFrame {
             );
         }
     }
+    //endregion
 
-    //region action certificados
+
+    //region Certificados Actions
     void actionShowCertificados() {
         Proveedores self = this;
         this.comboBoxCertProveedor.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    String razonSocial = self.comboBoxCertProveedor.getSelectedItem().toString();
+                    ProveedorDTO dto = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
+                    if (dto != null) {
+                        self.textFieldCertCuit.setText(dto.cuit);
+                    }
                     populateTableProveedoresCert();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
@@ -533,10 +527,22 @@ public class Proveedores extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     CertificadoDTO nuevoCertif = new CertificadoDTO();
-                    nuevoCertif.fechaInicio = datePickerFormatter(self.certifInicio);
-                    nuevoCertif.fechaFin = datePickerFormatter(self.certifFin);
-                    nuevoCertif.tipo = TipoRetencion.valueOf(self.comboBoxCertTipoRetencion.getSelectedItem().toString());
+                    LocalDate startDate = Helpers.datePickerFormatter(self.certifInicio);
+                    nuevoCertif.fechaInicio = startDate;
+                    LocalDate endDate = Helpers.datePickerFormatter(self.certifFin);
+
+                    if (endDate.isBefore(startDate)) {
+                        throw new Exception(FECHA_VENCIMIENTO_POSTERIOR_INICIO);
+                    }
+
                     String provCuit = self.textFieldCertCuit.getText();
+                    nuevoCertif.tipo = TipoRetencion.valueOf(self.comboBoxCertTipoRetencion.getSelectedItem().toString());
+
+                    if (ProveedorController.getInstance().existeCertificado(provCuit, nuevoCertif)) {
+                        throw new Exception(CERTIFICAD_EXISTENTE);
+                    }
+
+                    nuevoCertif.fechaFin = endDate;
                     ProveedorController.getInstance().agregarCertificado(nuevoCertif, provCuit);
                     populateTableProveedoresCert();
                 } catch (Exception ex) {
@@ -596,25 +602,6 @@ public class Proveedores extends JFrame {
             }
         });
     }
-
-    void actionSelectedCertificadoProveedor() {
-        Proveedores self = this;
-        this.comboBoxCertProveedor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String razonSocial = self.comboBoxCertProveedor.getSelectedItem().toString();
-                    ProveedorDTO dto = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
-                    self.textFieldCertCuit.setText(dto.cuit);
-                } catch (Exception ex) {
-
-                }
-            }
-        });
-    }
-
-    LocalDate datePickerFormatter(JDatePickerImpl toFormat) {
-        return LocalDate.of(toFormat.getModel().getYear(), toFormat.getModel().getMonth(), toFormat.getModel().getDay());
-    }
-
+    //endregion
+    //endregion
 }

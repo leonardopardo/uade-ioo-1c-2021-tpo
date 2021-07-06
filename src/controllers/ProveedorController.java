@@ -1,11 +1,13 @@
 package controllers;
 
 import dto.CertificadoDTO;
+import dto.DetalleDTO;
+import dto.OrdenCompraDTO;
 import dto.ProveedorDTO;
-import modelos.CertificadoExcencion;
-import modelos.OrdenCompra;
-import modelos.Proveedor;
+import modelos.*;
 import modelos.enums.Rubro;
+import servicios.ItemsService;
+import servicios.PrecioService;
 import servicios.ProveedorService;
 
 import java.util.ArrayList;
@@ -13,14 +15,19 @@ import java.util.List;
 
 public class ProveedorController {
 
-    private List<Proveedor> proveedores;
-    private List<CertificadoExcencion> certificados;
     private static ProveedorController instance;
-    private ProveedorService service;
+
+    private ProveedorService proveedorService;
+
+    private ItemsService itemsService;
+
+    private PrecioService precioService;
+
+    private List<Proveedor> proveedores;
 
     private ProveedorController() throws Exception {
-        this.service = new ProveedorService();
-        this.proveedores = this.service.getAll();
+        this.proveedorService = new ProveedorService();
+        this.proveedores = this.proveedorService.getAll();
     }
 
     public static ProveedorController getInstance() throws Exception {
@@ -30,6 +37,13 @@ public class ProveedorController {
         return instance;
     }
 
+    //region Proveedor
+
+    /**
+     * @param proveedor
+     * @throws Exception
+     * @tarea Dado un proveedor dto el mismo construye el objeto proveedor del dominio y lo agrega a la lista y servicio.
+     */
     public void agregar(ProveedorDTO proveedor) throws Exception {
         try {
             Proveedor nuevoProveedor = new Proveedor(proveedor);
@@ -38,8 +52,8 @@ public class ProveedorController {
                 nuevoProveedor.agregarRubro(r);
             }
 
-            nuevoProveedor.setId(this.service.getProximoId());
-            this.service.save(nuevoProveedor);
+            nuevoProveedor.setId(this.proveedorService.getProximoId());
+            this.proveedorService.save(nuevoProveedor);
             this.proveedores.add(nuevoProveedor);
 
         } catch (Exception ex) {
@@ -62,31 +76,6 @@ public class ProveedorController {
     }
 
     /**
-     * @param dto
-     * @tarea Dado un ProveedorDTO y un proveedor existente, se actualizan las propiedades del mismo.
-     */
-    public void actualizar(ProveedorDTO dto) throws Exception {
-
-        try {
-            Proveedor nuevoProveedor = obtenerProveedor(dto.cuit);
-
-            nuevoProveedor.reemplazarRubros(dto.rubros);
-            nuevoProveedor.setCuit(dto.cuit);
-            nuevoProveedor.setEmail(dto.email);
-            nuevoProveedor.setTipoIVA(dto.tipoIVA);
-            nuevoProveedor.setNombreFantasia(dto.nombreFantasia);
-            nuevoProveedor.setIngresosBrutos(dto.ingresosBrutos);
-            nuevoProveedor.setLimiteCtaCte(dto.limiteCtaCte);
-            nuevoProveedor.setTelefono(dto.telefono);
-            nuevoProveedor.setRazonSocial(dto.razonSocial);
-
-            this.service.update(nuevoProveedor);
-        } catch (Exception ex) {
-            throw ex;
-        }
-    }
-
-    /**
      * @param razonSocial
      * @return ProveedorDTO
      * @tarea Dado una razonSocial, en caso de que exista un proveedor con dicha razonSocial, devuelve un objeto ProveedorDTO, si no null.
@@ -95,6 +84,15 @@ public class ProveedorController {
         for (Proveedor proveedor : this.proveedores) {
             if (proveedor.getRazonSocial().equals(razonSocial)) {
                 return proveedor.toDTO();
+            }
+        }
+        return null;
+    }
+
+    public Proveedor obtenerProveedorPorRazonSocial(String razonSocial) {
+        for (Proveedor proveedor : this.proveedores) {
+            if (proveedor.getRazonSocial().equals(razonSocial)) {
+                return proveedor;
             }
         }
         return null;
@@ -119,17 +117,28 @@ public class ProveedorController {
     }
 
     /**
-     * @param cuit
-     * @return List<CertificadoDTO>
-     * @tarea Lista los certificados como DTO de un provedor en particular.
+     * @param dto
+     * @tarea Dado un ProveedorDTO y un proveedor existente, se actualizan las propiedades del mismo.
      */
-    public List<CertificadoDTO> listarCertificadosPorProveedor(String cuit) {
+    public void actualizar(ProveedorDTO dto) throws Exception {
 
-        Proveedor p = this.obtenerProveedor(cuit);
-        if (p != null)
-            return p.getCertificados();
+        try {
+            Proveedor nuevoProveedor = obtenerProveedor(dto.cuit);
 
-        return new ArrayList<>();
+            nuevoProveedor.reemplazarRubros(dto.rubros);
+            nuevoProveedor.setCuit(dto.cuit);
+            nuevoProveedor.setEmail(dto.email);
+            nuevoProveedor.setTipoIVA(dto.tipoIVA);
+            nuevoProveedor.setNombreFantasia(dto.nombreFantasia);
+            nuevoProveedor.setIngresosBrutos(dto.ingresosBrutos);
+            nuevoProveedor.setLimiteCtaCte(dto.limiteCtaCte);
+            nuevoProveedor.setTelefono(dto.telefono);
+            nuevoProveedor.setRazonSocial(dto.razonSocial);
+
+            this.proveedorService.update(nuevoProveedor);
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
     /**
@@ -144,7 +153,7 @@ public class ProveedorController {
             }
             for (Proveedor p : this.proveedores) {
                 if (p.getCuit().equals(cuit)) {
-                    this.service.delete(p.getId());
+                    this.proveedorService.delete(p.getId());
                     this.proveedores.remove(p);
                     break;
                 }
@@ -153,6 +162,9 @@ public class ProveedorController {
             throw e;
         }
     }
+    //endregion
+
+    //region Certificado
 
     /**
      * @param certifDTO
@@ -165,7 +177,7 @@ public class ProveedorController {
             if (prov != null) {
                 CertificadoExcencion nuevoCertif = new CertificadoExcencion(certifDTO);
                 prov.agregarCertificicado(nuevoCertif);
-                this.service.update(prov);
+                this.proveedorService.update(prov);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -202,9 +214,43 @@ public class ProveedorController {
 
     /**
      * @param cuit
+     * @return List<CertificadoDTO>
+     * @tarea Lista los certificados como DTO de un provedor en particular.
+     */
+    public List<CertificadoDTO> listarCertificadosPorProveedor(String cuit) {
+
+        Proveedor p = this.obtenerProveedor(cuit);
+        if (p != null)
+            return p.getCertificados();
+
+        return new ArrayList<>();
+    }
+
+    /**
+     * @param provCuit
+     * @param nuevoCertificado
+     * @return Boolean
+     * @tarea Dado un cuit y un certificado dto, este mismo corrobora si el certificado existe.
+     */
+    public boolean existeCertificado(String provCuit, CertificadoDTO nuevoCertificado) {
+        for (Proveedor p : this.proveedores) {
+            if (p.getCuit().equals(provCuit)) {
+                for (CertificadoDTO c : p.getCertificados()) {
+                    if (c.fechaInicio.equals(nuevoCertificado.fechaInicio) && c.tipo.equals(nuevoCertificado.tipo)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    //endregion
+
+    /**
+     * @param cuit
      * @return proveedor
-     * @tarea metodo privado para poder operar con objetos del dominio.
-     * @comment El metodo es privado ya que devuelve un objeto del dominio.
+     * @tarea Obtine un Proveedor proporcionando el cuit, null en caso de que no lo encuentre.
+     * @comment El método es privado ya que devuelve un objeto del dominio.
      */
     private Proveedor obtenerProveedor(String cuit) {
         for (Proveedor proveedor : this.proveedores) {
@@ -213,14 +259,5 @@ public class ProveedorController {
             }
         }
         return null;
-    }
-
-    public void setProveedorEnOc(String cuit, OrdenCompra oc) {
-        for (Proveedor p : this.proveedores) {
-            if (p.getCuit().equals(cuit)) {
-                oc.setProveedor(p);
-                return;
-            }
-        }
     }
 }

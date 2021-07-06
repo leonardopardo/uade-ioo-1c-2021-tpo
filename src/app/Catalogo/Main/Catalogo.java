@@ -3,14 +3,13 @@ package app.Catalogo.Main;
 import app.Catalogo.Item.Items;
 import app.Catalogo.Precio.Precio;
 import app.Main.Main;
-import app.Proveedores.Main.Proveedores;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class Catalogo extends JFrame{
+public class Catalogo extends JFrame {
     private JPanel pnlMain;
     private JPanel pnlHeader;
     private JPanel pnlBody;
@@ -19,27 +18,38 @@ public class Catalogo extends JFrame{
     private JLabel lblTitle;
     private JPanel pnlIcon;
     private JPanel pnlTitle;
+    private JPanel pnlItems;
+    private JPanel pnlPrecio;
 
     public Catalogo(String title) throws Exception {
         super(title);
 
         //region Settings
-        this.setResizable(true);
+        this.setResizable(false);
         this.setContentPane(this.pnlMain);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
         this.setSize(pnlMain.getPreferredSize());
         this.setBackground(Color.WHITE);
-
         //endregion
 
-        this.tabbedPane1.setComponentAt(0, new Items());
+        int w = this.pnlMain.getPreferredSize().width;
+        int h = this.pnlMain.getPreferredSize().height;
 
-        this.tabbedPane1.setComponentAt(1, new Precio());
+        JPanel itemsPanel = new Items();
+        itemsPanel.setSize(new Dimension(w, h));
+        this.pnlItems.setLayout(new GridLayout());
+        this.pnlItems.add(itemsPanel, BorderLayout.CENTER);
+
+        JPanel precioPanel = new Precio();
+        precioPanel.setSize(new Dimension(w, h));
+        this.pnlPrecio.setLayout(new GridLayout());
+        this.pnlPrecio.add(precioPanel, BorderLayout.CENTER);
 
 
         //region Register Actions
         this.closeModule();
+        this.positionScreen();
         //endregion
     }
 
@@ -66,5 +76,13 @@ public class Catalogo extends JFrame{
 
             }
         });
+    }
+
+    void positionScreen(){
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(
+                dim.width/2-this.getSize().width/2,
+                dim.height/2-this.getSize().height/2
+        );
     }
 }

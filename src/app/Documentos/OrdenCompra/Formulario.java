@@ -1,6 +1,7 @@
 package app.Documentos.OrdenCompra;
 
-import controllers.DocumentosController;
+
+import controllers.DocumentoController;
 import controllers.PrecioController;
 import controllers.ProveedorController;
 import dto.DetalleDTO;
@@ -364,12 +365,14 @@ public class Formulario extends JDialog {
 
                     self.guardarOrdenFlag = true;
 
-                    DocumentosController.getInstance().agregarOrdenCompra(self.valuesToDto());
+                    DocumentoController.getInstance().agregarOrden(self.valuesToDto());
+
+                    self.dispose();
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
-                            ex.getMessage(),
+                            ex.getStackTrace(),
                             "Error",
                             JOptionPane.ERROR_MESSAGE
                     );
@@ -433,14 +436,13 @@ public class Formulario extends JDialog {
     }
     //endregion
 
-    OrdenCompraDTO valuesToDto(){
+    OrdenCompraDTO valuesToDto() {
         OrdenCompraDTO dto = new OrdenCompraDTO();
-        dto.cuitProveedor = this.textFieldCuit.getText();
+        dto.cuit = this.textFieldCuit.getText();
         dto.razonSocial = this.comboBoxProveedor.getSelectedItem().toString();
         dto.fecha = Helpers.datePickerFormatter(this.datePickerfecha);
         dto.detalles = this.detalle;
 
         return dto;
     }
-
 }
