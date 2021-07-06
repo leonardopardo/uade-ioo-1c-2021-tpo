@@ -3,7 +3,6 @@ package app.Catalogo.Main;
 import app.Catalogo.Item.Items;
 import app.Catalogo.Precio.Precio;
 import app.Main.Main;
-import app.Proveedores.Main.Proveedores;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +25,7 @@ public class Catalogo extends JFrame {
         super(title);
 
         //region Settings
-        this.setResizable(true);
+        this.setResizable(false);
         this.setContentPane(this.pnlMain);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);

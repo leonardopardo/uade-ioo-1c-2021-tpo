@@ -7,7 +7,6 @@ import dto.ProveedorCompulsaDTO;
 import modelos.Detalle;
 import modelos.Item;
 import modelos.Precio;
-import modelos.Proveedor;
 import modelos.enums.Rubro;
 import servicios.ItemsService;
 import servicios.PrecioService;

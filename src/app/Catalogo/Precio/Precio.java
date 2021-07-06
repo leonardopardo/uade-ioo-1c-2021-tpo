@@ -1,16 +1,9 @@
 package app.Catalogo.Precio;
 
-import app.Catalogo.Item.Items;
-import app.Documentos.Main.Documentos;
-import app.Proveedores.Main.Proveedores;
 import controllers.PrecioController;
 import controllers.ProveedorController;
 import dto.*;
-import modelos.Proveedor;
-import modelos.enums.Role;
 import modelos.enums.Rubro;
-import modelos.enums.TipoItem;
-import modelos.enums.Unidad;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
