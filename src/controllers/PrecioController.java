@@ -165,7 +165,7 @@ public class PrecioController {
             precioExistente.setItem(this.obtenerItemModelPorCodigo(precio.itemCodigo));
             precioExistente.setId(this.precioService.getProximoId());
 
-            this.precioService.save(precioExistente);
+            this.precioService.update(precioExistente);
         }catch(Exception ex){
             throw new Exception(ex.getMessage());
         }
