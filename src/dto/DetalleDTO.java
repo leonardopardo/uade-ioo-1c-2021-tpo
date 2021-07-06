@@ -7,5 +7,6 @@ public class DetalleDTO {
     public Double cantItem;
     public Double precioUnidad;
     public Double iva;
+    public Double precioTotal;
 
 }
