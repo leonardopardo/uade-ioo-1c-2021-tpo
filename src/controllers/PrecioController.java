@@ -1,12 +1,10 @@
 package controllers;
 
-import dto.CompulsaPrecioDTO;
-import dto.ItemDTO;
-import dto.PrecioDTO;
-import dto.ProveedorCompulsaDTO;
+import dto.*;
 import modelos.Detalle;
 import modelos.Item;
 import modelos.Precio;
+import modelos.Proveedor;
 import modelos.enums.Rubro;
 import servicios.ItemsService;
 import servicios.PrecioService;
@@ -157,6 +155,27 @@ public class PrecioController {
         }
     }
 
+    /**
+     * @param dto
+     * @tarea Dado un ItemDTO y un item existente, se actualizan las propiedades del mismo.
+     */
+    public void actualizar(ItemDTO dto) throws Exception {
+
+        try {
+            Item nuevoItem = obtenerItemModelPorCodigo(dto.codigo);
+
+            nuevoItem.setTitulo(dto.titulo);
+            nuevoItem.setCodigo(dto.codigo);
+            nuevoItem.setDescripcion(dto.descripcion);
+            nuevoItem.setRubro(dto.rubro);
+            nuevoItem.setUnidad(dto.unidad);
+
+            this.itemsService.update(nuevoItem);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
     public ItemDTO obtenerItemPorCodigo(String itemCodigo) {
         try {
 
@@ -165,6 +184,23 @@ public class PrecioController {
             for (Item i : this.items) {
                 if (i.getCodigo().equals(itemCodigo))
                     item = i.toDTO();
+            }
+
+            return item;
+
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    private Item obtenerItemModelPorCodigo(String itemCodigo) {
+        try {
+
+            Item item = null;
+
+            for (Item i : this.items) {
+                if (i.getCodigo().equals(itemCodigo))
+                    item = i;
             }
 
             return item;
