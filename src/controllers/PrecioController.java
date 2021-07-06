@@ -3,6 +3,7 @@ package controllers;
 import dto.*;
 import modelos.Item;
 import modelos.Precio;
+import modelos.Proveedor;
 import modelos.enums.Rubro;
 import servicios.ItemsService;
 import servicios.PrecioService;
@@ -18,6 +19,7 @@ public class PrecioController {
     private List<Item> items;
     private ItemsService itemsService;
     private PrecioService precioService;
+
 
     public static PrecioController instance;
 
@@ -161,7 +163,7 @@ public class PrecioController {
 
     }
 
-    public void eliminar(PrecioDTO precio){
+    public void eliminar(String codigoItem, String cuitProveedor){
 
     }
     //endregion

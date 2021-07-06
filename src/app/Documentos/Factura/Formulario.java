@@ -227,7 +227,8 @@ public class Formulario extends JDialog {
                         d.cantItem = cantidad;
                         d.descripcion = item.titulo;
                         d.precioUnidad = precio;
-                        //d.precioTotal = precio * cantidad;
+                        d.alicuotaIVA = item.alicuotaIVA;
+                        d.precioTotal = precio * cantidad;
                         self.detalle.add(d);
                     }
 
@@ -313,6 +314,8 @@ public class Formulario extends JDialog {
                         d.cantItem,
                         Unidad.UNIDAD,
                         d.precioUnidad,
+                        (d.iva * d.precioTotal) / 100,
+                        d.precioTotal
                 };
 
                 tblModel.addRow(o);

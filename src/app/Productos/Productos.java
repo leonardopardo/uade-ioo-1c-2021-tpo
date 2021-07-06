@@ -87,6 +87,7 @@ public class Productos extends JFrame {
         this.closeModule();
         this.actionOnClickNuevoItem();
         this.actionOnClickNuevoPrecio();
+        this.actionOnClickEliminarPrecio();
         this.actionOnChangeComboBoxProveedores();
         this.actionOnChangeComboBoxItems();
         //endregion
@@ -272,7 +273,6 @@ public class Productos extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 self.nuevoPrecio = new Precios(self);
-                self.loadPrecios();
             }
         });
     }
@@ -282,7 +282,34 @@ public class Productos extends JFrame {
     }
 
     void actionOnClickEliminarPrecio(){
+        Productos self = this;
+        this.btnEliminarPrecio.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
 
+                    int row = self.tablePrecios.getSelectedRow();
+
+                    String codigoItem = self.tablePrecios.getValueAt(row, 0).toString();
+
+                    String cuitProveedor = self.tablePrecios.getValueAt(row, 2).toString();
+
+                    PrecioController.getInstance().eliminar(codigoItem, cuitProveedor);
+
+                    self.precios.remove(row);
+
+                    self.loadTablePrecios();
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
     }
 
     void actionOnClickFiltrarPrecios(){
