@@ -48,8 +48,8 @@ public class Documentos extends JFrame {
     private JPanel pnlOCFormCUIT;
     private JButton eliminarButton;
     private JButton btnLimpiarFiltros;
-    private JComboBox comboBox1;
-    private JTextField textField1;
+    private JComboBox comboBoxProveedoresFactura;
+    private JTextField cuitDocFactura;
     private JTable tableFacturas;
     private JButton btnNuevaFactura;
     private JButton btnEliminarFactura;
@@ -57,6 +57,10 @@ public class Documentos extends JFrame {
     private JButton btnLimpiarFiltroFacturas;
     private JButton modificarOrdenButton;
     private JButton modificarFacturaButton;
+    private JPanel fechaDesdeFactura;
+    private JPanel fechaHastaFactura;
+    private JDatePickerImpl factFechaDesde;
+    private JDatePickerImpl factFechaHasta;
     private JDatePickerImpl ocFechaDesde;
     private JDatePickerImpl ocFechaHasta;
     private JDialog frmOrdenCompra;
@@ -100,10 +104,16 @@ public class Documentos extends JFrame {
 
         this.ocFechaHasta = Helpers.nuevoDatePicker();
         Helpers.appendDatePicker(this.pnlOCFormFechaHastaDP, this.ocFechaHasta);
+
+        this.factFechaDesde = Helpers.nuevoDatePicker();
+        Helpers.appendDatePicker(this.fechaDesdeFactura, this.factFechaDesde);
+
+        this.factFechaHasta = Helpers.nuevoDatePicker();
+        Helpers.appendDatePicker(this.fechaHastaFactura, this.factFechaHasta);
         //endregion
 
         //region Populate
-        this.populateOCComboBoxProveedores();
+        this.populateComboBoxProevedores();
         this.populateOCTable();
         //endregion
 
@@ -112,13 +122,15 @@ public class Documentos extends JFrame {
     //region Ordenes
 
     //region Populate
-    void populateOCComboBoxProveedores() {
+    void populateComboBoxProevedores() {
         try {
             List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
 
             this.comboBoxOCProveedores.addItem("-- Seleccione --");
+            this.comboBoxProveedoresFactura.addItem("-- Seleccione --");
             proveedores.stream().forEach(x -> {
                 this.comboBoxOCProveedores.addItem(x.razonSocial);
+                this.comboBoxProveedoresFactura.addItem(x.razonSocial);
             });
 
         } catch (Exception ex) {
@@ -274,15 +286,15 @@ public class Documentos extends JFrame {
 
                     LocalDate fechaHasta = null;
 
-                    if(self.ocFechaDesde.getJFormattedTextField().getValue() != null)
+                    if (self.ocFechaDesde.getJFormattedTextField().getValue() != null)
                         fechaDesde = Helpers.datePickerFormatter(self.ocFechaDesde);
 
-                    if(self.ocFechaHasta.getJFormattedTextField().getValue() != null)
+                    if (self.ocFechaHasta.getJFormattedTextField().getValue() != null)
                         fechaHasta = Helpers.datePickerFormatter(self.ocFechaHasta);
 
-                    if(fechaDesde != null
+                    if (fechaDesde != null
                             && fechaHasta != null
-                            && !(fechaDesde.isBefore(fechaHasta) || fechaDesde.equals(fechaHasta))){
+                            && !(fechaDesde.isBefore(fechaHasta) || fechaDesde.equals(fechaHasta))) {
 
                         throw new Exception("La fecha desde no puede ser mayor que la fecha hasta.");
                     }
@@ -295,7 +307,7 @@ public class Documentos extends JFrame {
                         self.ordenes = controller.listarOrdenes(cuit);
                     } else if (!cuit.equals("") && fechaDesde == null && fechaHasta != null) { // si viene cuit y fecha hasta
                         self.ordenes = controller.listarOrdenes(cuit, LocalDate.MIN, fechaHasta);
-                    } else if(!cuit.equals("") && fechaDesde != null && fechaHasta == null) { // si viene cuit y fecha desde
+                    } else if (!cuit.equals("") && fechaDesde != null && fechaHasta == null) { // si viene cuit y fecha desde
                         self.ordenes = controller.listarOrdenes(cuit, fechaDesde, LocalDate.MAX);
                     } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null) { // si viene el cuit y las dos fechas
                         self.ordenes = controller.listarOrdenes(cuit, fechaDesde, fechaHasta);
@@ -359,14 +371,14 @@ public class Documentos extends JFrame {
     //endregion
 
     //region Facturas
-    void actionNuevaFactura(){
+    void actionNuevaFactura() {
         Documentos self = this;
         this.btnNuevaFactura.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     self.frmFactura = new app.Documentos.Factura.Formulario(self);
-                } catch (Exception ex){
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
                             ex.getMessage(),
