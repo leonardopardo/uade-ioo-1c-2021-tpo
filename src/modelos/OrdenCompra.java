@@ -13,10 +13,6 @@ public class OrdenCompra extends Documento {
         this.detalles = new ArrayList<Detalle>();
     }
 
-    public void setProveedor(Proveedor p) {
-        this.proveedor = p;
-    }
-
     public void setDetalle(Detalle detalle) {
         this.detalles.add(detalle);
     }
@@ -25,37 +21,12 @@ public class OrdenCompra extends Documento {
         this.numero = num;
     }
 
-    public Integer getNumero() {
-        return this.numero;
-    }
-
-    public LocalDate getFecha() {
-        return this.fecha;
-    }
-
-    public String getDescripcion() {
-        return this.descripcion;
-    }
-
-    public List<Detalle> getDetalles() {
-        return this.detalles;
-    }
-
-    public Proveedor getProveedor() {
-        return this.proveedor;
-    }
-
-    public String getProveedorCuit(){
-        return this.proveedor.getCuit();
-    }
-
     public OrdenCompraDTO toDTO(){
         OrdenCompraDTO o = new OrdenCompraDTO();
         o.fecha = this.fecha;
         o.numero = this.numero;
-        o.cuitProveedor = this.proveedor.getCuit();
         o.razonSocial = this.proveedor.getRazonSocial();
-
+        o.cuit = this.proveedor.getCuit();
         return o;
     }
 }

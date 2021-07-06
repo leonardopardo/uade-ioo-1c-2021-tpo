@@ -12,10 +12,7 @@ import java.util.Properties;
 
 public class Helpers {
     public static LocalDate datePickerFormatter(JDatePickerImpl toFormat) {
-        return LocalDate.of(
-                toFormat.getModel().getYear(),
-                toFormat.getModel().getMonth() + 1,
-                toFormat.getModel().getDay()
+        return LocalDate.of(toFormat.getModel().getYear(), toFormat.getModel().getMonth() + 1, toFormat.getModel().getDay()
         );
     }
 
@@ -27,7 +24,7 @@ public class Helpers {
         return datePicker;
     }
 
-    public static void appendDatePicker(JPanel panel, JDatePickerImpl picker){
+    public static void appendDatePicker(JPanel panel, JDatePickerImpl picker) {
         panel.setLayout(new GridLayout());
         panel.add(picker);
     }

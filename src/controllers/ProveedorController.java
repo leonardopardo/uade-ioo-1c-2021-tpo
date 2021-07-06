@@ -6,7 +6,8 @@ import dto.OrdenCompraDTO;
 import dto.ProveedorDTO;
 import modelos.*;
 import modelos.enums.Rubro;
-import servicios.OrdenCompraService;
+import servicios.ItemsService;
+import servicios.PrecioService;
 import servicios.ProveedorService;
 
 import java.util.ArrayList;
@@ -15,17 +16,18 @@ import java.util.List;
 public class ProveedorController {
 
     private static ProveedorController instance;
-    private PrecioController precController;
-    private ProveedorService proveedorService;
-    private OrdenCompraService ordenCompraService;
-    private List<Proveedor> proveedores;
 
+    private ProveedorService proveedorService;
+
+    private ItemsService itemsService;
+
+    private PrecioService precioService;
+
+    private List<Proveedor> proveedores;
 
     private ProveedorController() throws Exception {
         this.proveedorService = new ProveedorService();
         this.proveedores = this.proveedorService.getAll();
-        this.ordenCompraService = new OrdenCompraService();
-        this.precController = PrecioController.getInstance();
     }
 
     public static ProveedorController getInstance() throws Exception {
@@ -34,6 +36,8 @@ public class ProveedorController {
         }
         return instance;
     }
+
+    //region Proveedor
 
     /**
      * @param proveedor
@@ -80,6 +84,15 @@ public class ProveedorController {
         for (Proveedor proveedor : this.proveedores) {
             if (proveedor.getRazonSocial().equals(razonSocial)) {
                 return proveedor.toDTO();
+            }
+        }
+        return null;
+    }
+
+    public Proveedor obtenerProveedorPorRazonSocial(String razonSocial) {
+        for (Proveedor proveedor : this.proveedores) {
+            if (proveedor.getRazonSocial().equals(razonSocial)) {
+                return proveedor;
             }
         }
         return null;
@@ -149,6 +162,9 @@ public class ProveedorController {
             throw e;
         }
     }
+    //endregion
+
+    //region Certificado
 
     /**
      * @param certifDTO
@@ -228,81 +244,13 @@ public class ProveedorController {
         }
         return false;
     }
-
-    /**
-     * @param dto
-     * @tarea Dada una orden de compra, la asigna al correspondiente proveedor.
-     */
-    public void agregarOrdenCompra(OrdenCompraDTO dto) throws Exception {
-        try {
-            OrdenCompra oc = new OrdenCompra(dto);
-            oc.setNumero(this.ordenCompraService.getProximoNumero());
-            Proveedor prov = this.obtenerProveedor(dto.cuitProveedor);
-
-            for (DetalleDTO d : dto.detalles) {
-                Detalle nuevoDetalle = new Detalle(d);
-                this.precController.setItemEnDetalle(d.codItem, nuevoDetalle);
-                oc.setDetalle(nuevoDetalle);
-            }
-            prov.setOrdenCompra(dto);
-            this.ordenCompraService.save(oc);
-        } catch (Exception ex) {
-            throw ex;
-        }
-    }
-
-
-    // region Ordenes Compra
-
-    /**
-     * @return List<OrdenCompraDTO>
-     * @ Lista todas las ordenes de compra del dominio
-     */
-    public List<OrdenCompraDTO> listarOrdenes() {
-        try {
-            List<OrdenCompraDTO> ordenes = new ArrayList<>();
-
-            for (Proveedor prov : this.proveedores) {
-                for (OrdenCompra oc : prov.getOrdenesCompra()) {
-                    OrdenCompraDTO o = oc.toDTO();
-                    ordenes.add(o);
-                }
-            }
-            return ordenes;
-        } catch (Exception ex) {
-            throw ex;
-        }
-    }
-
-    /**
-     * @param cuit
-     * @return List<OrdenCompraDTO>
-     * @tarea Dado un cuit, construye una lista de ordenes de compra dto.
-     */
-    public List<OrdenCompraDTO> listarOrdenes(String cuit) {
-        try {
-            List<OrdenCompraDTO> ordenes = new ArrayList<>();
-            Proveedor prov = this.obtenerProveedor(cuit);
-
-            for (OrdenCompra oc : prov.getOrdenesCompra()) {
-                if (oc.getProveedorCuit().equals(cuit)) {
-                    OrdenCompraDTO o = oc.toDTO();
-                    ordenes.add(o);
-                }
-            }
-            return ordenes;
-        } catch (Exception ex) {
-            throw ex;
-        }
-    }
-
-    // Private region
+    //endregion
 
     /**
      * @param cuit
      * @return proveedor
-     * @tarea metodo privado para poder operar con objetos del dominio.
-     * @comment El metodo es privado ya que devuelve un objeto del dominio.
+     * @tarea Obtine un Proveedor proporcionando el cuit, null en caso de que no lo encuentre.
+     * @comment El método es privado ya que devuelve un objeto del dominio.
      */
     private Proveedor obtenerProveedor(String cuit) {
         for (Proveedor proveedor : this.proveedores) {

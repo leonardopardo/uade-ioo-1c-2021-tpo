@@ -1,6 +1,7 @@
 package app.Documentos.OrdenCompra;
 
 
+import controllers.DocumentoController;
 import controllers.PrecioController;
 import controllers.ProveedorController;
 import dto.DetalleDTO;
@@ -364,7 +365,7 @@ public class Formulario extends JDialog {
 
                     self.guardarOrdenFlag = true;
 
-                    ProveedorController.getInstance().agregarOrdenCompra(self.valuesToDto());
+                    DocumentoController.getInstance().agregarOrden(self.valuesToDto());
 
                     self.dispose();
 
@@ -437,7 +438,7 @@ public class Formulario extends JDialog {
 
     OrdenCompraDTO valuesToDto() {
         OrdenCompraDTO dto = new OrdenCompraDTO();
-        dto.cuitProveedor = this.textFieldCuit.getText();
+        dto.cuit = this.textFieldCuit.getText();
         dto.razonSocial = this.comboBoxProveedor.getSelectedItem().toString();
         dto.fecha = Helpers.datePickerFormatter(this.datePickerfecha);
         dto.detalles = this.detalle;

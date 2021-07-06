@@ -1,7 +1,6 @@
 package modelos;
 
 import dto.CertificadoDTO;
-import dto.OrdenCompraDTO;
 import dto.ProveedorCompulsaDTO;
 import dto.ProveedorDTO;
 import modelos.enums.Rubro;
@@ -29,7 +28,7 @@ public class Proveedor {
     private List<OrdenCompra> ordenesCompra;
     private List<Factura> facturas;
 
-    public Proveedor(ProveedorDTO p) {
+    public Proveedor(ProveedorDTO p) throws Exception {
         this.razonSocial = p.razonSocial;
         this.cuit = p.cuit;
         this.tipoIVA = p.tipoIVA;
@@ -46,6 +45,7 @@ public class Proveedor {
         this.facturas = new ArrayList<>();
     }
 
+    //region Setters
     public void setRazonSocial(String razonSocial) {
         this.razonSocial = razonSocial;
     }
@@ -86,11 +86,12 @@ public class Proveedor {
         this.certificados = certificados;
     }
 
-    public void setOrdenCompra(OrdenCompraDTO oc) {
-        OrdenCompra nuevaOC = new OrdenCompra(oc);
+    public void setOrdenCompra(OrdenCompra nuevaOC) {
         this.ordenesCompra.add(nuevaOC);
     }
+    //endregion
 
+    //region Getters
     public String getCuit() {
         return this.cuit;
     }
@@ -101,6 +102,10 @@ public class Proveedor {
 
     public Integer getId() {
         return this.id;
+    }
+
+    public List<OrdenCompra> getOrdenesCompra() {
+        return this.ordenesCompra;
     }
 
     public List<CertificadoDTO> getCertificados() {
@@ -120,6 +125,7 @@ public class Proveedor {
     public Double getBalance() {
         return this.balance;
     }
+    //endregion
 
     public void agregarRubro(Rubro r) {
         this.rubros.add(r);
@@ -133,6 +139,7 @@ public class Proveedor {
         this.rubros = nuevoRubros;
     }
 
+    //region DTO's
     public ProveedorDTO toDTO() {
         ProveedorDTO dto = new ProveedorDTO();
         dto.razonSocial = this.razonSocial;
@@ -152,7 +159,7 @@ public class Proveedor {
     public ProveedorCompulsaDTO toCompulsaDTO() {
         return new ProveedorCompulsaDTO();
     }
-
+    //endregion
 
     @Override
     public boolean equals(Object obj) {
@@ -190,9 +197,5 @@ public class Proveedor {
                 ", certificados=" + certificados +
                 ", balance=" + balance +
                 '}';
-    }
-
-    public List<OrdenCompra> getOrdenesCompra() {
-        return this.ordenesCompra;
     }
 }

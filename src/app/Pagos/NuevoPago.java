@@ -28,13 +28,42 @@ public class NuevoPago extends JDialog implements ActionListener {
     private JLabel lblEstado;
     private JComboBox comboBoxEstadoPago;
     private JPanel pnlEstadoPago;
+    private JButton btnGuardar;
+    private JButton cancelarButton;
     private JButton button1;
+    private JList listFacturasImpagas;
+    private JList listFacturasAPagar;
+    private JButton button2;
+    private JButton button3;
+    private JButton button4;
+    private JComboBox comboBoxFormaPago;
+    private JTextField textFieldTotal;
+    private JLabel lblTotal;
+    private JLabel lblFormaPago;
+    private JPanel pnlActions;
+    private JPanel pnlFacturas;
+    private JPanel pnlFormaPago;
+    private JPanel pnlCheque;
+    private JTextField textFieldChequeNumero;
+    private JTextField textFieldBancoCheque;
+    private JTextField textFieldMontoCheque;
+    private JTextField textFieldTitularCheque;
+    private JLabel lblNumero;
+    private JPanel pnlContainerFechaEmision;
+    private JLabel lblFechaEmision;
+    private JLabel lblFechaVencimiento;
+    private JPanel pnlContainerFechaVencimiento;
     private JDatePickerImpl datePickerFecha;
+    private JDatePickerImpl datePickerFechaEmisionCheque;
+    private JDatePickerImpl datePickerFechaVencimientoCheque;
 
     public NuevoPago(JFrame parent) {
         super(parent);
 
         this.onChangeComboBoxProveedor();
+        this.onChangeComboBoxTipoPago();
+
+        this.pnlCheque.setVisible(false);
 
         this.setDefaults();
     }
@@ -54,7 +83,7 @@ public class NuevoPago extends JDialog implements ActionListener {
         }
     }
 
-    void populateComboBoxProveedores(){
+    void populateComboBoxProveedores() {
         try {
             List<ProveedorDTO> proveedores = ProveedorController.getInstance().listar();
 
@@ -71,10 +100,17 @@ public class NuevoPago extends JDialog implements ActionListener {
             );
         }
     }
+
+    void populateComboBoxTipoPago() {
+        this.comboBoxFormaPago.addItem("--Seleccione--");
+        for (TipoPago tp : TipoPago.values()) {
+            this.comboBoxFormaPago.addItem(tp);
+        }
+    }
     //endregion
 
     //region Actions
-    void onChangeComboBoxProveedor(){
+    void onChangeComboBoxProveedor() {
         NuevoPago self = this;
         this.comboBoxProveedores.addActionListener(new ActionListener() {
             @Override
@@ -85,12 +121,54 @@ public class NuevoPago extends JDialog implements ActionListener {
 
                     ProveedorDTO proveedor = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
 
-                    if(proveedor != null)
+                    if (proveedor != null){
                         self.textFieldCUIT.setText(proveedor.cuit);
-                    else
+                        self.textFieldTitularCheque.setText(proveedor.razonSocial);
+                    } else {
                         self.textFieldCUIT.setText("");
+                    }
 
                 } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void onChangeComboBoxTipoPago(){
+        NuevoPago self = this;
+        this.comboBoxFormaPago.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+
+                    if(self.comboBoxFormaPago.getSelectedIndex() > 0){
+                        TipoPago tipo = (TipoPago) self.comboBoxFormaPago.getSelectedItem();
+
+                        if(tipo.equals(TipoPago.CHEQUE_PROPIO) || tipo.equals(TipoPago.CHEQUE_TERCERO)){
+                            self.pnlCheque.setVisible(true);
+
+                            JTextField titular = self.textFieldTitularCheque;
+
+                            if(tipo.equals(TipoPago.CHEQUE_PROPIO)){
+                                titular.setText(self.comboBoxProveedores.getSelectedItem().toString());
+                                titular.setEditable(false);
+                            } else {
+                                titular.setText("");
+                                titular.setEditable(true);
+                            }
+
+                        } else {
+                            self.pnlCheque.setVisible(false);
+                        }
+                    }
+
+                } catch(Exception ex ) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
                             ex.getMessage(),
@@ -116,10 +194,17 @@ public class NuevoPago extends JDialog implements ActionListener {
 
         this.populateComboBoxProveedores();
         this.populateComboBoxEstadoPago();
+        this.populateComboBoxTipoPago();
         this.textFieldCUIT.setEditable(false);
 
         this.datePickerFecha = Helpers.nuevoDatePicker();
         Helpers.appendDatePicker(this.pnlContainerFecha, this.datePickerFecha);
+
+        this.datePickerFechaEmisionCheque = Helpers.nuevoDatePicker();
+        Helpers.appendDatePicker(this.pnlContainerFechaEmision, this.datePickerFechaEmisionCheque);
+
+        this.datePickerFechaVencimientoCheque = Helpers.nuevoDatePicker();
+        Helpers.appendDatePicker(this.pnlContainerFechaVencimiento, this.datePickerFechaVencimientoCheque);
 
         this.setContentPane(this.pnlMain);
         this.setResizable(false);

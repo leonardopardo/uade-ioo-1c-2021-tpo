@@ -8,8 +8,8 @@ public class OrdenCompraDTO {
 
     public Integer numero;
     public LocalDate fecha;
-    public String cuitProveedor;
     public String razonSocial;
+    public String cuit;
     public List<DetalleDTO> detalles;
 
     public OrdenCompraDTO() {
