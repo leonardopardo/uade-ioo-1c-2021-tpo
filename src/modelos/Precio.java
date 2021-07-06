@@ -1,6 +1,6 @@
 package modelos;
 
-import java.time.LocalDate;
+import dto.PrecioDTO;
 
 public class Precio {
 
@@ -8,17 +8,40 @@ public class Precio {
     private Item item;
     private Proveedor proveedor;
     private Double precio;
-    private LocalDate fecha;
+
+    public Precio(PrecioDTO precio) {
+        this.item = precio.item;
+        this.proveedor = precio.proveedor;
+        this.precio = precio.precio;
+    }
 
     public Item getItem() {
-        return item;
+        return this.item;
     }
 
     public Proveedor getProveedor() {
-        return proveedor;
+        return this.proveedor;
     }
 
     public Double getPrecio() {
-        return precio;
+        return this.precio;
+    }
+
+    public String getProveedorCuit() {
+        return this.getProveedor().getCuit();
+    }
+
+    public String getCodigoItem() {
+        return this.getItem().getCodigo();
+    }
+
+    public PrecioDTO toDTO() {
+        PrecioDTO dto = new PrecioDTO();
+        dto.item = this.item;
+        dto.proveedor = this.proveedor;
+        dto.precio = this.precio;
+        dto.rubro = this.item.getRubro();
+
+        return dto;
     }
 }

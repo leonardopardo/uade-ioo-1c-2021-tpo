@@ -117,7 +117,7 @@ public class DocumentoController {
         for (OrdenCompra o : this.ordenes) {
             if (o.getProveedor().getCuit().equals(cuit)
                     && (o.getFecha().isAfter(fechaDesde) || o.getFecha().equals(fechaDesde))
-                    && (o.getFecha().isBefore(fechaHasta)|| o.getFecha().equals(fechaHasta) )) {
+                    && (o.getFecha().isBefore(fechaHasta) || o.getFecha().equals(fechaHasta))) {
                 ordenesDTO.add(o.toDTO());
             }
         }
@@ -148,6 +148,15 @@ public class DocumentoController {
         OrdenCompra orden = this.obtenerOrden(numero);
         this.ordenes.remove(orden);
         this.ordenService.delete(orden.getNumero());
+    }
+
+    public Double buscarPrecio(String cuit, String codItem) {
+        for (Precio p : this.precios) {
+            if (p.getProveedorCuit().equals(cuit) && p.getCodigoItem().equals(codItem)) {
+                return p.getPrecio();
+            }
+        }
+        return null;
     }
     //endregion
 
