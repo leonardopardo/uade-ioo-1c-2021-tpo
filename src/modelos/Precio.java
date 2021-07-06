@@ -11,14 +11,22 @@ public class Precio {
     private LocalDate fecha;
 
     public Item getItem() {
-        return item;
+        return this.item;
     }
 
     public Proveedor getProveedor() {
-        return proveedor;
+        return this.proveedor;
     }
 
     public Double getPrecio() {
-        return precio;
+        return this.precio;
+    }
+
+    public String getProveedorCuit() {
+        return this.getProveedor().getCuit();
+    }
+
+    public String getCodigoItem() {
+        return this.getItem().getCodigo();
     }
 }
