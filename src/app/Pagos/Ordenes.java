@@ -1,6 +1,7 @@
 package app.Pagos;
 
 import app.Main.Main;
+import controllers.DocumentoController;
 import controllers.OrdenPagoController;
 import controllers.ProveedorController;
 import dto.OrdenPagoDTO;
@@ -214,19 +215,43 @@ public class Ordenes extends JFrame{
 
                     LocalDate fechaHasta = Helpers.datePickerFormatter(self.datePickerFechaHasta);
 
+                    if(self.datePickerFechaDesde.getJFormattedTextField().getValue() != null)
+                        fechaDesde = Helpers.datePickerFormatter(self.datePickerFechaDesde);
+
+                    if(self.datePickerFechaHasta.getJFormattedTextField().getValue() != null)
+                        fechaHasta = Helpers.datePickerFormatter(self.datePickerFechaHasta);
+
+                    if(fechaDesde != null
+                            && fechaHasta != null
+                            && !(fechaDesde.isBefore(fechaHasta) || fechaDesde.equals(fechaHasta))){
+
+                        throw new Exception("La fecha desde no puede ser mayor que la fecha hasta.");
+                    }
+
                     OrdenPagoController controller = OrdenPagoController.getInstance();
 
-                    if(fechaDesde != null && fechaHasta != null && fechaHasta.isBefore(fechaDesde))
-                        throw new Exception("La fecha 'hasta' no puede ser anterior a la fecha 'desde'");
+                    self.ordenes = null;
 
-                    if(cuit != null && fechaDesde == null && fechaHasta == null){
+                    if (!cuit.equals("") && fechaDesde == null && fechaHasta == null) { // si viene cuit y no vienen fechas
                         self.ordenes = controller.ordenesPagoEmitidas(cuit);
-                    } else if (cuit == null && fechaDesde != null && fechaHasta == null){
-                        self.ordenes = controller.ordenesPagoEmitidas(fechaDesde, LocalDate.now());
-                    } else if (cuit == null && fechaDesde == null && fechaHasta != null){
-                        self.ordenes = controller.ordenesPagoEmitidas(LocalDate.now(), fechaHasta);
-                    } else if (cuit == null && fechaDesde != null && fechaHasta != null){
+                    } else if (cuit.equals("") && fechaDesde != null && fechaHasta == null) { // si viene solo fecha desde
+                        self.ordenes = controller.ordenesPagoEmitidas(fechaDesde, LocalDate.MAX);
+                    } else if (cuit.equals("") && fechaDesde == null && fechaHasta != null) { // si viene solo fecha hasta
+                        self.ordenes = controller.ordenesPagoEmitidas(LocalDate.MIN, fechaHasta);
+                    } else if (!cuit.equals("") && fechaDesde == null && fechaHasta != null) { // si viene cuit y fecha hasta
+                        self.ordenes = controller.ordenesPagoEmitidas(LocalDate.MIN, fechaHasta);
+                    } else if(!cuit.equals("") && fechaDesde != null && fechaHasta == null) { // si viene cuit y fecha desde
+                        self.ordenes = controller.ordenesPagoEmitidas(fechaDesde, LocalDate.MAX, cuit);
+                    } else if (cuit.equals("") && fechaDesde != null && fechaHasta != null) { // si viene fecha desde y fecha hasta
+                        self.ordenes = controller.ordenesPagoEmitidas(fechaDesde, fechaHasta);
+                    } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null) { // si viene el cuit y las dos fechas
                         self.ordenes = controller.ordenesPagoEmitidas(fechaDesde, fechaHasta, cuit);
+                    } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null && fechaDesde.equals(fechaHasta)) { // si viene las fechas son iguales
+                        self.ordenes = controller.ordenesPagoEmitidas(cuit, fechaDesde);
+                    } else if (cuit.equals("") && fechaDesde != null && fechaHasta != null && fechaDesde.equals(fechaHasta)) {
+                        self.ordenes = controller.ordenesPagoEmitidas(fechaDesde);
+                    } else {
+                        self.ordenes = controller.ordenesPagoEmitidas(); // no viene nada
                     }
 
                 } catch (Exception ex) {

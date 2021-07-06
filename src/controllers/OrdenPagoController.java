@@ -1,9 +1,13 @@
 package controllers;
 
 import dto.*;
+import modelos.Factura;
 import modelos.OrdenPago;
+import modelos.Proveedor;
 import modelos.enums.EstadoPago;
+import servicios.FacturaService;
 import servicios.OrdenPagoService;
+import servicios.ProveedorService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,15 +16,24 @@ import java.util.List;
 public class OrdenPagoController {
 
     private List<OrdenPago> ordenesPago;
+    private List<Factura> facturas;
+    private List<Proveedor> proveedores;
+    private OrdenPagoService ordenPagoService;
+    private ProveedorService proveedorService;
+    private FacturaService facturaService;
 
     private static OrdenPagoController instance;
 
-    private OrdenPagoService service;
-
     private OrdenPagoController() throws Exception {
 
-        this.service = new OrdenPagoService();
-        this.ordenesPago = this.service.getAll();
+        this.ordenPagoService = new OrdenPagoService();
+        this.ordenesPago = this.ordenPagoService.getAll();
+
+        this.facturaService = new FacturaService();
+        this.facturas = this.facturaService.getAll();
+
+        this.proveedorService = new ProveedorService();
+        this.proveedores = this.proveedorService.getAll();
     }
 
     public static OrdenPagoController getInstance() throws Exception {
@@ -84,16 +97,22 @@ public class OrdenPagoController {
      * @tarea Dado un provedor, devuelve todas las ordenes de pago emitidas por ese proveedor.
      */
     public List<OrdenPagoDTO> ordenesPagoEmitidas(String cuit) {
-
         List<OrdenPagoDTO> opEmitidas = new ArrayList<OrdenPagoDTO>();
-
         this.ordenesPago.forEach(op -> {
-
             if (op.getCuitProveedor().equals(cuit)) {
                 opEmitidas.add(op.toDTO());
             }
         });
+        return opEmitidas;
+    }
 
+    public List<OrdenPagoDTO> ordenesPagoEmitidas(LocalDate fecha){
+        List<OrdenPagoDTO> opEmitidas = new ArrayList<OrdenPagoDTO>();
+        this.ordenesPago.forEach(op -> {
+            if (op.getFecha().equals(fecha)) {
+                opEmitidas.add(op.toDTO());
+            }
+        });
         return opEmitidas;
     }
 
