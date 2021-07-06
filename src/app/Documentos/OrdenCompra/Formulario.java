@@ -62,7 +62,7 @@ public class Formulario extends JDialog {
     public Formulario(JFrame parent) {
         super(parent);
         this.detalle = new ArrayList<>();
-        this.textFieldCuit.setEnabled(false);
+        this.textFieldCuit.setEditable(false);
         this.guardarOrdenFlag = false;
         this.spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 1000, 1));
 
@@ -389,7 +389,10 @@ public class Formulario extends JDialog {
                     "CÓDIGO",
                     "DESCRIPCIÓN",
                     "CANTIDAD",
-                    "UNIDAD"
+                    "UNIDAD",
+                    "PRECIO",
+                    "PRECIO TOTAL"
+
             };
 
             DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
@@ -399,7 +402,8 @@ public class Formulario extends JDialog {
                         d.codItem,
                         d.descripcion,
                         d.cantItem,
-                        Unidad.UNIDAD
+                        Unidad.UNIDAD,
+                        d.precioUnidad
                 };
 
                 tblModel.addRow(o);

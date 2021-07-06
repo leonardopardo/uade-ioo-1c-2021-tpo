@@ -61,6 +61,7 @@ public class Formulario extends JDialog {
     public Formulario(JFrame parent) {
         super(parent);
         this.detalle = new ArrayList<>();
+        this.textFieldCuit.setEditable(false);
         this.spinnerCantFact.setModel(new SpinnerNumberModel(1, 1, 1000, 1));
 
         //region Register Actions
@@ -87,7 +88,6 @@ public class Formulario extends JDialog {
         this.pack();
         this.positionScreen();
         this.setVisible(true);
-
         //endregion
     }
 

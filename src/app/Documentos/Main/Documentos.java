@@ -94,7 +94,8 @@ public class Documentos extends JFrame {
         //endregion
 
         //region Default Values
-        this.textFieldOCFormCUIT.setEnabled(false);
+        this.textFieldOCFormCUIT.setEditable(false);
+        this.cuitDocFactura.setEditable(false);
         this.ordenes = DocumentoController.getInstance().listarOrdenes();
         //endregion
 
@@ -151,7 +152,8 @@ public class Documentos extends JFrame {
                     "NUMERO",
                     "FECHA",
                     "RAZON SOCIAL",
-                    "CUIT"
+                    "CUIT",
+                    "TOTAL"
             };
 
             DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
