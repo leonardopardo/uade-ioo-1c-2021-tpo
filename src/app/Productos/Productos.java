@@ -202,6 +202,8 @@ public class Productos extends JFrame {
                 Object[] o = {
                         x.itemCodigo,
                         x.itemTitulo,
+                        x.cuit,
+                        x.precio
                 };
                 tblModel.addRow(o);
             });
@@ -270,6 +272,7 @@ public class Productos extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 self.nuevoPrecio = new Precios(self);
+                self.loadPrecios();
             }
         });
     }

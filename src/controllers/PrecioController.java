@@ -29,12 +29,10 @@ public class PrecioController {
     //endregion
 
     private PrecioController() throws Exception {
-        this.precios = new ArrayList<>();
-        this.items = new ArrayList<>();
         this.itemsService = new ItemsService();
-        this.precioService = new PrecioService();
-
         this.items = this.itemsService.getAll();
+        this.precioService = new PrecioService();
+        this.precios = this.precioService.getAll();
     }
 
     public static PrecioController getInstance() throws Exception {
@@ -120,13 +118,19 @@ public class PrecioController {
 
     public void agregar(PrecioDTO precio) throws Exception {
         try {
-            if (this.precios.contains(precio)) {
+
+            if (this.precios.contains(precio))
                 throw new Exception(PRECIO_EXISTENTE_EXCEPTION);
-            }
 
             Precio nuevoPrecio = new Precio(precio);
+            nuevoPrecio.setProveedor(ProveedorController.getInstance().obtener(precio.cuit));
+            nuevoPrecio.setItem(this.obtenerItemModelPorCodigo(precio.itemCodigo));
+            nuevoPrecio.setId(this.precioService.getProximoId());
+
             this.precioService.save(nuevoPrecio);
+
             this.precios.add(nuevoPrecio);
+
         } catch (Exception ex) {
             throw ex;
         }
