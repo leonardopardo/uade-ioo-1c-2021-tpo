@@ -70,8 +70,8 @@ public class Precio extends JPanel{
 
             precios.stream().forEach(x -> {
                 Object[] o = {
-                        x.item.getCodigo(),
-                        x.item.getTitulo(),
+                        x.item.codigo,
+                        x.item.titulo,
                         x.rubro,
                         x.proveedor.getRazonSocial(),
                         x.precio
@@ -147,7 +147,7 @@ public class Precio extends JPanel{
                     PrecioDTO precioDTO = new PrecioDTO();
                     String titulo = self.comboBoxItem.getSelectedItem().toString();
                     String razonSocial = self.comboBoxProveedor.getSelectedItem().toString();
-                    precioDTO.item = PrecioController.getInstance().obtenerItemModelPorTitulo(titulo);
+                    precioDTO.item = PrecioController.getInstance().obtenerItemPorTitulo(titulo);
                     precioDTO.rubro = Rubro.valueOf(self.comboBoxRubro.getSelectedItem().toString());
                     precioDTO.precio = Double.parseDouble(self.txtprecio.getText().trim());
                     precioDTO.proveedor = ProveedorController.getInstance().obtenerProveedorPorRazonSocial(razonSocial);

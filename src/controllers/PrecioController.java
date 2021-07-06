@@ -1,7 +1,6 @@
 package controllers;
 
 import dto.*;
-import modelos.Detalle;
 import modelos.Item;
 import modelos.Precio;
 import modelos.enums.Rubro;
@@ -21,8 +20,13 @@ public class PrecioController {
     private PrecioService precioService;
 
     public static PrecioController instance;
-    protected static final String ITEM_EXISTENTE_EXCEPTION = "El item que intenta agregar ya existe.";
-    protected static final String PRECIO_EXISTENTE_EXCEPTION = "El precio que intenta agregar ya existe.";
+
+    //region Exceptions
+    protected static final String ITEM_EXISTENTE_EXCEPTION =
+            "El item que intenta agregar ya existe.";
+    protected static final String PRECIO_EXISTENTE_EXCEPTION =
+            "El precio que intenta agregar ya existe.";
+    //endregion
 
     private PrecioController() throws Exception {
         this.precios = new ArrayList<>();
@@ -40,12 +44,6 @@ public class PrecioController {
         return instance;
     }
 
-    /**
-     * @param codigo
-     * @param rubro
-     * @return CompulsaPrecioDTO
-     * @tarea Dado un codigo de item y un rubro, devuelve una lista de proveedores que ofrecen el item y su precio.
-     */
     public CompulsaPrecioDTO filtrarPorItem(String codigo, Rubro rubro) {
 
         try {
@@ -79,27 +77,6 @@ public class PrecioController {
         return null;
     }
 
-    /**
-     * @param codigo
-     * @return String titulo
-     * @tarea Dado un codigo de item devuelve el titulo del mismo.
-     */
-    private String buscarItemTituloPorCodigo(String codigo) {
-
-        AtomicReference<String> titulo = null;
-
-        this.precios.forEach(precio -> {
-            if (precio.getItem().getCodigo().equals(codigo)) {
-                titulo.set(precio.getItem().getTitulo());
-            }
-        });
-
-        return titulo.get();
-    }
-
-    /**
-     * @return
-     */
     public List<ItemDTO> listarItems() {
         try {
             List<ItemDTO> items = new ArrayList<>();
@@ -126,6 +103,7 @@ public class PrecioController {
         }
     }
 
+    //region ABM Item-Precio
     public void agregar(ItemDTO item) throws Exception {
         try {
             if (this.items.contains(item)) {
@@ -154,20 +132,16 @@ public class PrecioController {
         }
     }
 
-    /**
-     * @param dto
-     * @tarea Dado un ItemDTO y un item existente, se actualizan las propiedades del mismo.
-     */
-    public void actualizar(ItemDTO dto) throws Exception {
+    public void actualizar(ItemDTO item) throws Exception {
 
         try {
-            Item nuevoItem = obtenerItemModelPorCodigo(dto.codigo);
+            Item nuevoItem = obtenerItemModelPorCodigo(item.codigo);
 
-            nuevoItem.setTitulo(dto.titulo);
-            nuevoItem.setCodigo(dto.codigo);
-            nuevoItem.setDescripcion(dto.descripcion);
-            nuevoItem.setRubro(dto.rubro);
-            nuevoItem.setUnidad(dto.unidad);
+            nuevoItem.setTitulo(item.titulo);
+            nuevoItem.setCodigo(item.codigo);
+            nuevoItem.setDescripcion(item.descripcion);
+            nuevoItem.setRubro(item.rubro);
+            nuevoItem.setUnidad(item.unidad);
 
             this.itemsService.update(nuevoItem);
         } catch (Exception ex) {
@@ -175,6 +149,20 @@ public class PrecioController {
         }
     }
 
+    public void actualizar(PrecioDTO precio) throws Exception{
+
+    }
+
+    public void eliminar(ItemDTO item){
+
+    }
+
+    public void eliminar(PrecioDTO precio){
+
+    }
+    //endregion
+
+    //region Búsqueda Items
     public ItemDTO obtenerItemPorCodigo(String itemCodigo) {
         try {
 
@@ -183,23 +171,6 @@ public class PrecioController {
             for (Item i : this.items) {
                 if (i.getCodigo().equals(itemCodigo))
                     item = i.toDTO();
-            }
-
-            return item;
-
-        } catch (Exception ex) {
-            throw ex;
-        }
-    }
-
-    private Item obtenerItemModelPorCodigo(String itemCodigo) {
-        try {
-
-            Item item = null;
-
-            for (Item i : this.items) {
-                if (i.getCodigo().equals(itemCodigo))
-                    item = i;
             }
 
             return item;
@@ -223,8 +194,10 @@ public class PrecioController {
             throw ex;
         }
     }
+    //endregion
 
-    public Item obtenerItemModelPorTitulo(String itemTitulo) {
+    //region Métodos Privados
+    private Item obtenerItemModelPorTitulo(String itemTitulo) {
         try {
             Item item = null;
 
@@ -239,11 +212,34 @@ public class PrecioController {
         }
     }
 
-    // detalle no puede existir acá!!!           >>!<<
-    public void setItemEnDetalle(String codigo, Detalle detalle) {
-        for (Item i : this.items) {
-            if(i.getCodigo().equals(codigo))
-                detalle.setItem(i);
+    private Item obtenerItemModelPorCodigo(String itemCodigo) {
+        try {
+
+            Item item = null;
+
+            for (Item i : this.items) {
+                if (i.getCodigo().equals(itemCodigo))
+                    item = i;
+            }
+
+            return item;
+
+        } catch (Exception ex) {
+            throw ex;
         }
     }
+
+    private String buscarItemTituloPorCodigo(String codigo) {
+
+        AtomicReference<String> titulo = null;
+
+        this.precios.forEach(precio -> {
+            if (precio.getItem().getCodigo().equals(codigo)) {
+                titulo.set(precio.getItem().getTitulo());
+            }
+        });
+
+        return titulo.get();
+    }
+    //endregion
 }

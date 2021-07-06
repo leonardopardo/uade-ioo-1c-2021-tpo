@@ -1,4 +1,4 @@
-package app.Proveedores.Main;
+package app.Proveedores;
 
 import app.Main.Main;
 import controllers.ProveedorController;

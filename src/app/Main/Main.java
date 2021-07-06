@@ -1,9 +1,9 @@
 package app.Main;
 
-import app.Catalogo.Main.Catalogo;
 import app.Documentos.Main.Documentos;
 import app.Pagos.Ordenes;
-import app.Proveedores.Main.Proveedores;
+import app.Productos.Productos;
+import app.Proveedores.Proveedores;
 import app.Usuarios.Usuarios;
 
 import javax.swing.*;
@@ -120,7 +120,8 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 self.setVisible(false);
                 try {
-                    Catalogo d = new Catalogo("Documentos");
+                    //Catalogo d = new Catalogo("Documentos");
+                    Productos p = new Productos("PRDUCTOS");
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
