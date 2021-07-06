@@ -5,18 +5,14 @@ import dto.ItemDTO;
 import modelos.enums.Rubro;
 import modelos.enums.TipoItem;
 import modelos.enums.Unidad;
-import org.jdatepicker.impl.DateComponentFormatter;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.Properties;
 
 public class Items extends JPanel {
     private JTable tableItems;
@@ -48,13 +44,22 @@ public class Items extends JPanel {
         this.populateComboRubro();
         this.populateComboTipo();
         this.populateComboUnidad();
-//        this.actionSelectedTipo();
 
-        this.actionGuardarItem();
+        this.actionGuardar();
         this.actionEliminarItem();
         this.actionCancelarItem();
+        this.actionSelectedRowItems();
 
         this.precioController = PrecioController.getInstance();
+    }
+
+    void populateInputs(String selectedRow) throws Exception {
+        ItemDTO item = PrecioController.getInstance().obtenerItemPorTitulo(selectedRow);
+        this.textFieldCodigo.setText(item.codigo);
+        this.textFieldTitulo.setText(item.titulo);
+        this.comboBoxRubro.setSelectedItem(item.rubro);
+        this.comboBoxUnidad.setSelectedItem(item.unidad);
+        this.comboBoxTipo.setSelectedItem(item.tipo);
     }
 
     void populateTableItems() {
@@ -121,41 +126,44 @@ public class Items extends JPanel {
         this.comboBoxRubro.setModel(comboBoxModel);
     }
 
-//    void actionSelectedTipo(){
-//
-//        Items self = this;
-//
-//        this.comboBoxTipo.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String value = self.comboBoxTipo.getSelectedItem().toString();
-//
-//                if(value.equals(TipoItem.SERVICIO.name())){
-//                    self.pnlFecha.setVisible(true);
-//                } else {
-//                    self.pnlFecha.setVisible(false);
-//                }
-//
-//            }
-//        });
-//    }
+    void actionSelectedRowItems() {
+        this.tableItems.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JTable target = (JTable) e.getSource();
+                try {
+                    populateInputs(tableItems.getValueAt(target.getSelectedRow(), 1).toString());
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+    }
 
-    void actionGuardarItem() {
+    void actionGuardar() {
         Items self = this;
-
         this.guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ItemDTO iDto = new ItemDTO();
-                    iDto.codigo = self.textFieldCodigo.getText();
-                    iDto.titulo = self.textFieldTitulo.getText();
-                    iDto.rubro = Rubro.valueOf(self.comboBoxRubro.getSelectedItem().toString());
-                    iDto.unidad = Unidad.valueOf(self.comboBoxUnidad.getSelectedItem().toString());
-                    iDto.tipo = TipoItem.valueOf(self.comboBoxTipo.getSelectedItem().toString());
+                    PrecioController pController = PrecioController.getInstance();
+                    ItemDTO check = pController.obtenerItemPorCodigo(self.textFieldCodigo.getText());
 
-                    self.precioController.agregar(iDto);
-                    tblModel.addRow(new Object[]{iDto.codigo, iDto.titulo, iDto.unidad, iDto.rubro, iDto.tipo});
+                    if (check != null) {
+                        String message = "Usted está a punto de editar el item " + check.titulo + " ¿está seguro?";
+
+                        int confirmResult = JOptionPane.showConfirmDialog(pnlMain, message,
+                                "Actualizar item", JOptionPane.YES_NO_OPTION
+                        );
+                        if (confirmResult == JOptionPane.YES_OPTION) {
+                            pController.actualizar(self.crearActualizarItem());
+                        }
+                    } else {
+                        ItemDTO iDto = self.crearActualizarItem();
+                        pController.agregar(iDto);
+                    }
+                    self.populateTableItems();
 
                     JOptionPane.showMessageDialog(
                             pnlMain,
@@ -163,17 +171,27 @@ public class Items extends JPanel {
                             "",
                             JOptionPane.INFORMATION_MESSAGE
                     );
-
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
-                            ex.getMessage(),
-                            "",
+                            ex.getStackTrace(),
+                            "Error",
                             JOptionPane.ERROR_MESSAGE
                     );
                 }
             }
         });
+    }
+
+    ItemDTO crearActualizarItem() {
+        ItemDTO iDto = new ItemDTO();
+        iDto.codigo = this.textFieldCodigo.getText();
+        iDto.titulo = this.textFieldTitulo.getText();
+        iDto.rubro = Rubro.valueOf(this.comboBoxRubro.getSelectedItem().toString());
+        iDto.unidad = Unidad.valueOf(this.comboBoxUnidad.getSelectedItem().toString());
+        iDto.tipo = TipoItem.valueOf(this.comboBoxTipo.getSelectedItem().toString());
+
+        return iDto;
     }
 
     void actionCancelarItem() {

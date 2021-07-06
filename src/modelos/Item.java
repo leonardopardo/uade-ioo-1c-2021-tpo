@@ -35,20 +35,40 @@ public class Item {
         return codigo;
     }
 
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
     public String getTitulo() {
         return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getDescripcion() {
         return descripcion;
     }
 
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public Unidad getUnidad() {
         return unidad;
     }
 
+    public void setUnidad(Unidad unidad) {
+        this.unidad = unidad;
+    }
+
     public Rubro getRubro() {
         return rubro;
+    }
+
+    public void setRubro(Rubro rubro) {
+        this.rubro = rubro;
     }
 
     public TipoItem getTipoItem() {
