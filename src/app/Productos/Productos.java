@@ -200,8 +200,8 @@ public class Productos extends JFrame {
 
             this.precios.stream().forEach(x -> {
                 Object[] o = {
-                        x.item.codigo,
-                        x.item.titulo,
+                        x.itemCodigo,
+                        x.itemTitulo,
                 };
                 tblModel.addRow(o);
             });
@@ -279,6 +279,14 @@ public class Productos extends JFrame {
     }
 
     void actionOnClickEliminarPrecio(){
+
+    }
+
+    void actionOnClickFiltrarPrecios(){
+
+    }
+
+    void actionOnClickLimpiarFiltroPrecios(){
 
     }
 

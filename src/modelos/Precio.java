@@ -11,7 +11,7 @@ public class Precio {
 
     public Precio(PrecioDTO precio) {
         //this.item = precio.item;
-        this.proveedor = precio.proveedor;
+        //this.proveedor = precio.razonSocial;
         this.precio = precio.precio;
     }
 
@@ -38,7 +38,7 @@ public class Precio {
     public PrecioDTO toDTO() {
         PrecioDTO dto = new PrecioDTO();
         //dto.item = this.item;
-        dto.proveedor = this.proveedor;
+        //dto.proveedor = this.proveedor;
         dto.precio = this.precio;
         dto.rubro = this.item.getRubro();
 
