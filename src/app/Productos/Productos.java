@@ -87,6 +87,7 @@ public class Productos extends JFrame {
         this.closeModule();
         this.actionOnClickNuevoItem();
         this.actionOnClickNuevoPrecio();
+        this.actionOnClickModificarPrecio();
         this.actionOnClickEliminarPrecio();
         this.actionOnChangeComboBoxProveedores();
         this.actionOnChangeComboBoxItems();
@@ -275,15 +276,45 @@ public class Productos extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     self.nuevoPrecio = new Precios(self);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         });
     }
 
     void actionOnClickModificarPrecio() {
+        Productos self = this;
+        this.btnModificarPrecio.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+                try {
+
+                    int row = self.tablePrecios.getSelectedRow();
+
+                    if(row < 0)
+                        throw new Exception("Debe seleccionar una fila de la tabla.");
+
+                    PrecioDTO precio = self.precios.get(row);
+
+                    self.nuevoPrecio = new Precios(self, precio);
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
     }
 
     void actionOnClickEliminarPrecio() {

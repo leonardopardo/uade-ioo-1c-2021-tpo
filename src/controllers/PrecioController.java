@@ -3,7 +3,6 @@ package controllers;
 import dto.*;
 import modelos.Item;
 import modelos.Precio;
-import modelos.Proveedor;
 import modelos.enums.Rubro;
 import servicios.ItemsService;
 import servicios.PrecioService;
@@ -155,7 +154,21 @@ public class PrecioController {
     }
 
     public void actualizar(PrecioDTO precio) throws Exception {
+        try{
+            Precio precioExistente = this.obtenerPrecio(precio.itemCodigo, precio.cuit);
 
+            if (precioExistente == null)
+                throw new Exception("El precio que intenta actualizar no se encuentra en la lista de precios.");
+
+            precioExistente.setPrecio(precio.precio);
+            precioExistente.setProveedor(ProveedorController.getInstance().obtener(precio.cuit));
+            precioExistente.setItem(this.obtenerItemModelPorCodigo(precio.itemCodigo));
+            precioExistente.setId(this.precioService.getProximoId());
+
+            this.precioService.save(precioExistente);
+        }catch(Exception ex){
+            throw new Exception(ex.getMessage());
+        }
     }
 
     public void eliminar(ItemDTO item) {

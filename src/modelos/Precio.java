@@ -14,6 +14,7 @@ public class Precio {
         this.precio = precio.precio;
     }
 
+    //region Getters
     public Integer getId() {
         return id;
     }
@@ -37,9 +38,15 @@ public class Precio {
     public String getCodigoItem() {
         return this.getItem().getCodigo();
     }
+    //endregion
 
+    //region Setters
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 
     public void setItem(Item item) {
@@ -49,6 +56,7 @@ public class Precio {
     public void setProveedor(ProveedorDTO proveedor) throws Exception {
         this.proveedor = new Proveedor(proveedor);
     }
+    //endregion
 
     public PrecioDTO toDTO() {
         PrecioDTO dto = new PrecioDTO();
