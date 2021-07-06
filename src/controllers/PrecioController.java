@@ -2,10 +2,12 @@ package controllers;
 
 import dto.CompulsaPrecioDTO;
 import dto.ItemDTO;
+import dto.PrecioDTO;
 import dto.ProveedorCompulsaDTO;
 import modelos.Detalle;
 import modelos.Item;
 import modelos.Precio;
+import modelos.Proveedor;
 import modelos.enums.Rubro;
 import servicios.ItemsService;
 import servicios.PrecioService;
@@ -24,6 +26,7 @@ public class PrecioController {
 
     public static PrecioController instance;
     protected static final String ITEM_EXISTENTE_EXCEPTION = "El item que intenta agregar ya existe.";
+    protected static final String PRECIO_EXISTENTE_EXCEPTION = "El precio que intenta agregar ya existe.";
 
     private PrecioController() throws Exception {
         this.precios = new ArrayList<>();
@@ -114,6 +117,19 @@ public class PrecioController {
         }
     }
 
+    public List<PrecioDTO> listarPrecios() {
+        try {
+            List<PrecioDTO> precios = new ArrayList<>();
+            this.precios.forEach(precio -> {
+                precios.add(precio.toDTO());
+            });
+
+            return precios;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
     public void agregar(ItemDTO item) throws Exception {
         try {
             if (this.items.contains(item)) {
@@ -123,6 +139,20 @@ public class PrecioController {
             Item nuevoItem = new Item(item);
             this.itemsService.save(nuevoItem);
             Collections.addAll(this.items, nuevoItem);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public void agregar(PrecioDTO precio) throws Exception {
+        try {
+            if (this.precios.contains(precio)) {
+                throw new Exception(PRECIO_EXISTENTE_EXCEPTION);
+            }
+
+            Precio nuevoPrecio = new Precio(precio);
+            this.precioService.save(nuevoPrecio);
+            this.precios.add(nuevoPrecio);
         } catch (Exception ex) {
             throw ex;
         }
@@ -152,6 +182,21 @@ public class PrecioController {
             for (Item i : this.items) {
                 if (i.getTitulo().equals(itemTitulo))
                     item = i.toDTO();
+            }
+
+            return item;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public Item obtenerItemModelPorTitulo(String itemTitulo) {
+        try {
+            Item item = null;
+
+            for (Item i : this.items) {
+                if (i.getTitulo().equals(itemTitulo))
+                    item = i;
             }
 
             return item;

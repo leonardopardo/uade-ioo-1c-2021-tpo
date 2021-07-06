@@ -26,7 +26,7 @@ public class Catalogo extends JFrame {
         super(title);
 
         //region Settings
-        this.setResizable(false);
+        this.setResizable(true);
         this.setContentPane(this.pnlMain);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);

@@ -1,12 +1,11 @@
 package app.Catalogo.Precio;
 
 import app.Catalogo.Item.Items;
+import app.Documentos.Main.Documentos;
 import app.Proveedores.Main.Proveedores;
 import controllers.PrecioController;
 import controllers.ProveedorController;
-import dto.CompulsaPrecioDTO;
-import dto.ItemDTO;
-import dto.ProveedorDTO;
+import dto.*;
 import modelos.Proveedor;
 import modelos.enums.Role;
 import modelos.enums.Rubro;
@@ -14,8 +13,10 @@ import modelos.enums.TipoItem;
 import modelos.enums.Unidad;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class Precio extends JPanel{
     private JPanel pnlMain;
@@ -27,7 +28,7 @@ public class Precio extends JPanel{
     private JPanel pnlprecio;
     private JTextField txtCodigo;
     private JLabel lblCodigo;
-    private JTextField txtITem;
+    private JComboBox comboBoxItem;
     private JLabel Item;
     private JTextField txtprecio;
     private JPanel pnlRubro;
@@ -36,38 +37,111 @@ public class Precio extends JPanel{
     private JLabel lblRubro;
     private JComboBox comboBoxProveedor;
     private JLabel lblProveedor;
-    private JTable table1;
+    private JTable tablePrecio;
     private JButton guardarButton;
     private JButton cancelarButton;
     private JButton eliminarButton;
     private JList listaProveedor;
+    private PrecioController precioController;
+    private DefaultTableModel tblModel;
 
     public Precio() throws Exception{
         this.add(this.pnlMain);
+        this.populateTablePrecio();
         this.populateComboRubro();
         this.populateComboProveedor();
+        this.populateComboBoxItem();
+        this.txtCodigo.setEnabled(false);
 
+        this.actionSelectedItem();
+        this.actionGuardarPrecio();
+        this.actionCancelarItem();
+        this.actionEliminarItem();
+        this.precioController = PrecioController.getInstance();
 
     }
 
+    void populateTablePrecio() {
+        try {
+            List<PrecioDTO> precios = PrecioController.getInstance().listarPrecios();
+
+            String[] columns = new String[]{
+                    "CODIGO",
+                    "ITEM",
+                    "RUBRO",
+                    "PROVEEDOR",
+                    "PRECIO UNITARIO"
+            };
+
+            this.tblModel = new DefaultTableModel(columns, 0);
+
+            precios.stream().forEach(x -> {
+                Object[] o = {
+                        x.item.getCodigo(),
+                        x.item.getTitulo(),
+                        x.rubro,
+                        x.proveedor.getRazonSocial(),
+                        x.precio
+                };
+                tblModel.addRow(o);
+            });
+
+            this.tablePrecio.setModel(tblModel);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    pnlMain,
+                    ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
     void populateComboRubro(){
-        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel<String>();
         for (Rubro rubro : Rubro.values()){
-            comboBoxModel.addElement(rubro);
+            this.comboBoxRubro.addItem(rubro);
         }
     }
 
     void populateComboProveedor() throws Exception{
 
-        DefaultListModel model = new DefaultListModel();
-
         for(ProveedorDTO proveedor : ProveedorController.getInstance().listar()){
             this.comboBoxProveedor.addItem(proveedor.razonSocial);
-            model.addElement(proveedor);
         }
 
-        listaProveedor.setModel(model);
+    }
 
+    void populateComboBoxItem() throws Exception {
+        for (ItemDTO item : PrecioController.getInstance().listarItems()){
+            this.comboBoxItem.addItem(item.titulo);
+        }
+    }
+
+    void actionSelectedItem() {
+        Precio self = this;
+        this.comboBoxItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String titulo = self.comboBoxItem.getSelectedItem().toString();
+                    ItemDTO dto = PrecioController.getInstance().obtenerItemPorTitulo(titulo);
+
+                    if (dto != null) {
+                        self.txtCodigo.setText(dto.codigo);
+                    } else {
+                        self.txtCodigo.setText("");
+                    }
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
     }
 
     void actionGuardarPrecio() {
@@ -77,28 +151,20 @@ public class Precio extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    CompulsaPrecioDTO precioDTO = new CompulsaPrecioDTO();
-                    precioDTO.itemTitulo = self.txtITem.getText();
+                    PrecioDTO precioDTO = new PrecioDTO();
+                    String titulo = self.comboBoxItem.getSelectedItem().toString();
+                    String razonSocial = self.comboBoxProveedor.getSelectedItem().toString();
+                    precioDTO.item = PrecioController.getInstance().obtenerItemModelPorTitulo(titulo);
                     precioDTO.rubro = Rubro.valueOf(self.comboBoxRubro.getSelectedItem().toString());
+                    precioDTO.precio = Double.parseDouble(self.txtprecio.getText().trim());
+                    precioDTO.proveedor = ProveedorController.getInstance().obtenerProveedorPorRazonSocial(razonSocial);
 
-                    for (int i = 0; i < this.listaProveedor.getModel().getSize(); i++) {
-                        Rubro r = Rubro.valueOf(this.listRubros.getModel().getElementAt(i).toString());
-                        pDto.rubros.add(r);
-                    }
-                }
-
-                    iDto.codigo = self.textFieldCodigo.getText();
-                    iDto.titulo = self.textFieldTitulo.getText();
-                    iDto.rubro = Rubro.valueOf(self.comboBoxRubro.getSelectedItem().toString());
-                    iDto.unidad = Unidad.valueOf(self.comboBoxUnidad.getSelectedItem().toString());
-                    iDto.tipo = TipoItem.valueOf(self.comboBoxTipo.getSelectedItem().toString());
-
-                    self.precioController.agregar(iDto);
-                    tblModel.addRow(new Object[]{iDto.codigo, iDto.titulo, iDto.unidad, iDto.rubro, iDto.tipo});
+                    self.precioController.agregar(precioDTO);
+                    self.populateTablePrecio();
 
                     JOptionPane.showMessageDialog(
                             pnlMain,
-                            "Item guardado",
+                            "Precio guardado",
                             "",
                             JOptionPane.INFORMATION_MESSAGE
                     );
@@ -119,8 +185,8 @@ public class Precio extends JPanel{
         this.cancelarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                textFieldCodigo.setText("");
-                textFieldTitulo.setText("");
+                txtCodigo.setText("");
+                txtprecio.setText("");
                 JOptionPane.showMessageDialog(
                         pnlMain,
                         "Item cancelado",
@@ -135,12 +201,12 @@ public class Precio extends JPanel{
         this.eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(tableItems.getSelectedRow() != -1) {
-                    tblModel.removeRow(tableItems.getSelectedRow());
+                if(tablePrecio.getSelectedRow() != -1) {
+                    tblModel.removeRow(tablePrecio.getSelectedRow());
 
                     JOptionPane.showMessageDialog(
                             pnlMain,
-                            "Item eliminado",
+                            "Precio eliminado",
                             "",
                             JOptionPane.INFORMATION_MESSAGE
                     );
@@ -148,10 +214,5 @@ public class Precio extends JPanel{
             }
         });
     }
-
-
-
-
-
 
 }

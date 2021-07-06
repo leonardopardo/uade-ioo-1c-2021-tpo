@@ -89,6 +89,15 @@ public class ProveedorController {
         return null;
     }
 
+    public Proveedor obtenerProveedorPorRazonSocial(String razonSocial) {
+        for (Proveedor proveedor : this.proveedores) {
+            if (proveedor.getRazonSocial().equals(razonSocial)) {
+                return proveedor;
+            }
+        }
+        return null;
+    }
+
     /**
      * @return ArrayList<ProveedorDTO>
      * @tarea Lista todos los proveedores del dominio como objetos DTO.
