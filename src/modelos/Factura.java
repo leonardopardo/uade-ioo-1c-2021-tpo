@@ -36,6 +36,7 @@ public class Factura extends Documento {
         facturaDTO.fecha = this.fecha;
         facturaDTO.razonSocial = this.getRazonSocialProveedor();
         facturaDTO.cuitProveedor = this.getCuitProveedor();
+        facturaDTO.estadoPago = this.estadoPago;
 
         return facturaDTO;
     }
@@ -54,5 +55,24 @@ public class Factura extends Documento {
 
     public String getCuitProveedor() {
         return this.proveedor.getCuit();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        final Factura other = (Factura) obj;
+
+        if (!this.numero.equals(other.getNumero())) {
+            return false;
+        }
+
+        return true;
     }
 }

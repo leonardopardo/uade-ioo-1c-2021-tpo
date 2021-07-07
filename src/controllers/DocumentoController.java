@@ -175,6 +175,28 @@ public class DocumentoController {
 
     }
 
+    public void cambiarEstadoFactura(Integer numeroFactura, EstadoPago estadoPago) throws Exception {
+        try {
+            Factura factura = this.obtenerFactura(numeroFactura);
+            factura.setEstadoPago(estadoPago);
+
+            if(!this.facturaService.update(factura))
+                throw new Exception("Error al cambiar estado en las facturas");
+
+        } catch (Exception ex) {
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    private Factura obtenerFactura(Integer numero) {
+        for (Factura f : this.facturas) {
+            if (f.getNumero().equals(numero)) {
+                return f;
+            }
+        }
+        return null;
+    }
+
     public List<FacturaDTO> listarFacturas() {
         List<FacturaDTO> facturasDTO = new ArrayList<>();
         for (Factura f : this.facturas) {
@@ -239,7 +261,7 @@ public class DocumentoController {
     public List<FacturaDTO> listarFacturasPorEstado(EstadoPago estado) {
         List<FacturaDTO> facturasDTO = new ArrayList<>();
         for (Factura f : this.facturas) {
-            if(f.getEstadoPago().equals(estado))
+            if (f.getEstadoPago().equals(estado))
                 facturasDTO.add(f.toDTO());
         }
         return facturasDTO;
@@ -249,7 +271,7 @@ public class DocumentoController {
         try {
             List<FacturaDTO> facturasDTO = new ArrayList<>();
             for (Factura f : this.facturas) {
-                if(f.getCuitProveedor().equals(cuit) && f.getEstadoPago().equals(estado))
+                if (f.getCuitProveedor().equals(cuit) && f.getEstadoPago().equals(estado))
                     facturasDTO.add(f.toDTO());
             }
             return facturasDTO;

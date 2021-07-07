@@ -481,6 +481,11 @@ public class NuevoPago extends JDialog {
 
                     op.estado = EstadoPago.CANCELADO;
                     op.facturas = self.facturasPagar;
+                    op.retencionesIVA = Double.parseDouble(self.textFieldIVA.getText());
+                    op.retencionesIIBB = Double.parseDouble(self.textFieldIIBB.getText());
+                    op.retencionesGAN = Double.parseDouble(self.textFieldGAN.getText());
+                    op.importeTotal = Double.parseDouble(self.textFieldTotal.getText());
+                    op.retencionesTotal = Double.parseDouble(self.textFieldRetenciones.getText());
 
                     OrdenPagoController.getInstance().agregar(op);
 

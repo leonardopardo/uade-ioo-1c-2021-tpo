@@ -196,7 +196,8 @@ public class Documentos extends JFrame {
                     "CUIT",
                     "TOTAL",
                     "IVA 21 %",
-                    "IVA 10,5 %"
+                    "IVA 10,5 %",
+                    "ESTADO"
             };
 
             DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
@@ -210,7 +211,7 @@ public class Documentos extends JFrame {
                         f.monto,
                         f.iva21,
                         f.iva10,
-
+                        f.estadoPago
                 };
                 tblModel.addRow(o);
             });
