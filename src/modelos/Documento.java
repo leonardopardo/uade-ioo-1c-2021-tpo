@@ -1,5 +1,8 @@
 package modelos;
 
+import dto.ProveedorDTO;
+import modelos.enums.EstadoPago;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,7 +12,9 @@ public abstract class Documento {
     protected LocalDate fecha;
     protected Proveedor proveedor;
     protected List<Detalle> detalles;
+    protected EstadoPago estadoPago;
 
+    //region Getters
     public Integer getNumero() {
         return numero;
     }
@@ -26,6 +31,16 @@ public abstract class Documento {
         return detalles;
     }
 
+    public EstadoPago getEstadoPago() {
+        return estadoPago;
+    }
+    //endregion
+
+    //region Setters
+    public void setEstadoPago(EstadoPago estadoPago) {
+        this.estadoPago = estadoPago;
+    }
+
     public void setNumero(Integer numero) {
         this.numero = numero;
     }
@@ -34,11 +49,12 @@ public abstract class Documento {
         this.fecha = fecha;
     }
 
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
+    public void setProveedor(ProveedorDTO proveedor) throws Exception {
+        this.proveedor = new Proveedor(proveedor);
     }
 
     public void setDetalles(List<Detalle> detalles) {
         this.detalles = detalles;
     }
+    //endregion
 }

@@ -17,9 +17,9 @@ public class OrdenPagoController {
 
     private List<OrdenPago> ordenesPago;
     private List<Factura> facturas;
-    private List<Proveedor> proveedores;
+    //private List<Proveedor> proveedores;
     private OrdenPagoService ordenPagoService;
-    private ProveedorService proveedorService;
+    //private ProveedorService proveedorService;
     private FacturaService facturaService;
 
     private static OrdenPagoController instance;
@@ -32,8 +32,8 @@ public class OrdenPagoController {
         this.facturaService = new FacturaService();
         this.facturas = this.facturaService.getAll();
 
-        this.proveedorService = new ProveedorService();
-        this.proveedores = this.proveedorService.getAll();
+        //this.proveedorService = new ProveedorService();
+        //this.proveedores = this.proveedorService.getAll();
     }
 
     public static OrdenPagoController getInstance() throws Exception {

@@ -3,7 +3,9 @@ package controllers;
 import dto.DetalleDTO;
 import dto.FacturaDTO;
 import dto.OrdenCompraDTO;
+import dto.ProveedorDTO;
 import modelos.*;
+import modelos.enums.EstadoPago;
 import servicios.*;
 
 import java.time.LocalDate;
@@ -16,13 +18,11 @@ public class DocumentoController {
     private List<Factura> facturas;
     private List<Item> items;
     private List<Precio> precios;
-    private List<Proveedor> proveedores;
 
     private OrdenCompraService ordenService;
     private FacturaService facturaService;
     private ItemsService itemsService;
     private PrecioService precioService;
-    private ProveedorService proveedorService;
 
     private static DocumentoController instance;
 
@@ -39,10 +39,6 @@ public class DocumentoController {
 
         this.precioService = new PrecioService();
         this.precios = this.precioService.getAll();
-
-        this.proveedorService = new ProveedorService();
-        this.proveedores = this.proveedorService.getAll();
-
     }
 
     public static DocumentoController getInstance() throws Exception {
@@ -64,14 +60,6 @@ public class DocumentoController {
         return orden;
     }
 
-    public List<FacturaDTO> listarFacturas() {
-        List<FacturaDTO> facturasDTO = new ArrayList<>();
-        for (Factura f : this.facturas) {
-            facturasDTO.add(f.toDTO());
-        }
-        return facturasDTO;
-    }
-
     public List<OrdenCompraDTO> listarOrdenes() {
         List<OrdenCompraDTO> ordenesDTO = new ArrayList<>();
         for (OrdenCompra o : this.ordenes) {
@@ -79,7 +67,6 @@ public class DocumentoController {
         }
         return ordenesDTO;
     }
-
 
     public List<OrdenCompraDTO> listarOrdenes(String cuit) {
         List<OrdenCompraDTO> ordenesDTO = new ArrayList<>();
@@ -89,17 +76,6 @@ public class DocumentoController {
             }
         }
         return ordenesDTO;
-    }
-
-
-    public List<FacturaDTO> listarFacturas(String cuit) {
-        List<FacturaDTO> facturasDTO = new ArrayList<>();
-        for (Factura f : this.facturas) {
-            if (f.getCuitProveedor().equals(cuit)) {
-                facturasDTO.add(f.toDTO());
-            }
-        }
-        return facturasDTO;
     }
 
     public List<OrdenCompraDTO> listarOrdenes(LocalDate fecha) {
@@ -112,15 +88,14 @@ public class DocumentoController {
         return ordenesDTO;
     }
 
-
-    public List<FacturaDTO> listarFacturas(LocalDate fecha) {
-        List<FacturaDTO> facturasDTO = new ArrayList<>();
-        for (Factura f : this.facturas) {
-            if (f.getFecha().equals(fecha)) {
-                facturasDTO.add(f.toDTO());
+    public List<OrdenCompraDTO> listarOrdenes(String cuit, LocalDate fecha) {
+        List<OrdenCompraDTO> ordenesDTO = new ArrayList<>();
+        for (OrdenCompra o : this.ordenes) {
+            if (o.getProveedor().getCuit().equals(cuit) && o.getFecha().equals(fecha)) {
+                ordenesDTO.add(o.toDTO());
             }
         }
-        return facturasDTO;
+        return ordenesDTO;
     }
 
     public List<OrdenCompraDTO> listarOrdenes(LocalDate fechaDesde, LocalDate fechaHasta) {
@@ -132,39 +107,6 @@ public class DocumentoController {
             }
         }
         return ordenesDTO;
-    }
-
-
-    public List<FacturaDTO> listarFacturas(LocalDate fechaDesde, LocalDate fechaHasta) {
-        List<FacturaDTO> facturasDTO = new ArrayList<>();
-        for (Factura f : this.facturas) {
-            if ((f.getFecha().isAfter(fechaDesde) || f.getFecha().equals(fechaDesde))
-                    && (f.getFecha().isBefore(fechaHasta) || f.getFecha().equals(fechaHasta))) {
-                facturasDTO.add(f.toDTO());
-            }
-        }
-        return facturasDTO;
-    }
-
-    public List<OrdenCompraDTO> listarOrdenes(String cuit, LocalDate fecha) {
-        List<OrdenCompraDTO> ordenesDTO = new ArrayList<>();
-        for (OrdenCompra o : this.ordenes) {
-            if (o.getProveedor().getCuit().equals(cuit) && o.getFecha().equals(fecha)) {
-                ordenesDTO.add(o.toDTO());
-            }
-        }
-        return ordenesDTO;
-    }
-
-
-    public List<FacturaDTO> listarFacturas(String cuit, LocalDate fecha) {
-        List<FacturaDTO> facturasDTO = new ArrayList<>();
-        for (Factura f : this.facturas) {
-            if (f.getCuitProveedor().equals(cuit) && f.getFecha().equals(fecha)) {
-                facturasDTO.add(f.toDTO());
-            }
-        }
-        return facturasDTO;
     }
 
     public List<OrdenCompraDTO> listarOrdenes(String cuit, LocalDate fechaDesde, LocalDate fechaHasta) {
@@ -179,22 +121,9 @@ public class DocumentoController {
         return ordenesDTO;
     }
 
-
-    public List<FacturaDTO> listarFacturas(String cuit, LocalDate fechaDesde, LocalDate fechaHasta) {
-        List<FacturaDTO> facturasDTO = new ArrayList<>();
-        for (Factura f : this.facturas) {
-            if ((f.getCuitProveedor().equals(cuit)
-                    && (f.getFecha().isAfter(fechaDesde) || f.getFecha().equals(fechaDesde))
-                    && (f.getFecha().isBefore(fechaHasta) || f.getFecha().equals(fechaHasta)))) {
-                facturasDTO.add(f.toDTO());
-            }
-        }
-        return facturasDTO;
-    }
-
     public void agregarOrden(OrdenCompraDTO dto) throws Exception {
 
-        Proveedor proveedor = this.obtenerProveedor(dto.cuit);
+        ProveedorDTO proveedor = ProveedorController.getInstance().obtener(dto.cuit);
 
         OrdenCompra orden = new OrdenCompra(dto);
         orden.setProveedor(proveedor);
@@ -228,18 +157,109 @@ public class DocumentoController {
     }
     //endregion
 
-    //region Private Methods
-    private Proveedor obtenerProveedor(String cuit) {
-        Proveedor proveedor = null;
-        for (Proveedor p : this.proveedores) {
-            if (p.getCuit().equals(cuit)) {
-                proveedor = p;
-                break;
-            }
+    //region Factuas
+    public void agregarFactura(FacturaDTO factDTO) throws Exception {
+        factDTO.numero = this.facturaService.getProximoId();
+        Factura nuevaFactura = new Factura(factDTO);
+
+        for (DetalleDTO d : factDTO.detalles) {
+            Detalle nuevoDetalle = new Detalle(d);
+            nuevoDetalle.setItem(this.obtenerItem(d.codItem));
+            nuevaFactura.setDetalle(nuevoDetalle);
         }
-        return proveedor;
+        nuevaFactura.setProveedor(ProveedorController.getInstance().obtener(factDTO.cuitProveedor));
+
+        this.facturas.add(nuevaFactura);
+        this.facturaService.save(nuevaFactura);
+        ProveedorController.getInstance().actualizarBalance(factDTO);
+
     }
 
+    public List<FacturaDTO> listarFacturas() {
+        List<FacturaDTO> facturasDTO = new ArrayList<>();
+        for (Factura f : this.facturas) {
+            facturasDTO.add(f.toDTO());
+        }
+        return facturasDTO;
+    }
+
+    public List<FacturaDTO> listarFacturas(String cuit) {
+        List<FacturaDTO> facturasDTO = new ArrayList<>();
+        for (Factura f : this.facturas) {
+            if (f.getCuitProveedor().equals(cuit)) {
+                facturasDTO.add(f.toDTO());
+            }
+        }
+        return facturasDTO;
+    }
+
+    public List<FacturaDTO> listarFacturas(LocalDate fecha) {
+        List<FacturaDTO> facturasDTO = new ArrayList<>();
+        for (Factura f : this.facturas) {
+            if (f.getFecha().equals(fecha)) {
+                facturasDTO.add(f.toDTO());
+            }
+        }
+        return facturasDTO;
+    }
+
+    public List<FacturaDTO> listarFacturas(String cuit, LocalDate fecha) {
+        List<FacturaDTO> facturasDTO = new ArrayList<>();
+        for (Factura f : this.facturas) {
+            if (f.getCuitProveedor().equals(cuit) && f.getFecha().equals(fecha)) {
+                facturasDTO.add(f.toDTO());
+            }
+        }
+        return facturasDTO;
+    }
+
+    public List<FacturaDTO> listarFacturas(LocalDate fechaDesde, LocalDate fechaHasta) {
+        List<FacturaDTO> facturasDTO = new ArrayList<>();
+        for (Factura f : this.facturas) {
+            if ((f.getFecha().isAfter(fechaDesde) || f.getFecha().equals(fechaDesde))
+                    && (f.getFecha().isBefore(fechaHasta) || f.getFecha().equals(fechaHasta))) {
+                facturasDTO.add(f.toDTO());
+            }
+        }
+        return facturasDTO;
+    }
+
+    public List<FacturaDTO> listarFacturas(String cuit, LocalDate fechaDesde, LocalDate fechaHasta) {
+        List<FacturaDTO> facturasDTO = new ArrayList<>();
+        for (Factura f : this.facturas) {
+            if ((f.getCuitProveedor().equals(cuit)
+                    && (f.getFecha().isAfter(fechaDesde) || f.getFecha().equals(fechaDesde))
+                    && (f.getFecha().isBefore(fechaHasta) || f.getFecha().equals(fechaHasta)))) {
+                facturasDTO.add(f.toDTO());
+            }
+        }
+        return facturasDTO;
+    }
+
+    public List<FacturaDTO> listarFacturasPorEstado(EstadoPago estado) {
+        List<FacturaDTO> facturasDTO = new ArrayList<>();
+        for (Factura f : this.facturas) {
+            if(f.getEstadoPago().equals(estado))
+                facturasDTO.add(f.toDTO());
+        }
+        return facturasDTO;
+    }
+
+    public List<FacturaDTO> listarFacturasPorEstado(String cuit, EstadoPago estado) throws Exception {
+        try {
+            List<FacturaDTO> facturasDTO = new ArrayList<>();
+            for (Factura f : this.facturas) {
+                if(f.getCuitProveedor().equals(cuit) && f.getEstadoPago().equals(estado))
+                    facturasDTO.add(f.toDTO());
+            }
+            return facturasDTO;
+        } catch (Exception ex) {
+            throw new Exception(ex.getMessage());
+        }
+    }
+    //endregion
+
+    //region Private Methods
     private Item obtenerItem(String codigo) {
         Item item = null;
         for (Item i : this.items) {
@@ -260,23 +280,6 @@ public class DocumentoController {
             }
         }
         return orden;
-    }
-
-    public void agregarFactura(FacturaDTO factDTO) throws Exception {
-        factDTO.numero = this.facturaService.getProximoId();
-        Factura nuevaFactura = new Factura(factDTO);
-
-        for (DetalleDTO d : factDTO.detalles) {
-            Detalle nuevoDetalle = new Detalle(d);
-            nuevoDetalle.setItem(this.obtenerItem(d.codItem));
-            nuevaFactura.setDetalle(nuevoDetalle);
-        }
-        nuevaFactura.setProveedor(ProveedorController.getInstance().obtener(factDTO.cuitProveedor));
-
-        this.facturas.add(nuevaFactura);
-        this.facturaService.save(nuevaFactura);
-        ProveedorController.getInstance().actualizarBalance(factDTO);
-
     }
     //endregion
 }

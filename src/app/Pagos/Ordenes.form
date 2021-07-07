@@ -98,7 +98,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Proveedor"/>
+                      <text value="PROVEEDOR"/>
                     </properties>
                   </component>
                 </children>
@@ -147,7 +147,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Fecha Desde"/>
+                      <text value="FECHA DESDE"/>
                     </properties>
                   </component>
                   <grid id="dca87" binding="pnlContainerFechaDesde" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -186,7 +186,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Fecha Hasta"/>
+                      <text value="FECHA HASTA"/>
                     </properties>
                   </component>
                   <grid id="826e5" binding="pnlContainerFechaHasta" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -245,10 +245,12 @@
             <children>
               <component id="1da71" class="javax.swing.JButton" binding="btnNuevaOrden">
                 <constraints>
-                  <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="30"/>
+                  </grid>
                 </constraints>
                 <properties>
-                  <text value="Nueva Orden"/>
+                  <text value="NUEVA ORDEN"/>
                 </properties>
               </component>
               <hspacer id="c0dcc">
@@ -258,34 +260,42 @@
               </hspacer>
               <component id="46fc" class="javax.swing.JButton" binding="btnEliminar">
                 <constraints>
-                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="30"/>
+                  </grid>
                 </constraints>
                 <properties>
-                  <text value="Eliminar"/>
+                  <text value="ELIMINAR"/>
                 </properties>
               </component>
               <component id="7adb3" class="javax.swing.JButton" binding="btnFiltrar">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="30"/>
+                  </grid>
                 </constraints>
                 <properties>
-                  <text value="Filtrar"/>
+                  <text value="FILTRAR"/>
                 </properties>
               </component>
               <component id="de1de" class="javax.swing.JButton" binding="btnLimpiarFiltro">
                 <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="30"/>
+                  </grid>
                 </constraints>
                 <properties>
-                  <text value="Limpiar Filtro"/>
+                  <text value="LIMPIAR FILTRO"/>
                 </properties>
               </component>
               <component id="a6c7f" class="javax.swing.JButton" binding="btnActualizarOrden">
                 <constraints>
-                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="30"/>
+                  </grid>
                 </constraints>
                 <properties>
-                  <text value="Actualizar Orden"/>
+                  <text value="MODIFICAR ORDEN"/>
                 </properties>
               </component>
             </children>

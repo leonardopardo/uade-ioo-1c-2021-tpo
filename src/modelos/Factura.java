@@ -2,6 +2,7 @@ package modelos;
 
 import dto.FacturaDTO;
 import dto.ProveedorDTO;
+import modelos.enums.EstadoPago;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public class Factura extends Documento {
         this.numero = nuevaFact.numero;
         this.monto = nuevaFact.monto;
         this.fecha = nuevaFact.fecha;
+        this.estadoPago = EstadoPago.PENDIENTE;
     }
 
     public FacturaDTO facturaDTO() {
@@ -37,7 +39,6 @@ public class Factura extends Documento {
 
         return facturaDTO;
     }
-
 
     public void setDetalle(Detalle nuevoDetalle) {
         this.detalles.add(nuevoDetalle);
