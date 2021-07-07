@@ -63,6 +63,7 @@ public class Proveedores extends JFrame {
     private JLabel lblRazonSocial;
     private JLabel lblBalance;
     private JLabel lblBalanceMonto;
+    private JLabel lblBalanceCtaProv;
     private JLabel lblNombreFantasia;
     private JButton btnElimnarRubro;
     private JPanel pnlDatePicker;
@@ -85,6 +86,11 @@ public class Proveedores extends JFrame {
     private JLabel lblCertFechaInicio;
     private JLabel lblCertFechaFin;
     private JPanel pnlCertFechaFin;
+    private JComboBox comboBoxCtaCte;
+    private JTextField cuitCtaCte;
+    private JButton btnAtrasCtaCte;
+    private JTable tableCtaCte;
+    private JLabel lblBalanceCtaCte;
     private JDatePickerImpl inicioAct;
     private JDatePickerImpl certifInicio;
     private JDatePickerImpl certifFin;
@@ -120,6 +126,7 @@ public class Proveedores extends JFrame {
         this.actionEliminarCertificado();
         this.actionSelectedRowProveedores();
         this.actionShowCertificados();
+        this.actionShowCtaCte();
         //endregion
 
         //region Populate Elements
@@ -128,6 +135,7 @@ public class Proveedores extends JFrame {
         this.populateTableProveedores();
         this.populateTipoRetencion();
         this.populateComboBoxProveedoresCert();
+        //this.populateCtaCteProveedor();
         //endregion
 
         //region Load Elements
@@ -163,6 +171,12 @@ public class Proveedores extends JFrame {
         this.inicioAct.getJFormattedTextField().setText(proveedor.inicioActividad.toString());
         this.rubros = proveedor.rubros;
         this.populateListRubros((ArrayList) rubros);
+        this.lblBalanceMonto.setText(proveedor.balance.toString());
+        if (proveedor.balance < 0) {
+            this.lblBalanceMonto.setForeground(Color.RED);
+        } else {
+            this.lblBalanceMonto.setForeground(Color.BLACK);
+        }
     }
 
     void populateRubros() {
@@ -454,9 +468,11 @@ public class Proveedores extends JFrame {
     //region Certificados Populate
     void populateComboBoxProveedoresCert() throws Exception {
         this.comboBoxCertProveedor.addItem("-- Seleccione un proveedor --");
+        this.comboBoxCtaCte.addItem("-- Seleccione un proveedor --");
         for (ProveedorDTO prov : ProveedorController.getInstance().listar()
         ) {
             this.comboBoxCertProveedor.addItem(prov.razonSocial);
+            this.comboBoxCtaCte.addItem(prov.razonSocial);
         }
     }
 
@@ -515,6 +531,25 @@ public class Proveedores extends JFrame {
                             "",
                             JOptionPane.ERROR_MESSAGE
                     );
+                }
+            }
+        });
+    }
+
+    void actionShowCtaCte() {
+        Proveedores self = this;
+        this.comboBoxCtaCte.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String razonSocial = self.comboBoxCtaCte.getSelectedItem().toString();
+                    ProveedorDTO dto = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
+                    if (dto != null) {
+                        self.cuitCtaCte.setText(dto.cuit);
+                        self.lblBalanceCtaProv.setText(dto.balance.toString());
+                    }
+                } catch (Exception exception) {
+                    exception.printStackTrace();
                 }
             }
         });
@@ -602,6 +637,7 @@ public class Proveedores extends JFrame {
             }
         });
     }
+
     //endregion
     //endregion
 }

@@ -31,6 +31,10 @@ public class Item {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getCodigo() {
         return codigo;
     }

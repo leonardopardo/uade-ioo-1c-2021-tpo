@@ -24,6 +24,7 @@ public class Items extends JDialog {
     private JLabel lblTipo;
     private JLabel lblCodigo;
     private JLabel lblUnidad;
+    private ItemDTO item;
 
     public Items(JFrame parent) {
         super(parent);
@@ -36,6 +37,7 @@ public class Items extends JDialog {
 
         //region Actions
         this.actionGuardarNuevoItem();
+        this.actionCancelarNuevoItem();
         //endregion
 
         //region Settings
@@ -48,6 +50,43 @@ public class Items extends JDialog {
         this.positionScreen();
         this.setVisible(true);
         //endregion
+    }
+
+    public Items(JFrame parent, ItemDTO item) {
+        super(parent);
+
+        this.item = item;
+
+        //region Populate
+        this.populateComboTipo();
+        this.populateComboRubro();
+        this.populateComboUnidad();
+        this.loadedFields();
+        //endregion
+
+        //region Actions
+        this.actionGuardarNuevoItem();
+        this.actionCancelarNuevoItem();
+        //endregion
+
+        //region Settings
+        this.setContentPane(this.pnlMain);
+        this.setResizable(false);
+        this.setModal(true);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setPreferredSize(this.pnlMain.getPreferredSize());
+        this.pack();
+        this.positionScreen();
+        this.setVisible(true);
+        //endregion
+    }
+
+    void loadedFields() {
+        this.textFieldTitulo.setText(this.item.titulo);
+        this.textFieldCodigo.setText(this.item.codigo);
+        this.comboBoxRubro.setSelectedItem(this.item.rubro);
+        this.comboBoxUnidad.setSelectedItem(this.item.unidad);
+        this.comboBoxTipo.setSelectedItem(this.item.tipo);
     }
 
     void populateComboTipo() {
@@ -80,14 +119,34 @@ public class Items extends JDialog {
                     String codigoItem = self.textFieldCodigo.getText();
                     String tituloItem = self.textFieldTitulo.getText();
 
+                    if(self.comboBoxRubro.getSelectedItem().equals(self.comboBoxTipo.getItemAt(0))) {
+                        throw new Exception("Debe seleccionar un rubro para el item.");
+                    }
+                    if(self.comboBoxTipo.getSelectedItem().equals(self.comboBoxTipo.getItemAt(0))) {
+                        throw new Exception("Debe seleccionar un tipo de item.");
+                    }
                     if (codigoItem.equals("")) {
                         throw new Exception("Debe asignar un código al item.");
+                    }
+                    if(self.comboBoxUnidad.getSelectedItem().equals(self.comboBoxUnidad.getItemAt(0))) {
+                        throw new Exception("Debe seleccionar una unidad de medida para el item.");
                     }
                     if (tituloItem.equals("")) {
                         throw new Exception("Debe asignar un título al item.");
                     }
 
-                    PrecioController.getInstance().agregar(self.valuestoItemDTO());
+                    ItemDTO item = self.valuestoItemDTO();
+
+                    if(self.item == null) {
+                        PrecioController.getInstance().agregar(item);
+                    } else {
+                        PrecioController.getInstance().actualizar(item);
+                    }
+
+                    Productos parent = (Productos) self.getParent();
+                    parent.loadItems();
+                    parent.loadTableItems();
+
                     self.dispose();
 
                     JOptionPane.showMessageDialog(
@@ -99,11 +158,21 @@ public class Items extends JDialog {
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
-                            ex.getStackTrace(),
+                            ex.getMessage(),
                             "Error",
                             JOptionPane.ERROR_MESSAGE
                     );
                 }
+            }
+        });
+    }
+
+    void actionCancelarNuevoItem() {
+        Items self = this;
+        this.CANCELARButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                self.dispose();
             }
         });
     }

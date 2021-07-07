@@ -225,7 +225,7 @@
                       <text value="SUBTOTAL"/>
                     </properties>
                   </component>
-                  <component id="9f301" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                  <component id="9f301" class="javax.swing.JTextField" binding="subtotalFact">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="100" height="30"/>
@@ -233,6 +233,7 @@
                     </constraints>
                     <properties>
                       <editable value="false"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>
@@ -253,7 +254,7 @@
                       <text value="IVA 21%"/>
                     </properties>
                   </component>
-                  <component id="c5876" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+                  <component id="c5876" class="javax.swing.JTextField" binding="iva21Fact">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="100" height="30"/>
@@ -281,7 +282,7 @@
                       <text value="IVA 10,5%"/>
                     </properties>
                   </component>
-                  <component id="86ad9" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+                  <component id="86ad9" class="javax.swing.JTextField" binding="iva10_5Fact">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="100" height="30"/>
@@ -310,7 +311,7 @@
                       <text value="TOTAL"/>
                     </properties>
                   </component>
-                  <component id="f9d5" class="javax.swing.JTextField" binding="textField5" default-binding="true">
+                  <component id="f9d5" class="javax.swing.JTextField" binding="totalFact">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="100" height="30"/>

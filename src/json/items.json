@@ -198,3 +198,5 @@
 {"id":198, "codigo":"50006741", "titulo":"ZAPATO FUNCIONAL CITY VISON T44 PUNT/ALUM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
 {"id":199, "codigo":"50009250", "titulo":"ZAPATO FUNCIONAL SOUL GRIS T39 C/PUNT ALUM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
 {"id":200, "codigo":"50010157", "titulo":"ZAPATO OMBU COBALTO CON PUNTERA COMPOSITE T44 MARRON", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":201,"codigo":"896986","titulo":"CONSULTA MEDICA","unidad":"HORA","rubro":"MEDICINA_PREPAGA","tipoItem":"SERVICIO"}
+{"id":202,"codigo":"12436462","titulo":"SUBE","unidad":"HORA","rubro":"VIATICOS_MOBILIDAD","tipoItem":"SERVICIO"}
