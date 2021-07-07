@@ -11,6 +11,7 @@ public class OrdenCompraDTO {
     public String razonSocial;
     public String cuit;
     public List<DetalleDTO> detalles;
+    public Double total;
 
     public OrdenCompraDTO() {
         this.detalles = new ArrayList<>();

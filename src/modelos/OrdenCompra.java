@@ -21,12 +21,21 @@ public class OrdenCompra extends Documento {
         this.numero = num;
     }
 
-    public OrdenCompraDTO toDTO(){
+    public Double setTotal() {
+        Double total = 0.0;
+        for (Detalle d : this.detalles) {
+            total += d.getPrecioUnitario() * d.getCantidad();
+        }
+        return total;
+    }
+
+    public OrdenCompraDTO toDTO() {
         OrdenCompraDTO o = new OrdenCompraDTO();
         o.fecha = this.fecha;
         o.numero = this.numero;
         o.razonSocial = this.proveedor.getRazonSocial();
         o.cuit = this.proveedor.getCuit();
+        o.total = this.setTotal();
         return o;
     }
 }

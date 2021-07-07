@@ -13,7 +13,7 @@ public class Detalle {
 
     private Double iva;
 
-    public Detalle(DetalleDTO detalle){
+    public Detalle(DetalleDTO detalle) {
         this.cantidad = detalle.cantItem;
         this.precioUnitario = detalle.precioUnidad;
         this.iva = detalle.iva;
@@ -24,7 +24,7 @@ public class Detalle {
         return this.precioUnitario;
     }
 
-    public String getItemDescription(){
+    public String getItemDescription() {
         return this.item.getTitulo();
     }
     //endregion
@@ -44,6 +44,10 @@ public class Detalle {
 
     public void setItem(Item item) {
         this.item = item;
+    }
+
+    public Double getCantidad() {
+        return this.cantidad;
     }
     //endregion
 

@@ -243,7 +243,7 @@ public class Formulario extends JDialog {
 
                     ItemDTO item = PrecioController.getInstance().obtenerItemPorCodigo(itemCodigo);
                     Double cantidad = Double.parseDouble(self.spinnerCantFact.getValue().toString());
-                    Double precio = DocumentoController.getInstance().buscarPrecio(self.textFieldCuit.getText(), itemCodigo);
+                    Double precio = PrecioController.getInstance().buscarPrecio(self.textFieldCuit.getText(), itemCodigo);
 
 
                     Integer element = itemAgregado(itemCodigo);

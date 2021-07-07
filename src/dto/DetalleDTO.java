@@ -27,4 +27,10 @@ public class DetalleDTO {
             this.iva = 0.0;
         }
     }
+
+    public void setPrecioTotal() {
+        if (this.precioUnidad != null && this.cantItem != null) {
+            this.precioTotal = precioUnidad * cantItem;
+        }
+    }
 }

@@ -169,7 +169,8 @@ public class Documentos extends JFrame {
                         x.numero,
                         x.fecha,
                         x.razonSocial.toUpperCase(),
-                        x.cuit
+                        x.cuit,
+                        x.total
                 };
                 tblModel.addRow(o);
             });

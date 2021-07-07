@@ -270,6 +270,9 @@ public class Formulario extends JDialog {
 
                     ItemDTO item = PrecioController.getInstance().obtenerItemPorCodigo(itemCodigo);
 
+                    String provCuit = self.textFieldCuit.getText();
+                    Double precio = PrecioController.getInstance().buscarPrecio(provCuit, itemCodigo);
+
                     Double cantidad = Double.parseDouble(self.spinnerCantidad.getValue().toString());
 
                     Integer element = itemAgregado(itemCodigo);
@@ -283,6 +286,8 @@ public class Formulario extends JDialog {
                         d.codItem = itemCodigo;
                         d.cantItem = cantidad;
                         d.descripcion = item.titulo;
+                        d.precioUnidad = precio;
+                        d.setPrecioTotal();
 
                         self.detalle.add(d);
                     }
@@ -403,7 +408,8 @@ public class Formulario extends JDialog {
                         d.descripcion,
                         d.cantItem,
                         Unidad.UNIDAD,
-                        d.precioUnidad
+                        d.precioUnidad,
+                        d.precioTotal
                 };
 
                 tblModel.addRow(o);

@@ -22,11 +22,13 @@ public class DocumentoController {
     private OrdenCompraService ordenService;
     private FacturaService facturaService;
     private ItemsService itemsService;
-    private PrecioService precioService;
+    private PrecioController precioController;
 
     private static DocumentoController instance;
 
     public DocumentoController() throws Exception {
+
+        this.precioController = PrecioController.getInstance();
 
         this.ordenService = new OrdenCompraService();
         this.ordenes = this.ordenService.getAll();
@@ -36,9 +38,6 @@ public class DocumentoController {
 
         this.itemsService = new ItemsService();
         this.items = this.itemsService.getAll();
-
-        this.precioService = new PrecioService();
-        this.precios = this.precioService.getAll();
     }
 
     public static DocumentoController getInstance() throws Exception {
@@ -133,6 +132,8 @@ public class DocumentoController {
         for (DetalleDTO d : dto.detalles) {
             Detalle detalle = new Detalle(d);
             detalle.setItem(this.obtenerItem(d.codItem));
+            Double precioUnitario = this.precioController.buscarPrecio(dto.cuit, d.codItem);
+            detalle.setPrecioUnitario(precioUnitario);
             orden.setDetalle(detalle);
         }
 
@@ -147,14 +148,7 @@ public class DocumentoController {
         this.ordenService.delete(orden.getNumero());
     }
 
-    public Double buscarPrecio(String cuit, String codItem) {
-        for (Precio p : this.precios) {
-            if (p.getProveedorCuit().equals(cuit) && p.getCodigoItem().equals(codItem)) {
-                return p.getPrecio();
-            }
-        }
-        return null;
-    }
+
     //endregion
 
     //region Factuas
@@ -239,7 +233,7 @@ public class DocumentoController {
     public List<FacturaDTO> listarFacturasPorEstado(EstadoPago estado) {
         List<FacturaDTO> facturasDTO = new ArrayList<>();
         for (Factura f : this.facturas) {
-            if(f.getEstadoPago().equals(estado))
+            if (f.getEstadoPago().equals(estado))
                 facturasDTO.add(f.toDTO());
         }
         return facturasDTO;
@@ -249,7 +243,7 @@ public class DocumentoController {
         try {
             List<FacturaDTO> facturasDTO = new ArrayList<>();
             for (Factura f : this.facturas) {
-                if(f.getCuitProveedor().equals(cuit) && f.getEstadoPago().equals(estado))
+                if (f.getCuitProveedor().equals(cuit) && f.getEstadoPago().equals(estado))
                     facturasDTO.add(f.toDTO());
             }
             return facturasDTO;
