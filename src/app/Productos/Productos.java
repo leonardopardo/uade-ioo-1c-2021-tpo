@@ -1,15 +1,11 @@
 package app.Productos;
 
-import app.Documentos.Factura.Formulario;
-import app.Documentos.Main.Documentos;
 import app.Main.Main;
 import controllers.PrecioController;
 import controllers.ProveedorController;
 import dto.ItemDTO;
-import dto.OrdenCompraDTO;
 import dto.PrecioDTO;
 import dto.ProveedorDTO;
-import modelos.Precio;
 import modelos.enums.Rubro;
 import modelos.enums.TipoItem;
 import modelos.enums.Unidad;
