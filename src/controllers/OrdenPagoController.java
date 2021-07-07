@@ -60,8 +60,24 @@ public class OrdenPagoController {
         return ctaCte;
     }
 
-    public void agregar(OrdenPagoDTO orden) {
-        OrdenPago nuevaOrden = new OrdenPago(orden);
+    public void agregar(OrdenPagoDTO orden) throws Exception {
+        try {
+
+            OrdenPago nuevaOrden = new OrdenPago(orden);
+            nuevaOrden.setNumero(this.ordenPagoService.getProximoNumero());
+            nuevaOrden.setProveedor(ProveedorController.getInstance().obtener(orden.cuitProveedor));
+
+            for (FacturaDTO f:orden.facturas) {
+                nuevaOrden.agregarFactura(f);
+                DocumentoController.getInstance().cambiarEstadoFactura(f.numero, EstadoPago.CANCELADO);
+            }
+
+            this.ordenPagoService.save(nuevaOrden);
+            this.ordenesPago.add(nuevaOrden);
+
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     public boolean eliminarOrdenPago(int numero) throws Exception {

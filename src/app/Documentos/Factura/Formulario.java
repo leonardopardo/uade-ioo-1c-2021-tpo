@@ -331,7 +331,6 @@ public class Formulario extends JDialog {
 
 
     // region Settings
-
     void setTableSchemma() {
         try {
             String[] columns = new String[]{
@@ -389,9 +388,7 @@ public class Formulario extends JDialog {
         return -1;
     }
 
-
     // region update
-
     void updateFactura(DetalleDTO dto) {
         if (dto.alicuotaIVA.equals(AlicuotaIVA.IVA_10_5)) {
             Double iva10 = Double.parseDouble(iva10_5Fact.getText()) + ((dto.iva * dto.precioTotal) / 100);
@@ -406,6 +403,4 @@ public class Formulario extends JDialog {
         this.totalFact.setText(total.toString());
         this.subtotalFact.setText(subtotal.toString());
     }
-
-
 }

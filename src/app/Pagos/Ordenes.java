@@ -53,7 +53,7 @@ public class Ordenes extends JFrame{
     private JDatePickerImpl datePickerFechaHasta;
     private List<OrdenPagoDTO> ordenes;
 
-    public Ordenes(String title){
+    public Ordenes(String title) throws Exception {
         super(title);
 
         //region Settings
@@ -77,6 +77,10 @@ public class Ordenes extends JFrame{
         this.onChangeComboBoxProveedor();
         //endregion
 
+        //region Loaders
+        this.loadTable();
+        //endregion
+
         //region Populate
         this.populateComboBoxProveedores();
         this.populateTable();
@@ -91,6 +95,10 @@ public class Ordenes extends JFrame{
         this.datePickerFechaHasta = Helpers.nuevoDatePicker();
         Helpers.appendDatePicker(this.pnlContainerFechaHasta, this.datePickerFechaHasta);
         //endregion
+    }
+
+    void loadTable() throws Exception {
+        this.ordenes = OrdenPagoController.getInstance().ordenesPagoEmitidas();
     }
 
     //region Populate
@@ -129,7 +137,7 @@ public class Ordenes extends JFrame{
                 Object[] o = {
                         x.numero,
                         x.fecha,
-                        x.nombreProveedor.toUpperCase(),
+                        x.nombreProveedor,
                         x.cuitProveedor,
                         x.importeTotal,
                         x.estado
