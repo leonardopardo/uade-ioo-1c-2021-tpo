@@ -2,6 +2,7 @@ package modelos;
 
 import dto.PrecioDTO;
 import dto.ProveedorDTO;
+import modelos.enums.Rubro;
 
 public class Precio {
 
@@ -37,6 +38,10 @@ public class Precio {
 
     public String getCodigoItem() {
         return this.getItem().getCodigo();
+    }
+
+    public Rubro getItemRubro(){
+        return this.getItem().getRubro();
     }
     //endregion
 

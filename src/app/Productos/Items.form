@@ -51,7 +51,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="192b3" class="javax.swing.JLabel">
+              <component id="192b3" class="javax.swing.JLabel" binding="lblCodigo">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -108,7 +108,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="fe53a" class="javax.swing.JLabel">
+              <component id="fe53a" class="javax.swing.JLabel" binding="lblRubro">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -134,7 +134,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="526b6" class="javax.swing.JLabel">
+              <component id="526b6" class="javax.swing.JLabel" binding="lblTipo">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -160,7 +160,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="a40a4" class="javax.swing.JLabel">
+              <component id="a40a4" class="javax.swing.JLabel" binding="lblUnidad">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>

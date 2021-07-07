@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Items extends JDialog{
+public class Items extends JDialog {
     private JPanel pnlMain;
     private JButton GUARDARButton;
     private JButton CANCELARButton;
@@ -20,9 +20,25 @@ public class Items extends JDialog{
     private JComboBox comboBoxUnidad;
     private JTextField textFieldTitulo;
     private JTextField textFieldCodigo;
+    private JLabel lblRubro;
+    private JLabel lblTipo;
+    private JLabel lblCodigo;
+    private JLabel lblUnidad;
 
+    public Items(JFrame parent) {
+        super(parent);
 
-    public Items(JFrame parent){
+        //region Populate
+        this.populateComboTipo();
+        this.populateComboRubro();
+        this.populateComboUnidad();
+        //endregion
+
+        //region Actions
+        this.actionGuardarNuevoItem();
+        //endregion
+
+        //region Settings
         this.setContentPane(this.pnlMain);
         this.setResizable(false);
         this.setModal(true);
@@ -31,43 +47,28 @@ public class Items extends JDialog{
         this.pack();
         this.positionScreen();
         this.setVisible(true);
-
-        this.populateComboTipo();
-        this.populateComboRubro();
-        this.populateComboUnidad();
-
-        this.actionGuardarNuevoItem();
-
+        //endregion
     }
 
-    void populateComboTipo(){
-        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel<String>();
-        this.comboBoxRubro.addItem("-- Seleccione --");
-        comboBoxModel.addElement(TipoItem.PRODUCTO);
-        comboBoxModel.addElement(TipoItem.SERVICIO);
-
-        this.comboBoxTipo.setModel(comboBoxModel);
+    void populateComboTipo() {
+        this.comboBoxTipo.addItem("-- Seleccione --");
+        for (TipoItem t:TipoItem.values()) {
+            this.comboBoxTipo.addItem(t);
+        }
     }
 
-    void populateComboUnidad(){
-        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel<String>();
-        this.comboBoxRubro.addItem("-- Seleccione --");
-        comboBoxModel.addElement(Unidad.UNIDAD);
-        comboBoxModel.addElement(Unidad.HORA);
-        comboBoxModel.addElement(Unidad.PESO);
-
-        this.comboBoxUnidad.setModel(comboBoxModel);
+    void populateComboUnidad() {
+        this.comboBoxUnidad.addItem("-- Seleccione --");
+        for (Unidad u : Unidad.values()) {
+            this.comboBoxUnidad.addItem(u);
+        }
     }
 
-    void populateComboRubro(){
-        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel<String>();
+    void populateComboRubro() {
         this.comboBoxRubro.addItem("-- Seleccione --");
         for (Rubro rubro : Rubro.values()) {
             this.comboBoxRubro.addItem(rubro);
-            comboBoxModel.addElement(rubro);
         }
-
-        this.comboBoxRubro.setModel(comboBoxModel);
     }
 
     void actionGuardarNuevoItem() {
@@ -124,9 +125,5 @@ public class Items extends JDialog{
                 dim.width / 2 - this.getSize().width / 2,
                 dim.height / 2 - this.getSize().height / 2
         );
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
 }

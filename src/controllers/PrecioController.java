@@ -102,11 +102,13 @@ public class PrecioController {
     }
 
     public List<PrecioDTO> listarPrecios(Rubro rubro){
+        List<PrecioDTO> lista = new ArrayList<>();
         for (Precio p:this.precios) {
-            if(p.){
-
+            if(p.getItemRubro().equals(rubro)){
+                lista.add(p.toDTO());
             }
         }
+        return lista;
     }
 
     //region ABM Item-Precio

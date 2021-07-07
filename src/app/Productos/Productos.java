@@ -89,6 +89,7 @@ public class Productos extends JFrame {
         this.actionOnClickNuevoPrecio();
         this.actionOnClickModificarPrecio();
         this.actionOnClickEliminarPrecio();
+        this.actionOnClickFiltrarPrecios();
         this.actionOnChangeComboBoxProveedores();
         this.actionOnChangeComboBoxItems();
         //endregion
@@ -358,7 +359,13 @@ public class Productos extends JFrame {
     }
 
     void actionOnClickFiltrarPrecios() {
+        Productos self = this;
+        this.btnFiltrarPrecios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+            }
+        });
     }
 
     void actionOnClickLimpiarFiltroPrecios() {
