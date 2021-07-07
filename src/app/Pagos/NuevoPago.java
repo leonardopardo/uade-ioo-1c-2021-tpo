@@ -2,17 +2,21 @@ package app.Pagos;
 
 import controllers.DocumentoController;
 import controllers.ProveedorController;
+import dto.CertificadoDTO;
 import dto.FacturaDTO;
 import dto.ProveedorDTO;
 import helpers.Helpers;
+import modelos.CertificadoExcencion;
 import modelos.enums.EstadoPago;
 import modelos.enums.TipoPago;
+import modelos.enums.TipoRetencion;
 import org.jdatepicker.impl.JDatePickerImpl;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,9 +61,11 @@ public class NuevoPago extends JDialog {
     private JLabel lblFechaEmision;
     private JLabel lblFechaVencimiento;
     private JPanel pnlContainerFechaVencimiento;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField textFieldIVA;
+    private JTextField textFieldIIBB;
+    private JTextField textFieldGAN;
+    private JTextField textFieldRetenciones;
+    private JTextField textFieldSubtotal;
     private JDatePickerImpl datePickerFecha;
     private JDatePickerImpl datePickerFechaEmisionCheque;
     private JDatePickerImpl datePickerFechaVencimientoCheque;
@@ -75,7 +81,6 @@ public class NuevoPago extends JDialog {
         this.facturasPagar = new ArrayList<>();
         this.inicial = true;
         this.montoPagar = 0.0;
-
 
         //region Actions
         this.onChangeComboBoxProveedor();
@@ -284,6 +289,8 @@ public class NuevoPago extends JDialog {
 
                     self.calcularMoto();
 
+                    self.calcularRetenciones();
+
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
@@ -313,6 +320,9 @@ public class NuevoPago extends JDialog {
                     self.loadFacturasImpagas();
 
                     self.calcularMoto();
+
+                    self.calcularRetenciones();
+
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
@@ -348,6 +358,9 @@ public class NuevoPago extends JDialog {
                     self.loadFacturasAPagar();
 
                     self.calcularMoto();
+
+                    calcularRetenciones();
+
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             pnlMain,
@@ -376,6 +389,8 @@ public class NuevoPago extends JDialog {
                     self.facturasPagar.removeAll(self.facturasPagar);
                     self.loadFacturasAPagar();
                     self.calcularMoto();
+                    self.calcularRetenciones();
+
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
@@ -398,8 +413,60 @@ public class NuevoPago extends JDialog {
 
                     // para guardar la orden de pago
                     // 1. Validar campos
+
+                    String cuitProveedor = self.textFieldCUIT.getText();
+
+                    if (cuitProveedor.equals(""))
+                        throw new Exception("Debe seleccionar un proveedor");
+
+                    if (self.facturasPagar.size() == 0)
+                        throw new Exception("Debe seleccionar al menos una factura a pagar.");
+
+                    if (self.comboBoxFormaPago.getSelectedIndex() == 0)
+                        throw new Exception("Debe seleccionar una forma de pago.");
+
+                    TipoPago formaDePago = TipoPago.valueOf(self.comboBoxFormaPago.getSelectedItem().toString());
+
+                    if (formaDePago.equals(TipoPago.CHEQUE_TERCERO) || formaDePago.equals(TipoPago.CHEQUE_PROPIO)) {
+
+                        String chequeTitular = self.textFieldTitularCheque.getText();
+                        String chequeBanco = self.textFieldBancoCheque.getText();
+                        String chequeNumero = self.textFieldChequeNumero.getText();
+
+                        LocalDate chequeFechaEmision = null;
+                        LocalDate chequeFechaVencimiento = null;
+
+                        if (self.datePickerFechaEmisionCheque.getJFormattedTextField().getValue() != null)
+                            chequeFechaEmision = Helpers.datePickerFormatter(self.datePickerFechaEmisionCheque);
+
+                        if (self.datePickerFechaVencimientoCheque.getJFormattedTextField().getValue() != null)
+                            chequeFechaVencimiento = Helpers.datePickerFormatter(self.datePickerFechaVencimientoCheque);
+
+                        if (chequeTitular.equals(""))
+                            throw new Exception("El campo titular es obligatorio");
+
+                        if (chequeBanco.equals(""))
+                            throw new Exception("El campo banco es obligatorio");
+
+                        if (chequeNumero.equals(""))
+                            throw new Exception("El campo número es obligatorio");
+
+                        if (chequeFechaEmision == null)
+                            throw new Exception("El campo fecha de emisión es obligatorio");
+
+                        if (chequeFechaVencimiento == null)
+                            throw new Exception("El campo fecha de vencimiento es obligatorio");
+
+                    }
+
                     // 2. Verificar que tiene certificados de excención.
-                    // 2.1 Si tiene certificados de excención no se le retiene nada.
+                    List<CertificadoDTO> certificados = ProveedorController.getInstance().listarCertificadosPorProveedor(cuitProveedor);
+
+                    if (certificados.size() == 0) {
+
+                    }
+
+                    // 2.1 Si tiene certificados de excención no se le retiene sobre el impuesto.
                     // 2.1 Si no tiene certificados de retención se le retiene iva, gancias e iibb según tabla.
                     // 3. Entonces el monto a pagar será el monto total - las retenciones.
                     // 4. Generar el pago.
@@ -439,7 +506,7 @@ public class NuevoPago extends JDialog {
         return null;
     }
 
-    void calcularMoto(){
+    void calcularMoto() {
 
         this.montoPagar = 0.0;
 
@@ -448,6 +515,73 @@ public class NuevoPago extends JDialog {
         });
 
         this.textFieldTotal.setText(this.montoPagar.toString());
+    }
+
+    void calcularRetenciones() throws Exception {
+
+        Double iva = 0.0;
+        Double iibb = 0.0;
+        Double ganancias = 0.0;
+
+        String cuit = this.textFieldCUIT.getText();
+
+        if (!cuit.equals("")) {
+            List<CertificadoDTO> certificados = ProveedorController.getInstance().obtenerCertificadosProveedor(cuit);
+
+            for (CertificadoDTO cert : certificados) {
+                TipoRetencion i = this.certificadoVigente(cert);
+                if (i != null) {
+                    if (i.equals(TipoRetencion.IVA)) {
+                        iva = this.calcularRetencionIVA();
+                    } else if (i.equals(TipoRetencion.IIBB)) {
+                        iibb = this.calcularRetencionIIBB();
+                    } else if (i.equals(TipoRetencion.GANANCIAS)) {
+                        ganancias = this.calcularRetencionGAN();
+                    }
+                }
+            }
+        }
+
+        Double retenciones = iva + iibb + ganancias;
+
+        Double subtotal = this.montoPagar - retenciones;
+
+        this.textFieldIVA.setText(iva.toString());
+        this.textFieldIIBB.setText(iibb.toString());
+        this.textFieldGAN.setText(ganancias.toString());
+        this.textFieldSubtotal.setText(subtotal.toString());
+        this.textFieldRetenciones.setText(retenciones.toString());
+
+    }
+
+    TipoRetencion certificadoVigente(CertificadoDTO cert) {
+        if (LocalDate.now().isAfter(cert.fechaInicio) && LocalDate.now().isBefore(cert.fechaFin))
+            return cert.tipo;
+
+        return null;
+    }
+
+    Double calcularRetencionIVA() {
+        return this.montoPagar - (this.montoPagar / 1.21);
+    }
+
+    Double calcularRetencionIIBB() {
+        return this.montoPagar - (this.montoPagar / 1.03);
+    }
+
+    Double calcularRetencionGAN() {
+        Double iva = this.calcularRetencionIVA();
+        Double iibb = this.calcularRetencionIIBB();
+        Double ganancias = 1.03;
+        Double neto = this.montoPagar - iva - iibb;
+
+        if (this.montoPagar >= 7870) {
+            ganancias = 1.06;
+        } else if (this.montoPagar >= 67170) {
+            ganancias = 1.02;
+        }
+
+        return neto - (neto / ganancias);
     }
     //endregion
 
