@@ -17,6 +17,9 @@ public class OrdenPago {
     private EstadoPago estado;
     private Proveedor proveedor;
     private LocalDate fecha;
+    private Double rIVA;
+    private Double rIIBB;
+    private Double rGAN;
 
     public OrdenPago() {
         this.facturas = new ArrayList<>();

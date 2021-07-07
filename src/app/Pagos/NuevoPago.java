@@ -76,6 +76,7 @@ public class NuevoPago extends JDialog {
         this.inicial = true;
         this.montoPagar = 0.0;
 
+
         //region Actions
         this.onChangeComboBoxProveedor();
         this.onChangeComboBoxTipoPago();

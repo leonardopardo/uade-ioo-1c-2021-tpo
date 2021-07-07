@@ -242,7 +242,9 @@
                     <children>
                       <component id="c591e" class="javax.swing.JButton" binding="btnNuevaOrden">
                         <constraints>
-                          <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="-1" height="30"/>
+                          </grid>
                         </constraints>
                         <properties>
                           <text value="Nueva Orden"/>
@@ -250,7 +252,9 @@
                       </component>
                       <component id="4a0f5" class="javax.swing.JButton" binding="btnFiltrarOC">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="-1" height="30"/>
+                          </grid>
                         </constraints>
                         <properties>
                           <text value="Filtrar"/>
@@ -258,7 +262,9 @@
                       </component>
                       <component id="78295" class="javax.swing.JButton" binding="eliminarButton" default-binding="true">
                         <constraints>
-                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="-1" height="30"/>
+                          </grid>
                         </constraints>
                         <properties>
                           <text value="Eliminar"/>
@@ -266,7 +272,9 @@
                       </component>
                       <component id="cad11" class="javax.swing.JButton" binding="btnLimpiarFiltros">
                         <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="-1" height="30"/>
+                          </grid>
                         </constraints>
                         <properties>
                           <text value="Limpiar Filtro"/>
@@ -274,7 +282,9 @@
                       </component>
                       <component id="f049c" class="javax.swing.JButton" binding="modificarOrdenButton" default-binding="true">
                         <constraints>
-                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="-1" height="30"/>
+                          </grid>
                         </constraints>
                         <properties>
                           <text value="Modificar Orden"/>
@@ -282,7 +292,9 @@
                       </component>
                       <component id="7ffb" class="javax.swing.JButton" binding="btnMakeFactura">
                         <constraints>
-                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="-1" height="30"/>
+                          </grid>
                         </constraints>
                         <properties>
                           <text value="Hacer Factura"/>
@@ -453,7 +465,9 @@
                     <children>
                       <component id="f1044" class="javax.swing.JButton" binding="btnNuevaFactura">
                         <constraints>
-                          <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="-1" height="30"/>
+                          </grid>
                         </constraints>
                         <properties>
                           <text value="Nueva Factura"/>
@@ -461,7 +475,9 @@
                       </component>
                       <component id="e73f4" class="javax.swing.JButton" binding="btnEliminarFactura">
                         <constraints>
-                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="-1" height="30"/>
+                          </grid>
                         </constraints>
                         <properties>
                           <text value="Eliminar"/>
@@ -469,7 +485,9 @@
                       </component>
                       <component id="86255" class="javax.swing.JButton" binding="btnFiltrarFacturas">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="-1" height="30"/>
+                          </grid>
                         </constraints>
                         <properties>
                           <text value="Filtrar"/>
@@ -477,7 +495,9 @@
                       </component>
                       <component id="a28e5" class="javax.swing.JButton" binding="btnLimpiarFiltroFacturas">
                         <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="-1" height="30"/>
+                          </grid>
                         </constraints>
                         <properties>
                           <text value="Limpiar Filtro"/>
@@ -490,7 +510,9 @@
                       </hspacer>
                       <component id="9ecf0" class="javax.swing.JButton" binding="modificarFacturaButton" default-binding="true">
                         <constraints>
-                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="-1" height="30"/>
+                          </grid>
                         </constraints>
                         <properties>
                           <text value="Modificar Factura"/>
