@@ -72,6 +72,8 @@ public class OrdenPagoController {
                 DocumentoController.getInstance().cambiarEstadoFactura(f.numero, EstadoPago.CANCELADO);
             }
 
+            ProveedorController.getInstance().actualizarBalance(orden.importeTotal + orden.retencionesTotal, orden.cuitProveedor);
+
             this.ordenPagoService.save(nuevaOrden);
             this.ordenesPago.add(nuevaOrden);
 

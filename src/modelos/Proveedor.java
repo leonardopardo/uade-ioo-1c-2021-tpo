@@ -3,6 +3,7 @@ package modelos;
 import dto.CertificadoDTO;
 import dto.ProveedorCompulsaDTO;
 import dto.ProveedorDTO;
+import helpers.Helpers;
 import modelos.enums.Rubro;
 import modelos.enums.TipoIVA;
 
@@ -64,8 +65,11 @@ public class Proveedor {
         this.email = email;
     }
 
-    public void setBalance(Double monto) {
-        this.balance -= monto;
+    public void setBalance(Double monto, Boolean suma) {
+        if(suma)
+            this.balance -= monto;
+        else
+            this.balance += monto;
     }
 
     public void setTelefono(String telefono) {
@@ -148,7 +152,7 @@ public class Proveedor {
         dto.rubros = this.rubros;
         dto.tipoIVA = this.tipoIVA;
         dto.inicioActividad = this.inicioActividad;
-        dto.balance = this.balance;
+        dto.balance = Helpers.doubleTwoDecimal(this.balance);
         return dto;
     }
 

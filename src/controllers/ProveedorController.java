@@ -86,7 +86,7 @@ public class ProveedorController {
         return null;
     }
 
-    public Proveedor obtenerProveedorPorRazonSocial(String razonSocial) {
+    private Proveedor obtenerProveedorPorRazonSocial(String razonSocial) {
         for (Proveedor proveedor : this.proveedores) {
             if (proveedor.getRazonSocial().equals(razonSocial)) {
                 return proveedor;
@@ -223,10 +223,15 @@ public class ProveedorController {
         return new ArrayList<>();
     }
 
-
     public void actualizarBalance(FacturaDTO factDTO) throws Exception {
         Proveedor prov = this.obtenerProveedor(factDTO.cuitProveedor);
-        prov.setBalance(factDTO.monto);
+        prov.setBalance(factDTO.monto, true);
+        this.proveedorService.update(prov);
+    }
+
+    public void actualizarBalance(Double monto, String cuit) throws Exception {
+        Proveedor prov = this.obtenerProveedor(cuit);
+        prov.setBalance(monto, true);
         this.proveedorService.update(prov);
     }
 

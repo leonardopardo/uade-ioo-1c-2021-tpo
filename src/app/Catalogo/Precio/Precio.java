@@ -150,7 +150,7 @@ public class Precio extends JPanel{
                     precioDTO.itemTitulo = PrecioController.getInstance().obtenerItemPorTitulo(titulo).titulo;
                     precioDTO.rubro = Rubro.valueOf(self.comboBoxRubro.getSelectedItem().toString());
                     precioDTO.precio = Double.parseDouble(self.txtprecio.getText().trim());
-                    precioDTO.razonSocial = ProveedorController.getInstance().obtenerProveedorPorRazonSocial(razonSocial).getRazonSocial();
+                    precioDTO.razonSocial = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial).razonSocial;
 
                     self.precioController.agregar(precioDTO);
                     self.populateTablePrecio();
