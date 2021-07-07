@@ -1,9 +1,6 @@
 package controllers;
 
-import dto.CertificadoDTO;
-import dto.DetalleDTO;
-import dto.OrdenCompraDTO;
-import dto.ProveedorDTO;
+import dto.*;
 import modelos.*;
 import modelos.enums.Rubro;
 import servicios.ItemsService;
@@ -224,6 +221,13 @@ public class ProveedorController {
             return p.getCertificados();
 
         return new ArrayList<>();
+    }
+
+
+    public void actualizarBalance(FacturaDTO factDTO) throws Exception {
+        Proveedor prov = this.obtenerProveedor(factDTO.cuitProveedor);
+        prov.setBalance(factDTO.monto);
+        this.proveedorService.update(prov);
     }
 
     /**

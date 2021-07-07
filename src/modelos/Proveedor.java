@@ -25,8 +25,7 @@ public class Proveedor {
     private Double balance;
     private List<CertificadoExcencion> certificados;
     private List<Rubro> rubros;
-    private List<OrdenCompra> ordenesCompra;
-    private List<Factura> facturas;
+
 
     public Proveedor(ProveedorDTO p) throws Exception {
         this.razonSocial = p.razonSocial;
@@ -38,11 +37,10 @@ public class Proveedor {
         this.inicioActividad = p.inicioActividad;
         this.ingresosBrutos = p.ingresosBrutos;
         this.limiteCtaCte = p.limiteCtaCte;
+        this.balance = 0.0;
 
         this.rubros = new ArrayList<>();
         this.certificados = new ArrayList<>();
-        this.ordenesCompra = new ArrayList<>();
-        this.facturas = new ArrayList<>();
     }
 
     //region Setters
@@ -66,6 +64,10 @@ public class Proveedor {
         this.email = email;
     }
 
+    public void setBalance(Double monto) {
+        this.balance -= monto;
+    }
+
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
@@ -86,9 +88,6 @@ public class Proveedor {
         this.certificados = certificados;
     }
 
-    public void setOrdenCompra(OrdenCompra nuevaOC) {
-        this.ordenesCompra.add(nuevaOC);
-    }
     //endregion
 
     //region Getters
@@ -104,9 +103,6 @@ public class Proveedor {
         return this.id;
     }
 
-    public List<OrdenCompra> getOrdenesCompra() {
-        return this.ordenesCompra;
-    }
 
     public List<CertificadoDTO> getCertificados() {
         List<CertificadoDTO> list = new ArrayList<>();
@@ -152,7 +148,7 @@ public class Proveedor {
         dto.rubros = this.rubros;
         dto.tipoIVA = this.tipoIVA;
         dto.inicioActividad = this.inicioActividad;
-
+        dto.balance = this.balance;
         return dto;
     }
 

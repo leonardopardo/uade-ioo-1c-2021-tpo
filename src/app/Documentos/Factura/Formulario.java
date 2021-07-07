@@ -5,9 +5,11 @@ import controllers.DocumentoController;
 import controllers.PrecioController;
 import controllers.ProveedorController;
 import dto.DetalleDTO;
+import dto.FacturaDTO;
 import dto.ItemDTO;
 import dto.ProveedorDTO;
 import helpers.Helpers;
+import modelos.enums.AlicuotaIVA;
 import modelos.enums.Rubro;
 import modelos.enums.Unidad;
 import org.jdatepicker.impl.DateComponentFormatter;
@@ -46,10 +48,10 @@ public class Formulario extends JDialog {
     private JButton btnCancelar;
     private JPanel pnlMain;
     private JComboBox comboBoxRubrosFact;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField5;
+    private JTextField subtotalFact;
+    private JTextField iva21Fact;
+    private JTextField iva10_5Fact;
+    private JTextField totalFact;
     private JComboBox comboBoxItems;
     private JTextField textFieldCodItem;
     private JSpinner spinnerCantFact;
@@ -60,7 +62,13 @@ public class Formulario extends JDialog {
 
     public Formulario(JFrame parent) {
         super(parent);
+        // region Initialize
         this.detalle = new ArrayList<>();
+        this.iva10_5Fact.setText("0.0");
+        this.iva21Fact.setText("0.0");
+        this.totalFact.setText("0.0");
+        this.subtotalFact.setText("0.0");
+
         this.textFieldCuit.setEditable(false);
         this.spinnerCantFact.setModel(new SpinnerNumberModel(1, 1, 1000, 1));
 
@@ -69,6 +77,7 @@ public class Formulario extends JDialog {
         this.actionSelectedComboBoxItem();
         this.actionAgregarDetalle();
         this.actionEliminarDetalle();
+        this.actionGuardarFactura();
 
         //region Factory
         this.datePickerfechaFact = Helpers.nuevoDatePicker();
@@ -198,6 +207,28 @@ public class Formulario extends JDialog {
         });
     }
 
+    void actionGuardarFactura() {
+        Formulario self = this;
+        this.btnGuardar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    FacturaDTO factDTO = new FacturaDTO();
+                    factDTO.detalles = self.detalle;
+                    factDTO.cuitProveedor = self.textFieldCuit.getText();
+                    factDTO.fecha = Helpers.datePickerFormatter(self.datePickerfechaFact);
+                    factDTO.monto = Double.parseDouble(self.totalFact.getText());
+                    factDTO.iva21 = Double.parseDouble(self.iva21Fact.getText());
+                    factDTO.iva10 = Double.parseDouble(self.iva10_5Fact.getText());
+                    DocumentoController.getInstance().agregarFactura(factDTO);
+                    self.dispose();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+    }
+
     void actionAgregarDetalle() {
         Formulario self = this;
         this.btnAgregarDetalle.addActionListener(new ActionListener() {
@@ -212,6 +243,7 @@ public class Formulario extends JDialog {
 
                     ItemDTO item = PrecioController.getInstance().obtenerItemPorCodigo(itemCodigo);
                     Double cantidad = Double.parseDouble(self.spinnerCantFact.getValue().toString());
+                    Double precio = DocumentoController.getInstance().buscarPrecio(self.textFieldCuit.getText(), itemCodigo);
 
 
                     Integer element = itemAgregado(itemCodigo);
@@ -219,18 +251,25 @@ public class Formulario extends JDialog {
                     if (element >= 0) {
                         DetalleDTO d = self.detalle.get(element);
                         d.cantItem = cantidad;
+                        d.alicuotaIVA = item.alicuotaIVA;
+                        d.cantItem = cantidad;
+                        d.precioTotal = precio * cantidad;
+                        d.setIva();
                         self.detalle.set(element, d);
+                        self.updateFactura(d);
                     } else {
-                        Double precio = DocumentoController.getInstance().buscarPrecio(self.textFieldCuit.getText(), itemCodigo);
                         DetalleDTO d = new DetalleDTO();
+                        d.alicuotaIVA = item.alicuotaIVA;
                         d.codItem = itemCodigo;
                         d.cantItem = cantidad;
                         d.descripcion = item.titulo;
                         d.precioUnidad = precio;
-                        d.alicuotaIVA = item.alicuotaIVA;
                         d.precioTotal = precio * cantidad;
+                        d.setIva();
                         self.detalle.add(d);
+                        self.updateFactura(d);
                     }
+
 
                     self.setTableSchemma();
 
@@ -348,6 +387,24 @@ public class Formulario extends JDialog {
                 return this.detalle.indexOf(d);
         }
         return -1;
+    }
+
+
+    // region update
+
+    void updateFactura(DetalleDTO dto) {
+        if (dto.alicuotaIVA.equals(AlicuotaIVA.IVA_10_5)) {
+            Double iva10 = Double.parseDouble(iva10_5Fact.getText()) + ((dto.iva * dto.precioTotal) / 100);
+            this.iva10_5Fact.setText(iva10.toString());
+        } else if (dto.alicuotaIVA.equals(AlicuotaIVA.IVA_21)) {
+            Double iva21 = Double.parseDouble(iva21Fact.getText()) + ((dto.iva * dto.precioTotal) / 100);
+            this.iva21Fact.setText(iva21.toString());
+        }
+        Double subtotal = Double.parseDouble(subtotalFact.getText()) + dto.precioTotal;
+        Double total = Double.parseDouble(totalFact.getText()) + ((dto.iva * dto.precioTotal) / 100) + dto.precioTotal;
+
+        this.totalFact.setText(total.toString());
+        this.subtotalFact.setText(subtotal.toString());
     }
 
 
