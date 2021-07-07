@@ -2,6 +2,7 @@ package modelos;
 
 import dto.PrecioDTO;
 import dto.ProveedorDTO;
+import modelos.enums.Rubro;
 
 public class Precio {
 
@@ -12,6 +13,11 @@ public class Precio {
 
     public Precio(PrecioDTO precio) {
         this.precio = precio.precio;
+    }
+
+    //region Getters
+    public Integer getId() {
+        return id;
     }
 
     public Item getItem() {
@@ -34,8 +40,18 @@ public class Precio {
         return this.getItem().getCodigo();
     }
 
+    public Rubro getItemRubro(){
+        return this.getItem().getRubro();
+    }
+    //endregion
+
+    //region Setters
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 
     public void setItem(Item item) {
@@ -45,6 +61,7 @@ public class Precio {
     public void setProveedor(ProveedorDTO proveedor) throws Exception {
         this.proveedor = new Proveedor(proveedor);
     }
+    //endregion
 
     public PrecioDTO toDTO() {
         PrecioDTO dto = new PrecioDTO();

@@ -3,8 +3,9 @@ package controllers;
 import dto.*;
 import modelos.Item;
 import modelos.Precio;
-import modelos.Proveedor;
 import modelos.enums.Rubro;
+import modelos.enums.TipoItem;
+import modelos.enums.Unidad;
 import servicios.ItemsService;
 import servicios.PrecioService;
 
@@ -19,7 +20,6 @@ public class PrecioController {
     private List<Item> items;
     private ItemsService itemsService;
     private PrecioService precioService;
-
 
     public static PrecioController instance;
 
@@ -103,6 +103,148 @@ public class PrecioController {
         }
     }
 
+    public List<PrecioDTO> listarPrecios(Rubro rubro){
+        List<PrecioDTO> lista = new ArrayList<>();
+        for (Precio p:this.precios) {
+            if(p.getItemRubro().equals(rubro)){
+                lista.add(p.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<PrecioDTO> listarPreciosPorItem(Rubro rubro, String codigoItem){
+        List<PrecioDTO> lista = new ArrayList<>();
+        for (Precio p:this.precios) {
+            if(p.getItemRubro().equals(rubro) && p.getCodigoItem().equals(codigoItem)){
+                lista.add(p.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<PrecioDTO> listarPreciosPorProveedor(Rubro rubro, String cuitProveedor){
+        List<PrecioDTO> lista = new ArrayList<>();
+        for (Precio p:this.precios) {
+            if(p.getItemRubro().equals(rubro) && p.getProveedorCuit().equals(cuitProveedor)){
+                lista.add(p.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<PrecioDTO> listarPrecios(Rubro rubro, String codigoItem, String cuitProveedor){
+        List<PrecioDTO> lista = new ArrayList<>();
+        for (Precio p:this.precios) {
+            if(p.getItemRubro().equals(rubro)
+                    && p.getCodigoItem().equals(codigoItem)
+                    && p.getProveedorCuit().equals(cuitProveedor)){
+                lista.add(p.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<PrecioDTO> listarPrecios(String codigoItem, String cuitProveedor){
+        List<PrecioDTO> lista = new ArrayList<>();
+        for (Precio p:this.precios) {
+            if(p.getCodigoItem().equals(codigoItem) && p.getProveedorCuit().equals(cuitProveedor)){
+                lista.add(p.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<PrecioDTO> listarPreciosPorItem(String codigoItem){
+        List<PrecioDTO> lista = new ArrayList<>();
+        for (Precio p:this.precios) {
+            if(p.getCodigoItem().equals(codigoItem)){
+                lista.add(p.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<PrecioDTO> listarPreciosPorProveedor(String cuitProveedor){
+        List<PrecioDTO> lista = new ArrayList<>();
+        for (Precio p:this.precios) {
+            if(p.getProveedorCuit().equals(cuitProveedor)){
+                lista.add(p.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<ItemDTO> listarItems(Rubro rubro){
+        List<ItemDTO> lista = new ArrayList<>();
+        for (Item i : this.items) {
+            if(i.getRubro().equals(rubro)){
+                lista.add(i.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<ItemDTO> listarItems(Rubro rubro, TipoItem tipoItem, Unidad unidad){
+        List<ItemDTO> lista = new ArrayList<>();
+        for (Item i : this.items) {
+            if(i.getRubro().equals(rubro) && i.getTipoItem().equals(tipoItem) && i.getUnidad().equals(unidad)){
+                lista.add(i.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<ItemDTO> listarItems(TipoItem tipoItem, Unidad unidad){
+        List<ItemDTO> lista = new ArrayList<>();
+        for (Item i : this.items) {
+            if(i.getTipoItem().equals(tipoItem) && i.getUnidad().equals(unidad)){
+                lista.add(i.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<ItemDTO> listarItemsPorTipo(Rubro rubro, TipoItem tipoItem){
+        List<ItemDTO> lista = new ArrayList<>();
+        for (Item i : this.items) {
+            if(i.getRubro().equals(rubro) && i.getTipoItem().equals(tipoItem)){
+                lista.add(i.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<ItemDTO> listarItemsPorTipo(TipoItem tipoItem){
+        List<ItemDTO> lista = new ArrayList<>();
+        for (Item i : this.items) {
+            if(i.getTipoItem().equals(tipoItem)){
+                lista.add(i.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<ItemDTO> listarItemsPorUnidad(Rubro rubro, Unidad unidad){
+        List<ItemDTO> lista = new ArrayList<>();
+        for (Item i : this.items) {
+            if(i.getRubro().equals(rubro) && i.getUnidad().equals(unidad)){
+                lista.add(i.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<ItemDTO> listarItemsPorUnidad(Unidad unidad){
+        List<ItemDTO> lista = new ArrayList<>();
+        for (Item i : this.items) {
+            if(i.getUnidad().equals(unidad)){
+                lista.add(i.toDTO());
+            }
+        }
+        return lista;
+    }
+
     //region ABM Item-Precio
     public void agregar(ItemDTO item) throws Exception {
         try {
@@ -111,8 +253,10 @@ public class PrecioController {
             }
 
             Item nuevoItem = new Item(item);
+            nuevoItem.setId(this.itemsService.getProximoId());
+
             this.itemsService.save(nuevoItem);
-            Collections.addAll(this.items, nuevoItem);
+            this.items.add(nuevoItem);
         } catch (Exception ex) {
             throw ex;
         }
@@ -143,11 +287,15 @@ public class PrecioController {
         try {
             Item nuevoItem = obtenerItemModelPorCodigo(item.codigo);
 
+            if (nuevoItem == null)
+                throw new Exception("El item que intenta actualizar no se encuentra en la lista de precios.");
+
             nuevoItem.setTitulo(item.titulo);
             nuevoItem.setCodigo(item.codigo);
             nuevoItem.setDescripcion(item.descripcion);
             nuevoItem.setRubro(item.rubro);
             nuevoItem.setUnidad(item.unidad);
+            nuevoItem.setId(this.itemsService.getProximoId());
 
             this.itemsService.update(nuevoItem);
         } catch (Exception ex) {
@@ -155,16 +303,47 @@ public class PrecioController {
         }
     }
 
-    public void actualizar(PrecioDTO precio) throws Exception{
+    public void actualizar(PrecioDTO precio) throws Exception {
+        try{
+            Precio precioExistente = this.obtenerPrecio(precio.itemCodigo, precio.cuit);
+
+            if (precioExistente == null)
+                throw new Exception("El precio que intenta actualizar no se encuentra en la lista de precios.");
+
+            precioExistente.setPrecio(precio.precio);
+            precioExistente.setProveedor(ProveedorController.getInstance().obtener(precio.cuit));
+            precioExistente.setItem(this.obtenerItemModelPorCodigo(precio.itemCodigo));
+            precioExistente.setId(this.precioService.getProximoId());
+
+            this.precioService.update(precioExistente);
+        }catch(Exception ex){
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    public void eliminar(String codigo) throws Exception {
+        try {
+            Item item = this.obtenerItemModelPorCodigo(codigo);
+            if(item != null) {
+                this.itemsService.delete(item.getId());
+                this.items.remove(item);
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
 
     }
 
-    public void eliminar(ItemDTO item){
-
-    }
-
-    public void eliminar(String codigoItem, String cuitProveedor){
-
+    public void eliminar(String codigoItem, String cuitProveedor) throws Exception{
+        try {
+            Precio precio = this.obtenerPrecio(codigoItem, cuitProveedor);
+            if(precio != null){
+                this.precioService.delete(precio.getId());
+                this.precios.remove(precio);
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
     //endregion
 
@@ -246,6 +425,16 @@ public class PrecioController {
         });
 
         return titulo.get();
+    }
+
+    private Precio obtenerPrecio(String itemCodigo, String cuitProveedor) {
+        for (Precio p : this.precios) {
+            if(p.getProveedor().getCuit().equals(cuitProveedor) && p.getItem().getCodigo().equals(itemCodigo)){
+                return p;
+            }
+        }
+
+        return null;
     }
     //endregion
 }

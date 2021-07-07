@@ -5,6 +5,7 @@ import controllers.ProveedorController;
 import dto.ItemDTO;
 import dto.PrecioDTO;
 import dto.ProveedorDTO;
+import modelos.Precio;
 import modelos.enums.Rubro;
 
 import javax.swing.*;
@@ -31,32 +32,40 @@ public class Precios extends JDialog {
     private JLabel lblItemCodigo;
     private JLabel lblProveedor;
     private JLabel lblProveedorCuit;
+    private PrecioDTO precio;
 
     public Precios(JFrame parent) {
         super(parent);
 
         //region Loaders
-        this.loadComboBoxProveedores();
-        this.loadComboBoxItems();
-        this.loadComboBoxRubros();
+        this.loaders();
         //endregion
 
         //region Actions
-        this.actionOnChangeComboBoxProveedor();
-        this.actionOnChangeComboBoxItems();
-        this.actionOnClickGuardar();
-        this.actionOnClickCancelar();
+        this.actions();
         //endregion
 
         //region Settings
-        this.setContentPane(this.pnlMain);
-        this.setResizable(false);
-        this.setModal(true);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setPreferredSize(this.pnlMain.getPreferredSize());
-        this.pack();
-        this.positionScreen();
-        this.setVisible(true);
+        this.settings();
+        //endregion
+    }
+
+    public Precios(JFrame parent, PrecioDTO precio){
+        super(parent);
+
+        this.precio = precio;
+
+        //region Loaders
+        this.loaders();
+        this.loadadFields();
+        //endregion
+
+        //region Actions
+        this.actions();
+        //endregion
+
+        //region Settings
+        this.settings();
         //endregion
     }
 
@@ -104,6 +113,15 @@ public class Precios extends JDialog {
             );
         }
     }
+
+    void loadadFields(){
+        this.textFieldPrecio.setText(this.precio.precio.toString());
+        this.comboBoxRubro.setSelectedItem(this.precio.rubro);
+        this.comboBoxProveedor.setSelectedItem(this.precio.razonSocial);
+        this.comboBoxItemTitle.setSelectedItem(this.precio.itemTitulo);
+        this.textFieldProveedorCuit.setText(this.precio.cuit);
+        this.textFieldItemCodigo.setText(this.precio.itemCodigo);
+    }
     //endregion
 
     //region Actions
@@ -134,7 +152,15 @@ public class Precios extends JDialog {
                     precio.cuit = txtCuit;
                     precio.rubro = Rubro.valueOf(self.comboBoxRubro.getSelectedItem().toString());
 
-                    PrecioController.getInstance().agregar(precio);
+                    if(self.precio == null) {
+                        PrecioController.getInstance().agregar(precio);
+                    } else {
+                        PrecioController.getInstance().actualizar(precio);
+                    }
+
+                    Productos parent = (Productos) self.getParent();
+                    parent.loadPrecios();
+                    parent.loadTablePrecios();
 
                     self.dispose();
 
@@ -236,6 +262,7 @@ public class Precios extends JDialog {
     }
     //endregion
 
+    //region Settings
     void positionScreen() {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(
@@ -243,4 +270,29 @@ public class Precios extends JDialog {
                 dim.height / 2 - this.getSize().height / 2
         );
     }
+
+    void loaders(){
+        this.loadComboBoxProveedores();
+        this.loadComboBoxItems();
+        this.loadComboBoxRubros();
+    }
+
+    void actions(){
+        this.actionOnChangeComboBoxProveedor();
+        this.actionOnChangeComboBoxItems();
+        this.actionOnClickGuardar();
+        this.actionOnClickCancelar();
+    }
+
+    void settings(){
+        this.setContentPane(this.pnlMain);
+        this.setResizable(false);
+        this.setModal(true);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setPreferredSize(this.pnlMain.getPreferredSize());
+        this.pack();
+        this.positionScreen();
+        this.setVisible(true);
+    }
+    //endregion
 }

@@ -1,203 +1,202 @@
-{"id":9321, "codigo":"9XP90081", "titulo":"A5 RETAINING RING 88210064 XP90", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":217, "codigo":"19703", "titulo":"ACEITE PARA CADENA DE MOTOSIERRA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "PESO"}
-{"id":2698, "codigo":"50004135", "titulo":"ALICATE BAHCO 167MM C/OBLICUO 6 1000V AISL 2121S-6", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "PESO"}
-{"id":6641, "codigo":"50010016", "titulo":"ALICATE PELACABLE BREMEN 160MM CAP 0.5mm/8mm -2624", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "PESO"}
-{"id":4750, "codigo":"50006931", "titulo":"AMOL ANG BOSCH 9 GWS 22-230 LVI 2200W 1891", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":9917, "codigo":"50007301", "titulo":"AMOL ANG BOSCH 9 GWS 26-230 LVI  2600W 1895", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":6567, "codigo":"50009929", "titulo":"AMOL ANG. SKIL 9 2000W 9981JB", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":3379, "codigo":"50004939", "titulo":"AMOLADORA ANGULAR BLACK & DECKER 4 1/2  G650 650W", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":9595, "codigo":"50001182", "titulo":"ANTEOJO DE TRABAJO PROWORK MERCURY INC (1071)", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":9241, "codigo":"9XP65054", "titulo":"ARANDELA 88261007 XP65 SMALL URETHANE RING", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8637, "codigo":"900R1883", "titulo":"ARANDELA GROWER 5/8\"", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5458, "codigo":"50007859", "titulo":"ARCO SEPARADOR CERAMICRUZ P/PORCELANATO 150UN", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2579, "codigo":"50003984", "titulo":"ASPERSOR CIRCULAR TRAMONTINA C/BASE 78529/400", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2578, "codigo":"50003983", "titulo":"ASPERSOR ESTATICO TRAMONTINA 78523/500", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":1641, "codigo":"50002712", "titulo":"ASPIRADORA BTA 30L POLVO/LIQ INDUSTRIAL INOX", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":9, "codigo":"10601", "titulo":"ASPIRADORA IND. GRANDE POLVO Y LIQUIDO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":3096, "codigo":"50004623", "titulo":"ATORN SKIL 4.8 V C/MALET 100 ACCES. 2248 JG", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5051, "codigo":"50007291", "titulo":"BANDEJA PLASTICA ATLAS P/PINTOR 1523B", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5292, "codigo":"50007637", "titulo":"BARBIJO FRAVIDA 5400 X UN", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2567, "codigo":"50003971", "titulo":"BATERIA BOSCH 14.4 V  1.5 AH 607335534", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":6331, "codigo":"50009543", "titulo":"BATERIA BOSCH 3.6 V LI-ION  1.3 AH 607336242", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8690, "codigo":"900R1943", "titulo":"BOMBA COMBUSTIBLE HONDA / BRIGGS", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":6615, "codigo":"50009986", "titulo":"BORDEADORA SCHAFER M-2 POTENCIADA 340W", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5831, "codigo":"50008526", "titulo":"BOTIN BORIS 3203 MARRON T44 C/PUNTERA NYLON", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2941, "codigo":"50004427", "titulo":"BOTIN FIORE T45 C/PUNTERA ACOLCH. ECON", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5106, "codigo":"50007368", "titulo":"BOTIN FUNCIONAL KUPRA MARRON T41 C/PUNT", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4448, "codigo":"50006551", "titulo":"BOTIN FUNCIONAL SOLDADOR NEGRO T43 37201", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":9476, "codigo":"50007568", "titulo":"BOTIN FUNCIONAL TERRA MARRON T38", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":3215, "codigo":"50004752", "titulo":"BOTIN FUNCIONAL TITANIUM NEGRO T42", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5924, "codigo":"50008701", "titulo":"BROCA BOSCH 12MM P/CERAMICA Y AZULEJO 587166", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4647, "codigo":"50006787", "titulo":"BROCA DIAMANTADA ALIAFOR NEXT 10MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4416, "codigo":"50006500", "titulo":"BROCA DREMEL DE CORTE TR562", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":3084, "codigo":"50004608", "titulo":"BROCA DREMEL PARA REDONDEAR 1/8 PARA TRIO TR615", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2921, "codigo":"50004405", "titulo":"BROCA RUBI DIAMANTADA 6.5MM KIT EASY GRES", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8196, "codigo":"900R1413", "titulo":"BUJIA BOSCH YTTRIUM +3 WR8DC+ 0.8MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":1713, "codigo":"50002805", "titulo":"CAJA HERRAM TACTIX 16\" BROCHE METALICO TX320341", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7284, "codigo":"9000R225", "titulo":"CAMARA 350-4 OLIVARES 260MM NC3504", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5671, "codigo":"50008248", "titulo":"CAMISA DE TRABAJO BLANCO GRAFA 70 T46", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5647, "codigo":"50008216", "titulo":"CAMISA DE TRABAJO NARANJA GRAFA 70 T50", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4475, "codigo":"50006586", "titulo":"CAMPERA TELA TRAKER TALLE XXXL AZUL MARINO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10821, "codigo":"50003173", "titulo":"CAPA DE LLUVIA DELTA PLUS PVC TALLE XXL AMARILLO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8136, "codigo":"900R1351", "titulo":"CARBON  DW352/304/849/888 (US) ORG", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8719, "codigo":"900R1974", "titulo":"CARBON DW292/130V (US) ORG", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8722, "codigo":"900R1977", "titulo":"CARBON DW311 (JP) ORG", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8730, "codigo":"900R1985", "titulo":"CARBON DW860 KIT (CH) ORG", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2002, "codigo":"50003323", "titulo":"CARTEL 40*45 CM ATENCION CARGAS SUSPENDIDAS", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":11182, "codigo":"50009424", "titulo":"CARTEL AUTOADHESIVO PROHIBIDA ACUMULACION DE GENTE", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2861, "codigo":"50004336", "titulo":"CARTEL CORR 50*70CM CERRADO AL TRANSITO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2862, "codigo":"50004337", "titulo":"CARTEL CORR 50*70CM PEATON CIRCULE C/PRECAUCION", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":11179, "codigo":"50009421", "titulo":"CARTEL OBLIGACIONES POR COVID-19", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":6303, "codigo":"50009441", "titulo":"CEPILLO DE MANO BRONCEADO MANGO AZUL", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":3492, "codigo":"50005078", "titulo":"CEPILLO STANLEY NUM 4 P/CARP 12-164", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":1067, "codigo":"50002012", "titulo":"CINCEL PALA BOSCH 250*40MM SDS PLUS AUTOAF. 690101", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8522, "codigo":"900R1764", "titulo":"CLIP ACOPLE MANGUERA AIRE 1357DLX0", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5312, "codigo":"50007660", "titulo":"COLA DE AMARRE ESLINGAR CV21 1.50MTS MOSQ 18MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5258, "codigo":"50007593", "titulo":"COLECTOR POLVO DEWALT P/FRESADORA DWP611PK DNP615", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7346, "codigo":"9000R384", "titulo":"CORREA SECCION A-32", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7518, "codigo":"9000R600", "titulo":"CORREA SECCION A-77", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7534, "codigo":"9000R616", "titulo":"CORREA SECCION B-33", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7431, "codigo":"9000R490", "titulo":"CORREA SECCION B-49", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7958, "codigo":"900R1166", "titulo":"CORREA SECCION C-73", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10225, "codigo":"50008851", "titulo":"CORT. DE PORCELANATO RUBI 3.25MT SLIM CUTTER", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2781, "codigo":"50004239", "titulo":"CORTADORA SENSITIVA BLACK & DECKER CS2000-AR", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10409, "codigo":"50005455", "titulo":"CRIQUE CARRO BREMEN PERFIL BAJO 3 TON", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7957, "codigo":"900R1165", "titulo":"CUBIERTA RAYADA 350-8 OLIVARES 350MM NRC3508", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2384, "codigo":"50003742", "titulo":"CUCHARA BIASSONI NRO 7 P/ALBAÑIL", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":356, "codigo":"50001163", "titulo":"CUCHARA GHERARDI NUM.8 FORJADA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":3320, "codigo":"50004861", "titulo":"CUCHARA STUBAI NUM 7 FORJADA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":1544, "codigo":"50002586", "titulo":"CUTTER ASSIST TRAPEZOIDAL 24G-T1", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10763, "codigo":"50008390", "titulo":"CUTTER ASSIST TRAPEZOIDAL ACERO 42-T1", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5465, "codigo":"50007869", "titulo":"DESMALEZADORA HUSQVARNA 28CC 1.1HP 128R", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4329, "codigo":"50006389", "titulo":"DEST BAHCO PLANO PARALELO P3000 4*250MM P3240-250", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5228, "codigo":"50007544", "titulo":"DEST FELO PZ 0*60MM AZUL 801", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2730, "codigo":"50004176", "titulo":"DEST STANLEY PRO PLANO 5*100 69-111", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5045, "codigo":"50007282", "titulo":"DEST STANLEY TORX 30 69-167 TX-30", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":692, "codigo":"50001547", "titulo":"DISCO DEWALT 115*3.2MM DW44604 CORTE METAL", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":1190, "codigo":"50002162", "titulo":"DISCO DIAM. ALIAFOR 4.5 LS-4.5-AB", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":606, "codigo":"50001440", "titulo":"DISCO DIAM. ALIAFOR 4.5 TRF TURBO P/PORCELANATO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4767, "codigo":"50006952", "titulo":"DISCO FLAP TYROLIT STANDARD 115MM GR60 P/INOX", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7378, "codigo":"9000R417", "titulo":"DISCO NYLON DOBLE FERODO WISKEHRS", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":1372, "codigo":"50002361", "titulo":"DISCO PEGASO 178*3*22MM PIEDRAS/MAMP C30S C/D", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10841, "codigo":"50001052", "titulo":"DISCO PEGASO 230*1.9MM INOX METAL WA46TBF  Y230-IM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":1222, "codigo":"50002197", "titulo":"DISCO TYROLIT 178*3*22.2MM INOX A30T3BF82A2 C/DEP", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7158, "codigo":"9000R085", "titulo":"EJE CENTRAL S/MARCA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":244, "codigo":"50001033", "titulo":"ENDOAURAL STEEL PRO SIN CORDON EXPANDIBLE", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7587, "codigo":"9000R683", "titulo":"ENGRANAJE ACERO P/PLUMA WISKERHS 500KG MOD. NUEVO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":6950, "codigo":"70001048", "titulo":"ESCALERA \"FERPAK\" 36 ESC. EXT. ALUM PESADA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":531, "codigo":"50001361", "titulo":"ESCOBILLON 30CM CPO PLASTICO CON CABO MAD.", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7943, "codigo":"900R1144", "titulo":"ESLINGA CABLE ACERO 13MM X 1MT LARGO C/OJALES", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5021, "codigo":"50007254", "titulo":"ESLINGA ESLINGAR 4000 KG 4 MT GRIS", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8662, "codigo":"900R1911", "titulo":"FILTRO DE AIRE CON P FILTRO GX 340/390", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5363, "codigo":"50007732", "titulo":"FRATACHO PLASTICO VOSS 2000 35CM BORDE P/GRUESO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7302, "codigo":"9000R322", "titulo":"GRILLETE RECTO 3/8\" x 3/8\"", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":248, "codigo":"50001037", "titulo":"GUANTE DE DESCARNE PUÑO JEAN", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":278, "codigo":"50001079", "titulo":"GUANTES TERRYCLOTH", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":9699, "codigo":"50003629", "titulo":"HOJA BAHCO P/ARCO DE SIERRA 32 DTES", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2538, "codigo":"50003941", "titulo":"HOJA DE CALAR BOSCH T119B HCS P/MADERA BUE 630037", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10812, "codigo":"50008560", "titulo":"HOJA DE SIERRA RHEIN 10 40 DTES. WIDIA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":92, "codigo":"12803", "titulo":"HORMIGONERA 180 lts. C/MOTOR 2 HP TRIF.", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":991, "codigo":"50001920", "titulo":"INGLETEADORA BOSCH GCM-10 1800W B201", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7746, "codigo":"9000R914", "titulo":"JUEGO DE JUNTAS MOTOR HONDA GX160", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":11118, "codigo":"50009326", "titulo":"KIT DREMEL DE LIJADO/PULIDO 7 ACCESORIOS EZ LOCK EZ684-01", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5559, "codigo":"50008105", "titulo":"LAMPARA DE LED 9.5W TIPO R7S 1250 LUMENES", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4322, "codigo":"50006379", "titulo":"LAPIZ GIGANTE LYRA 1174", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":101, "codigo":"13002", "titulo":"LIJADORA ROTO-ORBITAL 220 V 220W", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":9834, "codigo":"50005964", "titulo":"LIMA ROTATIVA STRONGER P/METAL 12MM 350664", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":3989, "codigo":"50005966", "titulo":"LIMA ROTATIVA STRONGER P/METAL 12MM 350666", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":82, "codigo":"12715", "titulo":"LIMPIADORA  ALFOMBRAS Y TAPIZADOS GDES SUPERF.", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":216, "codigo":"19702", "titulo":"LIQUIDO PARA LIMPIALFOMBRAS", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5733, "codigo":"50008353", "titulo":"LLAVE ALLEN BREMEN 1.5 MM SERIE LARGA CARD. 4765", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2065, "codigo":"50003389", "titulo":"LLAVE COMB STANLEY 11/16 86-838 86-1116", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":3849, "codigo":"50005773", "titulo":"LLAVE COMB STANLEY 18 MM 86-863 86-0418", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2096, "codigo":"50003420", "titulo":"LLAVE COMB STANLEY 5/16 86-832 86-0516", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10649, "codigo":"50007586", "titulo":"LLAVE COMBINADA BREMEN CON CRIQUET 10MM  4751", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":9528, "codigo":"50003229", "titulo":"LLAVE CROSSMASTER 11MM COMB 9960114", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":9896, "codigo":"50006958", "titulo":"LLAVE DE IMPACTO MAKITA 1/2 380W TW0200 120NM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":9588, "codigo":"50010062", "titulo":"LLAVE FRANCESA AJUSTABLE BREMEN 10", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10238, "codigo":"50007940", "titulo":"LLAVE IMPACTO NEUM BREMEN 1/2 USO INTENSIVO 5921", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8103, "codigo":"900R1316", "titulo":"LLAVE INVERSORA ELIBET MONOF EXT 20A 20301/6 72493", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5724, "codigo":"50008326", "titulo":"LLAVE T CELESTAL 1/8 ALLEN", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7634, "codigo":"9000R761", "titulo":"MANGO DE COLOCACION BROCAS 1/2\"", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4988, "codigo":"50007219", "titulo":"MARTILLO PLASTICO CELESTAL 227GR CHAPISTA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5147, "codigo":"50007429", "titulo":"MARTILLO STANLEY GALPONERO 51-274", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":1039, "codigo":"50001975", "titulo":"MECHA BOSCH 05*110MM SDS PLUS 596164", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":1065, "codigo":"50002009", "titulo":"MECHA BOSCH 30*370MM SDS MAX 596440", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":838, "codigo":"50001732", "titulo":"MECHA DEWALT 10*110 MM (PACK 10UN) SDS PLUS DT9833", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":405, "codigo":"50001223", "titulo":"MECHA DEWALT 12*160MM SDS PLUS DT9552-QZ", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":427, "codigo":"50001246", "titulo":"MECHA DEWALT 19*450MM SDS PLUS DT9596-QZ", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":832, "codigo":"50001726", "titulo":"MECHA DEWALT 6*110 MM (PACK 10UN) SDS PLUS DT9812", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":3548, "codigo":"50005227", "titulo":"MECHA MAKITA 18*300MM SDS PLUS D-00337", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2989, "codigo":"50004483", "titulo":"MECHA PALA BOSCH 22MM P/MADERA 595492 SELFCUT", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":3260, "codigo":"50004799", "titulo":"MECHA TWILL LENOX A.R. 5.00MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":1388, "codigo":"50002382", "titulo":"MECHA VENTURO 14*210MM SDS PLUS P140-210", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8614, "codigo":"900R1860", "titulo":"MEDIO CARTER LADO VOLANTE NIWA CNW-38", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":3040, "codigo":"50004562", "titulo":"MINI SIERRA CIRC DREMEL 670", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4169, "codigo":"50006167", "titulo":"NIVEL STANLEY 45CM C/TRANSP I-BEAM 42-318", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":770, "codigo":"50001648", "titulo":"NIVEL STANLEY THRIFTY 36 ALUMINIO 42-075 900MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8778, "codigo":"900R2035", "titulo":"O RING DEWALT 25701/25840/25980/25712/22 584706-00", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":3773, "codigo":"50005674", "titulo":"ORGANIZADOR PLASTICO CROSSMASTER 18 COMP 9931072", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5445, "codigo":"50007842", "titulo":"PALA MOISES ANCHA ESTAMPADA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5703, "codigo":"50008296", "titulo":"PANTALON CARGO GRAFA 70 AERO T42", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5708, "codigo":"50008301", "titulo":"PANTALON CARGO GRAFA 70 AERO T52", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10007, "codigo":"50008292", "titulo":"PANTALON CARGO GRAFA 70 AZUL MARINO T58", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":6035, "codigo":"50008904", "titulo":"PANTALON CARGO OMBU TIZA 46 AIRE LIBRE", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4492, "codigo":"50006604", "titulo":"PANTALON DE TRABAJO GRAFA 70 T46 HOMOL BEIGE", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":11467, "codigo":"50010237", "titulo":"PINCEL WENBLEY 1\" 1/2 CERDA NATURAL N 7422", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4016, "codigo":"50005996", "titulo":"PINTURA TEKBOND EN AEROSOL 250 GR ROJO BRILLO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":636, "codigo":"50001479", "titulo":"PINZA PORTA ELECTRODOS L&R 600 AMP.", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8346, "codigo":"900R1582", "titulo":"PISTON COMPLETO WM90/EH 09-2 0.50", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7209, "codigo":"9000R139", "titulo":"POLEA ALUMINIO 2B-140 MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4477, "codigo":"50006588", "titulo":"PORTA HERRAMIENTAS GASTRONOMIA 4 DIVISIONES TOOLMEN T 43", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":1251, "codigo":"50002227", "titulo":"PUNTA DEWALT P/ATORN. PH1 50MM DW2021", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10899, "codigo":"70000565", "titulo":"PUNTAL REFORZADO EXT 2.00 A 3.60 MTS ORIGEN ITALIA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":859, "codigo":"50001755", "titulo":"RASPA MEDIANA 45*8CM C/MANGO P/YESERO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4324, "codigo":"50006383", "titulo":"REGLA DE ALUMINIO ACHA 500MM BISELADA 54-505", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8135, "codigo":"900R1350", "titulo":"RODAMIENTO RS 6005-2RSH", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7812, "codigo":"9000R989", "titulo":"RODAMIENTO RS 6305-2RS1", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10736, "codigo":"50008365", "titulo":"RODILLO LANA NATURAL ATLAS 18CM 2318R", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":668, "codigo":"50001514", "titulo":"ROLDANA DE FUNDICION 18CM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":6765, "codigo":"70000579", "titulo":"RUEDA NEUMATICA 400MM RAYADA LL/NEGRA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":11266, "codigo":"50008984", "titulo":"SELLADOR SILICONA FISCHER NEUTRA/CONST TRANSP", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8532, "codigo":"900R1777", "titulo":"SEPARADOR RUBI TS60 CLASIC 7870 PZ1", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4189, "codigo":"50006194", "titulo":"SERRUCHO STANLEY 450MM HEAVY DUTY 20-086", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10678, "codigo":"50007919", "titulo":"SET LLAVES ALLEN BREMEN PLEGABLES MILIMETRADAS 7 PZS 6685", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4355, "codigo":"50006416", "titulo":"SET LLAVES COMB STANLEY 8 PZ PULG 88-854", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":6469, "codigo":"50009779", "titulo":"SET MECHAS STANLEY 2 HSS 2 PERCUSION 4 PZ ST5004", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10550, "codigo":"50005838", "titulo":"SET PUNTAS RIBE BREMEN 16PZ CON MALETIN 5446", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10083, "codigo":"50009782", "titulo":"SET STANLEY TUBOS PUNTAS 78 PZ TECH 3 72-655", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":9372, "codigo":"50004979", "titulo":"SET TUBOS LLAVES STANLEY 35PZ 97-195", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":9785, "codigo":"50005008", "titulo":"SIERRA CIRC MAKITA 7 1/4 5740NB1050W", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10915, "codigo":"50008684", "titulo":"SIERRA CIRC MAKITA MT 7 1/4 M5802G 1051W", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":11063, "codigo":"50002954", "titulo":"SIERRA CIRCULAR BOSCH 7 1/4 GKS 150 1500W 6B3 0H0", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":1017, "codigo":"50001952", "titulo":"SIERRA COPA BOSCH 51MM PROGRESSOR 584635", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":3599, "codigo":"50005331", "titulo":"SIERRA COPA BOSCH 79MM BIMETAL 584126", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":3932, "codigo":"50005895", "titulo":"SIERRA COPA BOSCH 92MM BIMETAL 584129", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4808, "codigo":"50007006", "titulo":"SIERRA COPA MAKITA 25MM EZYCHANGE BIMET B-11318", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5633, "codigo":"50008200", "titulo":"SIERRA COPA MORSE 25MM COBALTO P/TAL AV155", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4770, "codigo":"50006957", "titulo":"SIERRA SIN FIN MAKITA 710W 120MM 2107FK", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":9965, "codigo":"50007833", "titulo":"SILICONA NEUTRA ORISIL 300ML", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":2621, "codigo":"50004038", "titulo":"TALADRO DE BANCO BARBERO ABM16 16MM MONO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5373, "codigo":"50007744", "titulo":"TALADRO PERCUTOR METABO 13MM SBE 710 W", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":1664, "codigo":"50002743", "titulo":"TALADRO STANLEY 13MM 600W SDH600K C/MALETIN", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8849, "codigo":"900R8032", "titulo":"TANQUE DE COMBUSTIBLE GPO ELECTR. NIWA GNW55 E/EB", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":6664, "codigo":"50010046", "titulo":"TESTER DIGITALC/ MEDIDOR TEMP. BREMEN 6692", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":9273, "codigo":"9XP6572D", "titulo":"TORNILLO  88210016 XP HEX .SOCKET BOLT M8×30", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":7613, "codigo":"9000R732", "titulo":"TRABA  DE TRIPA P/VIBRADOR CHINO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10306, "codigo":"50004541", "titulo":"TUBO BREMEN 21MM HEXAG ENC 1/2", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10324, "codigo":"50005132", "titulo":"TUBO BREMEN 3/4 HEXAG ENC 1/2", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":6957, "codigo":"70001059", "titulo":"TUBO C/ DESCARGA P/ENTREPISO ", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":8686, "codigo":"900R1939", "titulo":"TUERCA BLANCA USS 3/8\"", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":6759, "codigo":"70000567", "titulo":"VIBRADOR 'FLEXIBON' AF2006 MONOF 30MM 4MTS", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10183, "codigo":"70000952", "titulo":"VIBRADOR A EXPLOSION HONDA  MOTOR 5.5 HP 38MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":6853, "codigo":"70000878", "titulo":"VIBRADOR INM TRIF \"MMQ\" PLATO 50MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":10891, "codigo":"50008842", "titulo":"ZAPATILLA FUNCIONAL MAUI NEGRO T39 C/PUNT/ALUM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4349, "codigo":"50006410", "titulo":"ZAPATILLA OMBU KRYPTON NEGRO ROJO T44 C/PUNT", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":5820, "codigo":"50008512", "titulo":"ZAPATO BORIS 3015 MARRON T40 C/PUNT", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4594, "codigo":"50006718", "titulo":"ZAPATO FUNCIONAL CITY CAMEL T42 PUNT/ALUM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":4613, "codigo":"50006741", "titulo":"ZAPATO FUNCIONAL CITY VISON T44 PUNT/ALUM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":6207, "codigo":"50009250", "titulo":"ZAPATO FUNCIONAL SOUL GRIS T39 C/PUNT ALUM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"id":11391, "codigo":"50010157", "titulo":"ZAPATO OMBU COBALTO CON PUNTERA COMPOSITE T44 MARRON", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
-{"codigo":"123123","titulo":"SUBE","unidad":"HORA","rubro":"VIATICOS_MOBILIDAD","tipoItem":"SERVICIO", "unidad":  "HORA"}
-{"codigo":"19703","titulo":"ACEITE PARA CADENA DE MOTOSIERRA","rubro":"FERRETERIA","tipoItem":"PRODUCTO", "unidad":  "UNIDAD"}
-{"codigo":"9XP90082","titulo":"A5 RETAINING RING 88210064 XP909","unidad":"UNIDAD","rubro":"FERRETERIA","tipoItem":"PRODUCTO"}
+{"id":1, "codigo":"9XP90081", "titulo":"A5 RETAINING RING 88210064 XP90", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":2, "codigo":"19703", "titulo":"ACEITE PARA CADENA DE MOTOSIERRA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "PESO"}
+{"id":3, "codigo":"50004135", "titulo":"ALICATE BAHCO 167MM C/OBLICUO 6 1000V AISL 2121S-6", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "PESO"}
+{"id":4, "codigo":"50010016", "titulo":"ALICATE PELACABLE BREMEN 160MM CAP 0.5mm/8mm -2624", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "PESO"}
+{"id":5, "codigo":"50006931", "titulo":"AMOL ANG BOSCH 9 GWS 22-230 LVI 2200W 1891", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":6, "codigo":"50007301", "titulo":"AMOL ANG BOSCH 9 GWS 26-230 LVI  2600W 1895", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":7, "codigo":"50009929", "titulo":"AMOL ANG. SKIL 9 2000W 9981JB", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":8, "codigo":"50004939", "titulo":"AMOLADORA ANGULAR BLACK & DECKER 4 1/2  G650 650W", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":9, "codigo":"50001182", "titulo":"ANTEOJO DE TRABAJO PROWORK MERCURY INC (1071)", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":10, "codigo":"9XP65054", "titulo":"ARANDELA 88261007 XP65 SMALL URETHANE RING", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":11, "codigo":"900R1883", "titulo":"ARANDELA GROWER 5/8\"", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":12, "codigo":"50007859", "titulo":"ARCO SEPARADOR CERAMICRUZ P/PORCELANATO 150UN", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":13, "codigo":"50003984", "titulo":"ASPERSOR CIRCULAR TRAMONTINA C/BASE 78529/400", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":14, "codigo":"50003983", "titulo":"ASPERSOR ESTATICO TRAMONTINA 78523/500", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":15, "codigo":"50002712", "titulo":"ASPIRADORA BTA 30L POLVO/LIQ INDUSTRIAL INOX", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":16, "codigo":"10601", "titulo":"ASPIRADORA IND. GRANDE POLVO Y LIQUIDO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":17, "codigo":"50004623", "titulo":"ATORN SKIL 4.8 V C/MALET 100 ACCES. 2248 JG", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":18, "codigo":"50007291", "titulo":"BANDEJA PLASTICA ATLAS P/PINTOR 1523B", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":19, "codigo":"50007637", "titulo":"BARBIJO FRAVIDA 5400 X UN", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":20, "codigo":"50003971", "titulo":"BATERIA BOSCH 14.4 V  1.5 AH 607335534", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":21, "codigo":"50009543", "titulo":"BATERIA BOSCH 3.6 V LI-ION  1.3 AH 607336242", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":22, "codigo":"900R1943", "titulo":"BOMBA COMBUSTIBLE HONDA / BRIGGS", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":23, "codigo":"50009986", "titulo":"BORDEADORA SCHAFER M-2 POTENCIADA 340W", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":24, "codigo":"50008526", "titulo":"BOTIN BORIS 3203 MARRON T44 C/PUNTERA NYLON", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":25, "codigo":"50004427", "titulo":"BOTIN FIORE T45 C/PUNTERA ACOLCH. ECON", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":26, "codigo":"50007368", "titulo":"BOTIN FUNCIONAL KUPRA MARRON T41 C/PUNT", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":27, "codigo":"50006551", "titulo":"BOTIN FUNCIONAL SOLDADOR NEGRO T43 37201", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":28, "codigo":"50007568", "titulo":"BOTIN FUNCIONAL TERRA MARRON T38", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":29, "codigo":"50004752", "titulo":"BOTIN FUNCIONAL TITANIUM NEGRO T42", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":30, "codigo":"50008701", "titulo":"BROCA BOSCH 12MM P/CERAMICA Y AZULEJO 587166", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":31, "codigo":"50006787", "titulo":"BROCA DIAMANTADA ALIAFOR NEXT 10MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":32, "codigo":"50006500", "titulo":"BROCA DREMEL DE CORTE TR562", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":33, "codigo":"50004608", "titulo":"BROCA DREMEL PARA REDONDEAR 1/8 PARA TRIO TR615", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":34, "codigo":"50004405", "titulo":"BROCA RUBI DIAMANTADA 6.5MM KIT EASY GRES", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":35, "codigo":"900R1413", "titulo":"BUJIA BOSCH YTTRIUM +3 WR8DC+ 0.8MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":36, "codigo":"50002805", "titulo":"CAJA HERRAM TACTIX 16\" BROCHE METALICO TX320341", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":37, "codigo":"9000R225", "titulo":"CAMARA 350-4 OLIVARES 260MM NC3504", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":38, "codigo":"50008248", "titulo":"CAMISA DE TRABAJO BLANCO GRAFA 70 T46", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":39, "codigo":"50008216", "titulo":"CAMISA DE TRABAJO NARANJA GRAFA 70 T50", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":40, "codigo":"50006586", "titulo":"CAMPERA TELA TRAKER TALLE XXXL AZUL MARINO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":41, "codigo":"50003173", "titulo":"CAPA DE LLUVIA DELTA PLUS PVC TALLE XXL AMARILLO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":42, "codigo":"900R1351", "titulo":"CARBON  DW352/304/849/888 (US) ORG", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":43, "codigo":"900R1974", "titulo":"CARBON DW292/130V (US) ORG", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":44, "codigo":"900R1977", "titulo":"CARBON DW311 (JP) ORG", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":45, "codigo":"900R1985", "titulo":"CARBON DW860 KIT (CH) ORG", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":46, "codigo":"50003323", "titulo":"CARTEL 40*45 CM ATENCION CARGAS SUSPENDIDAS", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":47, "codigo":"50009424", "titulo":"CARTEL AUTOADHESIVO PROHIBIDA ACUMULACION DE GENTE", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":48, "codigo":"50004336", "titulo":"CARTEL CORR 50*70CM CERRADO AL TRANSITO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":49, "codigo":"50004337", "titulo":"CARTEL CORR 50*70CM PEATON CIRCULE C/PRECAUCION", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":50, "codigo":"50009421", "titulo":"CARTEL OBLIGACIONES POR COVID-19", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":51, "codigo":"50009441", "titulo":"CEPILLO DE MANO BRONCEADO MANGO AZUL", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":52, "codigo":"50005078", "titulo":"CEPILLO STANLEY NUM 4 P/CARP 12-164", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":53, "codigo":"50002012", "titulo":"CINCEL PALA BOSCH 250*40MM SDS PLUS AUTOAF. 690101", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":54, "codigo":"900R1764", "titulo":"CLIP ACOPLE MANGUERA AIRE 1357DLX0", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":55, "codigo":"50007660", "titulo":"COLA DE AMARRE ESLINGAR CV21 1.50MTS MOSQ 18MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":56, "codigo":"50007593", "titulo":"COLECTOR POLVO DEWALT P/FRESADORA DWP611PK DNP615", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":57, "codigo":"9000R384", "titulo":"CORREA SECCION A-32", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":58, "codigo":"9000R600", "titulo":"CORREA SECCION A-77", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":59, "codigo":"9000R616", "titulo":"CORREA SECCION B-33", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":60, "codigo":"9000R490", "titulo":"CORREA SECCION B-49", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":61, "codigo":"900R1166", "titulo":"CORREA SECCION C-73", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":62, "codigo":"50008851", "titulo":"CORT. DE PORCELANATO RUBI 3.25MT SLIM CUTTER", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":63, "codigo":"50004239", "titulo":"CORTADORA SENSITIVA BLACK & DECKER CS2000-AR", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":64, "codigo":"50005455", "titulo":"CRIQUE CARRO BREMEN PERFIL BAJO 3 TON", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":65, "codigo":"900R1165", "titulo":"CUBIERTA RAYADA 350-8 OLIVARES 350MM NRC3508", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":66, "codigo":"50003742", "titulo":"CUCHARA BIASSONI NRO 7 P/ALBAÑIL", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":67, "codigo":"50001163", "titulo":"CUCHARA GHERARDI NUM.8 FORJADA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":68, "codigo":"50004861", "titulo":"CUCHARA STUBAI NUM 7 FORJADA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":69, "codigo":"50002586", "titulo":"CUTTER ASSIST TRAPEZOIDAL 24G-T1", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":70, "codigo":"50008390", "titulo":"CUTTER ASSIST TRAPEZOIDAL ACERO 42-T1", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":71, "codigo":"50007869", "titulo":"DESMALEZADORA HUSQVARNA 28CC 1.1HP 128R", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":72, "codigo":"50006389", "titulo":"DEST BAHCO PLANO PARALELO P3000 4*250MM P3240-250", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":73, "codigo":"50007544", "titulo":"DEST FELO PZ 0*60MM AZUL 801", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":74, "codigo":"50004176", "titulo":"DEST STANLEY PRO PLANO 5*100 69-111", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":75, "codigo":"50007282", "titulo":"DEST STANLEY TORX 30 69-167 TX-30", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":76, "codigo":"50001547", "titulo":"DISCO DEWALT 115*3.2MM DW44604 CORTE METAL", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":77, "codigo":"50002162", "titulo":"DISCO DIAM. ALIAFOR 4.5 LS-4.5-AB", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":78, "codigo":"50001440", "titulo":"DISCO DIAM. ALIAFOR 4.5 TRF TURBO P/PORCELANATO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":79, "codigo":"50006952", "titulo":"DISCO FLAP TYROLIT STANDARD 115MM GR60 P/INOX", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":80, "codigo":"9000R417", "titulo":"DISCO NYLON DOBLE FERODO WISKEHRS", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":81, "codigo":"50002361", "titulo":"DISCO PEGASO 178*3*22MM PIEDRAS/MAMP C30S C/D", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":82, "codigo":"50001052", "titulo":"DISCO PEGASO 230*1.9MM INOX METAL WA46TBF  Y230-IM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":83, "codigo":"50002197", "titulo":"DISCO TYROLIT 178*3*22.2MM INOX A30T3BF82A2 C/DEP", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":84, "codigo":"9000R085", "titulo":"EJE CENTRAL S/MARCA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":85, "codigo":"50001033", "titulo":"ENDOAURAL STEEL PRO SIN CORDON EXPANDIBLE", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":86, "codigo":"9000R683", "titulo":"ENGRANAJE ACERO P/PLUMA WISKERHS 500KG MOD. NUEVO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":87, "codigo":"70001048", "titulo":"ESCALERA \"FERPAK\" 36 ESC. EXT. ALUM PESADA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":88, "codigo":"50001361", "titulo":"ESCOBILLON 30CM CPO PLASTICO CON CABO MAD.", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":89, "codigo":"900R1144", "titulo":"ESLINGA CABLE ACERO 13MM X 1MT LARGO C/OJALES", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":90, "codigo":"50007254", "titulo":"ESLINGA ESLINGAR 4000 KG 4 MT GRIS", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":91, "codigo":"900R1911", "titulo":"FILTRO DE AIRE CON P FILTRO GX 340/390", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":92, "codigo":"50007732", "titulo":"FRATACHO PLASTICO VOSS 2000 35CM BORDE P/GRUESO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":93, "codigo":"9000R322", "titulo":"GRILLETE RECTO 3/8\" x 3/8\"", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":94, "codigo":"50001037", "titulo":"GUANTE DE DESCARNE PUÑO JEAN", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":95, "codigo":"50001079", "titulo":"GUANTES TERRYCLOTH", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":96, "codigo":"50003629", "titulo":"HOJA BAHCO P/ARCO DE SIERRA 32 DTES", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":97, "codigo":"50003941", "titulo":"HOJA DE CALAR BOSCH T119B HCS P/MADERA BUE 630037", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":98, "codigo":"50008560", "titulo":"HOJA DE SIERRA RHEIN 10 40 DTES. WIDIA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":99, "codigo":"12803", "titulo":"HORMIGONERA 180 lts. C/MOTOR 2 HP TRIF.", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":100, "codigo":"50001920", "titulo":"INGLETEADORA BOSCH GCM-10 1800W B201", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":101, "codigo":"9000R914", "titulo":"JUEGO DE JUNTAS MOTOR HONDA GX160", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":102, "codigo":"50009326", "titulo":"KIT DREMEL DE LIJADO/PULIDO 7 ACCESORIOS EZ LOCK EZ684-01", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":103, "codigo":"50008105", "titulo":"LAMPARA DE LED 9.5W TIPO R7S 1250 LUMENES", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":104, "codigo":"50006379", "titulo":"LAPIZ GIGANTE LYRA 1174", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":105, "codigo":"13002", "titulo":"LIJADORA ROTO-ORBITAL 220 V 220W", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":106, "codigo":"50005964", "titulo":"LIMA ROTATIVA STRONGER P/METAL 12MM 350664", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":107, "codigo":"50005966", "titulo":"LIMA ROTATIVA STRONGER P/METAL 12MM 350666", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":108, "codigo":"12715", "titulo":"LIMPIADORA  ALFOMBRAS Y TAPIZADOS GDES SUPERF.", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":109, "codigo":"19702", "titulo":"LIQUIDO PARA LIMPIALFOMBRAS", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":110, "codigo":"50008353", "titulo":"LLAVE ALLEN BREMEN 1.5 MM SERIE LARGA CARD. 4765", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":111, "codigo":"50003389", "titulo":"LLAVE COMB STANLEY 11/16 86-838 86-1116", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":112, "codigo":"50005773", "titulo":"LLAVE COMB STANLEY 18 MM 86-863 86-0418", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":113, "codigo":"50003420", "titulo":"LLAVE COMB STANLEY 5/16 86-832 86-0516", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":114, "codigo":"50007586", "titulo":"LLAVE COMBINADA BREMEN CON CRIQUET 10MM  4751", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":115, "codigo":"50003229", "titulo":"LLAVE CROSSMASTER 11MM COMB 9960114", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":116, "codigo":"50006958", "titulo":"LLAVE DE IMPACTO MAKITA 1/2 380W TW0200 120NM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":117, "codigo":"50010062", "titulo":"LLAVE FRANCESA AJUSTABLE BREMEN 10", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":118, "codigo":"50007940", "titulo":"LLAVE IMPACTO NEUM BREMEN 1/2 USO INTENSIVO 5921", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":119, "codigo":"900R1316", "titulo":"LLAVE INVERSORA ELIBET MONOF EXT 20A 20301/6 72493", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":120, "codigo":"50008326", "titulo":"LLAVE T CELESTAL 1/8 ALLEN", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":121, "codigo":"9000R761", "titulo":"MANGO DE COLOCACION BROCAS 1/2\"", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":122, "codigo":"50007219", "titulo":"MARTILLO PLASTICO CELESTAL 227GR CHAPISTA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":123, "codigo":"50007429", "titulo":"MARTILLO STANLEY GALPONERO 51-274", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":124, "codigo":"50001975", "titulo":"MECHA BOSCH 05*110MM SDS PLUS 596164", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":125, "codigo":"50002009", "titulo":"MECHA BOSCH 30*370MM SDS MAX 596440", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":126, "codigo":"50001732", "titulo":"MECHA DEWALT 10*110 MM (PACK 10UN) SDS PLUS DT9833", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":127, "codigo":"50001223", "titulo":"MECHA DEWALT 12*160MM SDS PLUS DT9552-QZ", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":128, "codigo":"50001246", "titulo":"MECHA DEWALT 19*450MM SDS PLUS DT9596-QZ", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":129, "codigo":"50001726", "titulo":"MECHA DEWALT 6*110 MM (PACK 10UN) SDS PLUS DT9812", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":130, "codigo":"50005227", "titulo":"MECHA MAKITA 18*300MM SDS PLUS D-00337", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":131, "codigo":"50004483", "titulo":"MECHA PALA BOSCH 22MM P/MADERA 595492 SELFCUT", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":132, "codigo":"50004799", "titulo":"MECHA TWILL LENOX A.R. 5.00MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":133, "codigo":"50002382", "titulo":"MECHA VENTURO 14*210MM SDS PLUS P140-210", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":134, "codigo":"900R1860", "titulo":"MEDIO CARTER LADO VOLANTE NIWA CNW-38", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":135, "codigo":"50004562", "titulo":"MINI SIERRA CIRC DREMEL 670", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":136, "codigo":"50006167", "titulo":"NIVEL STANLEY 45CM C/TRANSP I-BEAM 42-318", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":137, "codigo":"50001648", "titulo":"NIVEL STANLEY THRIFTY 36 ALUMINIO 42-075 900MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":138, "codigo":"900R2035", "titulo":"O RING DEWALT 25701/25840/25980/25712/22 584706-00", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":139, "codigo":"50005674", "titulo":"ORGANIZADOR PLASTICO CROSSMASTER 18 COMP 9931072", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":140, "codigo":"50007842", "titulo":"PALA MOISES ANCHA ESTAMPADA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":141, "codigo":"50008296", "titulo":"PANTALON CARGO GRAFA 70 AERO T42", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":142, "codigo":"50008301", "titulo":"PANTALON CARGO GRAFA 70 AERO T52", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":143, "codigo":"50008292", "titulo":"PANTALON CARGO GRAFA 70 AZUL MARINO T58", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":144, "codigo":"50008904", "titulo":"PANTALON CARGO OMBU TIZA 46 AIRE LIBRE", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":145, "codigo":"50006604", "titulo":"PANTALON DE TRABAJO GRAFA 70 T46 HOMOL BEIGE", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":146, "codigo":"50010237", "titulo":"PINCEL WENBLEY 1\" 1/2 CERDA NATURAL N 7422", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":147, "codigo":"50005996", "titulo":"PINTURA TEKBOND EN AEROSOL 250 GR ROJO BRILLO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":148, "codigo":"50001479", "titulo":"PINZA PORTA ELECTRODOS L&R 600 AMP.", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":149, "codigo":"900R1582", "titulo":"PISTON COMPLETO WM90/EH 09-2 0.50", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":150, "codigo":"9000R139", "titulo":"POLEA ALUMINIO 2B-140 MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":151, "codigo":"50006588", "titulo":"PORTA HERRAMIENTAS GASTRONOMIA 4 DIVISIONES TOOLMEN T 43", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":152, "codigo":"50002227", "titulo":"PUNTA DEWALT P/ATORN. PH1 50MM DW2021", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":153, "codigo":"70000565", "titulo":"PUNTAL REFORZADO EXT 2.00 A 3.60 MTS ORIGEN ITALIA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":154, "codigo":"50001755", "titulo":"RASPA MEDIANA 45*8CM C/MANGO P/YESERO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":155, "codigo":"50006383", "titulo":"REGLA DE ALUMINIO ACHA 500MM BISELADA 54-505", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":156, "codigo":"900R1350", "titulo":"RODAMIENTO RS 6005-2RSH", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":157, "codigo":"9000R989", "titulo":"RODAMIENTO RS 6305-2RS1", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":158, "codigo":"50008365", "titulo":"RODILLO LANA NATURAL ATLAS 18CM 2318R", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":159, "codigo":"50001514", "titulo":"ROLDANA DE FUNDICION 18CM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":160, "codigo":"70000579", "titulo":"RUEDA NEUMATICA 400MM RAYADA LL/NEGRA", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":161, "codigo":"50008984", "titulo":"SELLADOR SILICONA FISCHER NEUTRA/CONST TRANSP", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":162, "codigo":"900R1777", "titulo":"SEPARADOR RUBI TS60 CLASIC 7870 PZ1", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":163, "codigo":"50006194", "titulo":"SERRUCHO STANLEY 450MM HEAVY DUTY 20-086", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":164, "codigo":"50007919", "titulo":"SET LLAVES ALLEN BREMEN PLEGABLES MILIMETRADAS 7 PZS 6685", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":165, "codigo":"50006416", "titulo":"SET LLAVES COMB STANLEY 8 PZ PULG 88-854", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":166, "codigo":"50009779", "titulo":"SET MECHAS STANLEY 2 HSS 2 PERCUSION 4 PZ ST5004", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":167, "codigo":"50005838", "titulo":"SET PUNTAS RIBE BREMEN 16PZ CON MALETIN 5446", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":168, "codigo":"50009782", "titulo":"SET STANLEY TUBOS PUNTAS 78 PZ TECH 3 72-655", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":169, "codigo":"50004979", "titulo":"SET TUBOS LLAVES STANLEY 35PZ 97-195", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":170, "codigo":"50005008", "titulo":"SIERRA CIRC MAKITA 7 1/4 5740NB1050W", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":171, "codigo":"50008684", "titulo":"SIERRA CIRC MAKITA MT 7 1/4 M5802G 1051W", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":172, "codigo":"50002954", "titulo":"SIERRA CIRCULAR BOSCH 7 1/4 GKS 150 1500W 6B3 0H0", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":173, "codigo":"50001952", "titulo":"SIERRA COPA BOSCH 51MM PROGRESSOR 584635", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":174, "codigo":"50005331", "titulo":"SIERRA COPA BOSCH 79MM BIMETAL 584126", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":175, "codigo":"50005895", "titulo":"SIERRA COPA BOSCH 92MM BIMETAL 584129", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":176, "codigo":"50007006", "titulo":"SIERRA COPA MAKITA 25MM EZYCHANGE BIMET B-11318", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":177, "codigo":"50008200", "titulo":"SIERRA COPA MORSE 25MM COBALTO P/TAL AV155", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":178, "codigo":"50006957", "titulo":"SIERRA SIN FIN MAKITA 710W 120MM 2107FK", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":179, "codigo":"50007833", "titulo":"SILICONA NEUTRA ORISIL 300ML", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":180, "codigo":"50004038", "titulo":"TALADRO DE BANCO BARBERO ABM16 16MM MONO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":181, "codigo":"50007744", "titulo":"TALADRO PERCUTOR METABO 13MM SBE 710 W", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":182, "codigo":"50002743", "titulo":"TALADRO STANLEY 13MM 600W SDH600K C/MALETIN", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":183, "codigo":"900R8032", "titulo":"TANQUE DE COMBUSTIBLE GPO ELECTR. NIWA GNW55 E/EB", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":184, "codigo":"50010046", "titulo":"TESTER DIGITALC/ MEDIDOR TEMP. BREMEN 6692", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":185, "codigo":"9XP6572D", "titulo":"TORNILLO  88210016 XP HEX .SOCKET BOLT M8×30", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":186, "codigo":"9000R732", "titulo":"TRABA  DE TRIPA P/VIBRADOR CHINO", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":187, "codigo":"50004541", "titulo":"TUBO BREMEN 21MM HEXAG ENC 1/2", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":188, "codigo":"50005132", "titulo":"TUBO BREMEN 3/4 HEXAG ENC 1/2", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":189, "codigo":"70001059", "titulo":"TUBO C/ DESCARGA P/ENTREPISO ", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":190, "codigo":"900R1939", "titulo":"TUERCA BLANCA USS 3/8\"", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":191, "codigo":"70000567", "titulo":"VIBRADOR 'FLEXIBON' AF2006 MONOF 30MM 4MTS", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":192, "codigo":"70000952", "titulo":"VIBRADOR A EXPLOSION HONDA  MOTOR 5.5 HP 38MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":193, "codigo":"70000878", "titulo":"VIBRADOR INM TRIF \"MMQ\" PLATO 50MM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":194, "codigo":"50008842", "titulo":"ZAPATILLA FUNCIONAL MAUI NEGRO T39 C/PUNT/ALUM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":195, "codigo":"50006410", "titulo":"ZAPATILLA OMBU KRYPTON NEGRO ROJO T44 C/PUNT", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":196, "codigo":"50008512", "titulo":"ZAPATO BORIS 3015 MARRON T40 C/PUNT", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":197, "codigo":"50006718", "titulo":"ZAPATO FUNCIONAL CITY CAMEL T42 PUNT/ALUM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":198, "codigo":"50006741", "titulo":"ZAPATO FUNCIONAL CITY VISON T44 PUNT/ALUM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":199, "codigo":"50009250", "titulo":"ZAPATO FUNCIONAL SOUL GRIS T39 C/PUNT ALUM", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":200, "codigo":"50010157", "titulo":"ZAPATO OMBU COBALTO CON PUNTERA COMPOSITE T44 MARRON", "rubro":"FERRETERIA", "tipoItem":"PRODUCTO", "alicuotaIVA":"IVA_21", "unidad":  "UNIDAD"}
+{"id":201,"codigo":"896986","titulo":"CONSULTA MEDICA","unidad":"HORA","rubro":"MEDICINA_PREPAGA","tipoItem":"SERVICIO"}
+{"id":202,"codigo":"12436462","titulo":"SUBE","unidad":"HORA","rubro":"VIATICOS_MOBILIDAD","tipoItem":"SERVICIO"}

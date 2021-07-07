@@ -10,4 +10,8 @@ public class ItemsService extends GenericDAO {
         super(Item.class, "./src/json/items.json");
     }
 
+    public int getProximoId() throws Exception {
+        return this.getAll().size() + 1;
+    }
+
 }
