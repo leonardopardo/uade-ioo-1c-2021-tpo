@@ -1,10 +1,9 @@
 package app.Pagos;
 
 import controllers.DocumentoController;
+import controllers.OrdenPagoController;
 import controllers.ProveedorController;
-import dto.CertificadoDTO;
-import dto.FacturaDTO;
-import dto.ProveedorDTO;
+import dto.*;
 import helpers.Helpers;
 import modelos.CertificadoExcencion;
 import modelos.enums.EstadoPago;
@@ -412,7 +411,7 @@ public class NuevoPago extends JDialog {
                 try {
 
                     // para guardar la orden de pago
-                    // 1. Validar campos
+                    // 1. Validar campos  >>>>> OK! <<<<<
 
                     String cuitProveedor = self.textFieldCUIT.getText();
 
@@ -426,6 +425,13 @@ public class NuevoPago extends JDialog {
                         throw new Exception("Debe seleccionar una forma de pago.");
 
                     TipoPago formaDePago = TipoPago.valueOf(self.comboBoxFormaPago.getSelectedItem().toString());
+
+                    self.calcularRetenciones();
+
+                    OrdenPagoDTO op = new OrdenPagoDTO();
+                    op.fecha = Helpers.datePickerFormatter(self.datePickerFecha);
+                    op.nombreProveedor = self.comboBoxProveedores.getSelectedItem().toString();
+                    op.cuitProveedor = self.textFieldCUIT.getText();
 
                     if (formaDePago.equals(TipoPago.CHEQUE_TERCERO) || formaDePago.equals(TipoPago.CHEQUE_PROPIO)) {
 
@@ -457,19 +463,31 @@ public class NuevoPago extends JDialog {
                         if (chequeFechaVencimiento == null)
                             throw new Exception("El campo fecha de vencimiento es obligatorio");
 
+                        PagoDTO pDTO = new PagoDTO();
+                        pDTO.tipo = formaDePago;
+                        pDTO.orden = op;
+                        pDTO.fecha = Helpers.datePickerFormatter(self.datePickerFecha);
+                        pDTO.monto = Double.parseDouble(self.textFieldSubtotal.getText());
+
+                        ChequeDTO cheque = new ChequeDTO();
+                        cheque.banco = chequeBanco;
+                        cheque.titular = chequeTitular;
+                        cheque.fechaEmision = chequeFechaEmision;
+                        cheque.fechaVencimiento = chequeFechaVencimiento;
+                        cheque.numero = chequeNumero;
+
+                        pDTO.cheque = cheque;
                     }
 
-                    // 2. Verificar que tiene certificados de excención.
-                    List<CertificadoDTO> certificados = ProveedorController.getInstance().listarCertificadosPorProveedor(cuitProveedor);
+                    op.estado = EstadoPago.CANCELADO;
+                    op.facturas = self.facturasPagar;
 
-                    if (certificados.size() == 0) {
+                    OrdenPagoController.getInstance().agregar(op);
 
-                    }
+                    Ordenes parent = (Ordenes) self.getParent();
+                    parent.populateTable();
 
-                    // 2.1 Si tiene certificados de excención no se le retiene sobre el impuesto.
-                    // 2.1 Si no tiene certificados de retención se le retiene iva, gancias e iibb según tabla.
-                    // 3. Entonces el monto a pagar será el monto total - las retenciones.
-                    // 4. Generar el pago.
+                    self.dispose();
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(
@@ -546,11 +564,11 @@ public class NuevoPago extends JDialog {
 
         Double subtotal = this.montoPagar - retenciones;
 
-        this.textFieldIVA.setText(iva.toString());
-        this.textFieldIIBB.setText(iibb.toString());
-        this.textFieldGAN.setText(ganancias.toString());
-        this.textFieldSubtotal.setText(subtotal.toString());
-        this.textFieldRetenciones.setText(retenciones.toString());
+        this.textFieldIVA.setText(Helpers.doubleTwoDecimal(iva).toString());
+        this.textFieldIIBB.setText(Helpers.doubleTwoDecimal(iibb).toString());
+        this.textFieldGAN.setText(Helpers.doubleTwoDecimal(ganancias).toString());
+        this.textFieldSubtotal.setText(Helpers.doubleTwoDecimal(subtotal).toString());
+        this.textFieldRetenciones.setText(Helpers.doubleTwoDecimal(retenciones).toString());
 
     }
 
@@ -562,11 +580,11 @@ public class NuevoPago extends JDialog {
     }
 
     Double calcularRetencionIVA() {
-        return this.montoPagar - (this.montoPagar / 1.21);
+        return Helpers.doubleTwoDecimal(this.montoPagar - (this.montoPagar / 1.21));
     }
 
     Double calcularRetencionIIBB() {
-        return this.montoPagar - (this.montoPagar / 1.03);
+        return Helpers.doubleTwoDecimal(this.montoPagar - (this.montoPagar / 1.03));
     }
 
     Double calcularRetencionGAN() {
@@ -581,7 +599,7 @@ public class NuevoPago extends JDialog {
             ganancias = 1.02;
         }
 
-        return neto - (neto / ganancias);
+        return Helpers.doubleTwoDecimal(neto - (neto / ganancias));
     }
     //endregion
 

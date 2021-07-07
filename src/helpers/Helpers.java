@@ -7,6 +7,8 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Properties;
 
@@ -27,5 +29,10 @@ public class Helpers {
     public static void appendDatePicker(JPanel panel, JDatePickerImpl picker) {
         panel.setLayout(new GridLayout());
         panel.add(picker);
+    }
+
+    public static Double doubleTwoDecimal(Double val){
+        BigDecimal bd = new BigDecimal(val).setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

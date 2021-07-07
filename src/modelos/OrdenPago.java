@@ -13,7 +13,7 @@ public class OrdenPago {
     private List<Factura> facturas;
     private Double importeTotal;
     private Double retenciones;
-    private List<Pago> pagos;
+    private Pago pago;
     private EstadoPago estado;
     private Proveedor proveedor;
     private LocalDate fecha;
@@ -21,14 +21,12 @@ public class OrdenPago {
     private Double rIIBB;
     private Double rGAN;
 
-    public OrdenPago() {
+    public OrdenPago(OrdenPagoDTO orden) {
         this.facturas = new ArrayList<>();
-        this.pagos = new ArrayList<>();
     }
 
     private void agregarPago() {
         Pago p = new Pago();
-        this.pagos.add(p);
     }
 
     public Integer getNumero() {
@@ -47,8 +45,8 @@ public class OrdenPago {
         return retenciones;
     }
 
-    public List<Pago> getPagos() {
-        return pagos;
+    public Pago getPago() {
+        return pago;
     }
 
     public EstadoPago getEstado() {

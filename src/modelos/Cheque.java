@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 
 public class Cheque {
 
-    private Integer id;
-    private LocalDateTime fechaEmision;
-    private LocalDateTime fechaVencimiento;
-    private Double monto;
-    private Double numero;
-    private String titular;
-    private String banco;
+    public Integer id;
+    public LocalDateTime fechaEmision;
+    public LocalDateTime fechaVencimiento;
+    public Double monto;
+    public Double numero;
+    public String titular;
+    public String banco;
 
 }

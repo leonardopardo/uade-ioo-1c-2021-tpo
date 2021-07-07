@@ -3,6 +3,7 @@ package dto;
 import modelos.enums.EstadoPago;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class OrdenPagoDTO {
 
@@ -12,5 +13,6 @@ public class OrdenPagoDTO {
     public LocalDate fecha;
     public String cuitProveedor;
     public String nombreProveedor;
+    public List<FacturaDTO> facturas;
 
 }
