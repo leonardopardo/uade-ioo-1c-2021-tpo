@@ -51,7 +51,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="192b3" class="javax.swing.JLabel">
+              <component id="192b3" class="javax.swing.JLabel" binding="lblCodigo">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -59,7 +59,7 @@
                   <text value="CÓDIGO"/>
                 </properties>
               </component>
-              <component id="a6c82" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+              <component id="a6c82" class="javax.swing.JTextField" binding="textFieldCodigo">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="-1" height="30"/>
@@ -85,7 +85,7 @@
                   <text value="TÍTULO"/>
                 </properties>
               </component>
-              <component id="45b31" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+              <component id="45b31" class="javax.swing.JTextField" binding="textFieldTitulo">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="-1" height="30"/>
@@ -108,7 +108,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="fe53a" class="javax.swing.JLabel">
+              <component id="fe53a" class="javax.swing.JLabel" binding="lblRubro">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -116,7 +116,7 @@
                   <text value="RUBRO"/>
                 </properties>
               </component>
-              <component id="cc965" class="javax.swing.JComboBox" binding="comboBox2" default-binding="true">
+              <component id="cc965" class="javax.swing.JComboBox" binding="comboBoxRubro">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="-1" height="30"/>
@@ -134,7 +134,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="526b6" class="javax.swing.JLabel">
+              <component id="526b6" class="javax.swing.JLabel" binding="lblTipo">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -142,7 +142,7 @@
                   <text value="TIPO"/>
                 </properties>
               </component>
-              <component id="59eab" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+              <component id="59eab" class="javax.swing.JComboBox" binding="comboBoxTipo">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="-1" height="30"/>
@@ -160,7 +160,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="a40a4" class="javax.swing.JLabel">
+              <component id="a40a4" class="javax.swing.JLabel" binding="lblUnidad">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -168,7 +168,7 @@
                   <text value="UNIDAD"/>
                 </properties>
               </component>
-              <component id="c434c" class="javax.swing.JComboBox" binding="comboBox3" default-binding="true">
+              <component id="c434c" class="javax.swing.JComboBox" binding="comboBoxUnidad">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="-1" height="30"/>

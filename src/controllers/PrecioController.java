@@ -29,12 +29,10 @@ public class PrecioController {
     //endregion
 
     private PrecioController() throws Exception {
-        this.precios = new ArrayList<>();
-        this.items = new ArrayList<>();
         this.itemsService = new ItemsService();
-        this.precioService = new PrecioService();
-
         this.items = this.itemsService.getAll();
+        this.precioService = new PrecioService();
+        this.precios = this.precioService.getAll();
     }
 
     public static PrecioController getInstance() throws Exception {
@@ -103,6 +101,16 @@ public class PrecioController {
         }
     }
 
+    public List<PrecioDTO> listarPrecios(Rubro rubro){
+        List<PrecioDTO> lista = new ArrayList<>();
+        for (Precio p:this.precios) {
+            if(p.getItemRubro().equals(rubro)){
+                lista.add(p.toDTO());
+            }
+        }
+        return lista;
+    }
+
     //region ABM Item-Precio
     public void agregar(ItemDTO item) throws Exception {
         try {
@@ -120,13 +128,19 @@ public class PrecioController {
 
     public void agregar(PrecioDTO precio) throws Exception {
         try {
-            if (this.precios.contains(precio)) {
+
+            if (this.precios.contains(precio))
                 throw new Exception(PRECIO_EXISTENTE_EXCEPTION);
-            }
 
             Precio nuevoPrecio = new Precio(precio);
+            nuevoPrecio.setProveedor(ProveedorController.getInstance().obtener(precio.cuit));
+            nuevoPrecio.setItem(this.obtenerItemModelPorCodigo(precio.itemCodigo));
+            nuevoPrecio.setId(this.precioService.getProximoId());
+
             this.precioService.save(nuevoPrecio);
+
             this.precios.add(nuevoPrecio);
+
         } catch (Exception ex) {
             throw ex;
         }
@@ -149,16 +163,38 @@ public class PrecioController {
         }
     }
 
-    public void actualizar(PrecioDTO precio) throws Exception{
+    public void actualizar(PrecioDTO precio) throws Exception {
+        try{
+            Precio precioExistente = this.obtenerPrecio(precio.itemCodigo, precio.cuit);
+
+            if (precioExistente == null)
+                throw new Exception("El precio que intenta actualizar no se encuentra en la lista de precios.");
+
+            precioExistente.setPrecio(precio.precio);
+            precioExistente.setProveedor(ProveedorController.getInstance().obtener(precio.cuit));
+            precioExistente.setItem(this.obtenerItemModelPorCodigo(precio.itemCodigo));
+            precioExistente.setId(this.precioService.getProximoId());
+
+            this.precioService.update(precioExistente);
+        }catch(Exception ex){
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    public void eliminar(ItemDTO item) {
 
     }
 
-    public void eliminar(ItemDTO item){
-
-    }
-
-    public void eliminar(PrecioDTO precio){
-
+    public void eliminar(String codigoItem, String cuitProveedor) throws Exception{
+        try {
+            Precio precio = this.obtenerPrecio(codigoItem, cuitProveedor);
+            if(precio != null){
+                this.precioService.delete(precio.getId());
+                this.precios.remove(precio);
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
     //endregion
 
@@ -240,6 +276,16 @@ public class PrecioController {
         });
 
         return titulo.get();
+    }
+
+    private Precio obtenerPrecio(String itemCodigo, String cuitProveedor) {
+        for (Precio p : this.precios) {
+            if(p.getProveedor().getCuit().equals(cuitProveedor) && p.getItem().getCodigo().equals(itemCodigo)){
+                return p;
+            }
+        }
+
+        return null;
     }
     //endregion
 }

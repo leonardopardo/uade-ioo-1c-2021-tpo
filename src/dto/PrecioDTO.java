@@ -5,9 +5,11 @@ import modelos.enums.Rubro;
 
 public class PrecioDTO {
 
-    public ItemDTO item;
+    public String itemCodigo;
+    public String itemTitulo;
     public Rubro rubro;
     public Double precio;
-    public Proveedor proveedor;
+    public String razonSocial;
+    public String cuit;
 
 }

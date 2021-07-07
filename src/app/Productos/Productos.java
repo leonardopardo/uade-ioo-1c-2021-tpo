@@ -87,6 +87,9 @@ public class Productos extends JFrame {
         this.closeModule();
         this.actionOnClickNuevoItem();
         this.actionOnClickNuevoPrecio();
+        this.actionOnClickModificarPrecio();
+        this.actionOnClickEliminarPrecio();
+        this.actionOnClickFiltrarPrecios();
         this.actionOnChangeComboBoxProveedores();
         this.actionOnChangeComboBoxItems();
         //endregion
@@ -132,7 +135,7 @@ public class Productos extends JFrame {
     }
 
     void loadComboBoxTipo() {
-            this.comboBoxTipoItem.addItem("-- Seleccione --");
+        this.comboBoxTipoItem.addItem("-- Seleccione --");
         for (TipoItem t : TipoItem.values()) {
             this.comboBoxTipoItem.addItem(t);
         }
@@ -146,7 +149,8 @@ public class Productos extends JFrame {
     }
 
     void loadComboBoxUnidad() {
-            this.comboBoxUnidadItem.addItem("-- Seleccione --");;
+        this.comboBoxUnidadItem.addItem("-- Seleccione --");
+        ;
         for (Unidad u : Unidad.values()) {
             this.comboBoxUnidadItem.addItem(u);
         }
@@ -186,11 +190,12 @@ public class Productos extends JFrame {
         }
     }
 
-    void loadTablePrecios(){
+    void loadTablePrecios() {
         try {
 
             String[] columns = new String[]{
                     "CÓDIGO",
+                    "RUBRO",
                     "PROVEEDOR",
                     "CUIT",
                     "PRECIO"
@@ -200,8 +205,11 @@ public class Productos extends JFrame {
 
             this.precios.stream().forEach(x -> {
                 Object[] o = {
-                        x.item.codigo,
-                        x.item.titulo,
+                        x.itemCodigo,
+                        x.rubro,
+                        x.itemTitulo,
+                        x.cuit,
+                        x.precio
                 };
                 tblModel.addRow(o);
             });
@@ -269,16 +277,98 @@ public class Productos extends JFrame {
         this.btnNuevoPrecio.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                self.nuevoPrecio = new Precios(self);
+                try {
+                    self.nuevoPrecio = new Precios(self);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
             }
         });
     }
 
-    void actionOnClickModificarPrecio(){
+    void actionOnClickModificarPrecio() {
+        Productos self = this;
+        this.btnModificarPrecio.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+                try {
+
+                    int row = self.tablePrecios.getSelectedRow();
+
+                    if(row < 0)
+                        throw new Exception("Debe seleccionar una fila de la tabla.");
+
+                    PrecioDTO precio = self.precios.get(row);
+
+                    self.nuevoPrecio = new Precios(self, precio);
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
     }
 
-    void actionOnClickEliminarPrecio(){
+    void actionOnClickEliminarPrecio() {
+        Productos self = this;
+        this.btnEliminarPrecio.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+
+                    int row = self.tablePrecios.getSelectedRow();
+
+                    String codigoItem = self.tablePrecios.getValueAt(row, 0).toString();
+
+                    String cuitProveedor = self.tablePrecios.getValueAt(row, 2).toString();
+
+                    int confirmResult = JOptionPane.showConfirmDialog(
+                            pnlMain,
+                            "¿Está seguro que desea eliminar el registro?",
+                            "Cerrar",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (confirmResult == JOptionPane.YES_OPTION) {
+                        PrecioController.getInstance().eliminar(codigoItem, cuitProveedor);
+                        self.precios.remove(row);
+                        self.loadTablePrecios();
+                    }
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionOnClickFiltrarPrecios() {
+        Productos self = this;
+        this.btnFiltrarPrecios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+    }
+
+    void actionOnClickLimpiarFiltroPrecios() {
 
     }
 
@@ -357,6 +447,7 @@ public class Productos extends JFrame {
                 dim.height / 2 - this.getSize().height / 2
         );
     }
+
     void closeModule() {
         this.addWindowListener(new WindowAdapter() {
             @Override
