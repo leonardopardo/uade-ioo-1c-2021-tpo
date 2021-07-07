@@ -111,6 +111,68 @@ public class PrecioController {
         return lista;
     }
 
+    public List<PrecioDTO> listarPreciosPorItem(Rubro rubro, String codigoItem){
+        List<PrecioDTO> lista = new ArrayList<>();
+        for (Precio p:this.precios) {
+            if(p.getItemRubro().equals(rubro) && p.getCodigoItem().equals(codigoItem)){
+                lista.add(p.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<PrecioDTO> listarPreciosPorProveedor(Rubro rubro, String cuitProveedor){
+        List<PrecioDTO> lista = new ArrayList<>();
+        for (Precio p:this.precios) {
+            if(p.getItemRubro().equals(rubro) && p.getProveedorCuit().equals(cuitProveedor)){
+                lista.add(p.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<PrecioDTO> listarPrecios(Rubro rubro, String codigoItem, String cuitProveedor){
+        List<PrecioDTO> lista = new ArrayList<>();
+        for (Precio p:this.precios) {
+            if(p.getItemRubro().equals(rubro)
+                    && p.getCodigoItem().equals(codigoItem)
+                    && p.getProveedorCuit().equals(cuitProveedor)){
+                lista.add(p.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<PrecioDTO> listarPrecios(String codigoItem, String cuitProveedor){
+        List<PrecioDTO> lista = new ArrayList<>();
+        for (Precio p:this.precios) {
+            if(p.getCodigoItem().equals(codigoItem) && p.getProveedorCuit().equals(cuitProveedor)){
+                lista.add(p.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<PrecioDTO> listarPreciosPorItem(String codigoItem){
+        List<PrecioDTO> lista = new ArrayList<>();
+        for (Precio p:this.precios) {
+            if(p.getCodigoItem().equals(codigoItem)){
+                lista.add(p.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<PrecioDTO> listarPreciosPorProveedor(String cuitProveedor){
+        List<PrecioDTO> lista = new ArrayList<>();
+        for (Precio p:this.precios) {
+            if(p.getProveedorCuit().equals(cuitProveedor)){
+                lista.add(p.toDTO());
+            }
+        }
+        return lista;
+    }
+
     //region ABM Item-Precio
     public void agregar(ItemDTO item) throws Exception {
         try {

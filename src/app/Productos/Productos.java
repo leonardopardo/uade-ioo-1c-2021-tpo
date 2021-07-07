@@ -9,6 +9,7 @@ import dto.ItemDTO;
 import dto.OrdenCompraDTO;
 import dto.PrecioDTO;
 import dto.ProveedorDTO;
+import modelos.Precio;
 import modelos.enums.Rubro;
 import modelos.enums.TipoItem;
 import modelos.enums.Unidad;
@@ -83,17 +84,6 @@ public class Productos extends JFrame {
         this.loadComboBoxUnidad();
         //endregion
 
-        //region Actions
-        this.closeModule();
-        this.actionOnClickNuevoItem();
-        this.actionOnClickNuevoPrecio();
-        this.actionOnClickModificarPrecio();
-        this.actionOnClickEliminarPrecio();
-        this.actionOnClickFiltrarPrecios();
-        this.actionOnChangeComboBoxProveedores();
-        this.actionOnChangeComboBoxItems();
-        //endregion
-
         //region Settings
         this.setContentPane(this.pnlMain);
         this.setSize(pnlMain.getPreferredSize());
@@ -101,6 +91,18 @@ public class Productos extends JFrame {
         this.positionScreen();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
+        //endregion
+
+        //region Actions
+        this.closeModule();
+        this.actionOnClickNuevoItem();
+        this.actionOnClickNuevoPrecio();
+        this.actionOnClickModificarPrecio();
+        this.actionOnClickEliminarPrecio();
+        this.actionOnClickFiltrarPrecios();
+        this.actionOnClickLimpiarFiltroPrecios();
+        this.actionOnChangeComboBoxProveedores();
+        this.actionOnChangeComboBoxItems();
         //endregion
     }
 
@@ -301,7 +303,7 @@ public class Productos extends JFrame {
 
                     int row = self.tablePrecios.getSelectedRow();
 
-                    if(row < 0)
+                    if (row < 0)
                         throw new Exception("Debe seleccionar una fila de la tabla.");
 
                     PrecioDTO precio = self.precios.get(row);
@@ -363,13 +365,76 @@ public class Productos extends JFrame {
         this.btnFiltrarPrecios.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    PrecioController controller = PrecioController.getInstance();
 
+                    Rubro rubro = null;
+
+                    String codigoItem = null;
+
+                    String cuitProveedor = null;
+
+                    if (self.comboBoxRubroPrecio.getSelectedIndex() > 0)
+                        rubro = Rubro.valueOf(self.comboBoxRubroPrecio.getSelectedItem().toString());
+
+                    if (!self.textFieldItemCodigoPrecio.getText().equals(""))
+                        codigoItem = self.textFieldItemCodigoPrecio.getText();
+
+                    if (!self.textFieldProveedorCuitPrecio.getText().equals(""))
+                        cuitProveedor = self.textFieldProveedorCuitPrecio.getText();
+
+                    self.precios = null;
+
+                    if (rubro != null && codigoItem == null && cuitProveedor == null) {
+                        self.precios = controller.listarPrecios(rubro);
+                    } else if (rubro != null && codigoItem != null && cuitProveedor == null) {
+                        self.precios = controller.listarPreciosPorItem(rubro, codigoItem);
+                    } else if (rubro != null && codigoItem == null && cuitProveedor != null) {
+                        self.precios = controller.listarPreciosPorProveedor(rubro, cuitProveedor);
+                    } else if (rubro != null && codigoItem != null && cuitProveedor != null) {
+                        self.precios = controller.listarPrecios(rubro, codigoItem, cuitProveedor);
+                    } else if (rubro == null && codigoItem != null && cuitProveedor == null) {
+                        self.precios = controller.listarPreciosPorItem(codigoItem);
+                    } else if (rubro == null && codigoItem != null && cuitProveedor != null) {
+                        self.precios = controller.listarPrecios(codigoItem, cuitProveedor);
+                    } else if (rubro == null && codigoItem == null && cuitProveedor != null) {
+                        self.precios = controller.listarPreciosPorProveedor(cuitProveedor);
+                    } else {
+                        self.precios = controller.listarPrecios();
+                    }
+
+                    self.loadTablePrecios();
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
             }
         });
     }
 
     void actionOnClickLimpiarFiltroPrecios() {
+        Productos self = this;
+        this.btnLimpiarFiltroPrecios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    self.comboBoxRubroPrecio.setSelectedIndex(0);
+                    self.comboBoxItemPrecio.setSelectedIndex(0);
+                    self.comboBoxProveedorPrecio.setSelectedIndex(0);
+                    self.textFieldProveedorCuitPrecio.setText("");
+                    self.textFieldItemCodigoPrecio.setText("");
+                    self.loadPrecios();
+                    self.loadTablePrecios();
+                } catch (Exception ex) {
 
+                }
+            }
+        });
     }
 
     void actionOnChangeComboBoxProveedores() {
