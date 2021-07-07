@@ -103,6 +103,10 @@ public class Productos extends JFrame {
         this.actionOnClickLimpiarFiltroPrecios();
         this.actionOnChangeComboBoxProveedores();
         this.actionOnChangeComboBoxItems();
+        this.actionOnClickModificarItem();
+        this.actionOnClickEliminarItem();
+        this.actionOnClickFiltrarItems();
+        this.actionOnClickLimpiarFiltroItems();
         //endregion
     }
 
@@ -267,11 +271,143 @@ public class Productos extends JFrame {
     }
 
     void actionOnClickModificarItem() {
+        Productos self = this;
+        this.btnModificarItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+                try {
+
+                    int row = self.tableItems.getSelectedRow();
+
+                    if(row < 0)
+                        throw new Exception("Debe seleccionar una fila de la tabla.");
+
+                    ItemDTO item = self.items.get(row);
+
+                    self.nuevoItem = new Items(self, item);
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
     }
 
     void actionOnClickEliminarItem() {
+        Productos self = this;
+        this.btnEliminarItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
 
+                    int row = self.tableItems.getSelectedRow();
+
+                    String codigoItem = self.tableItems.getValueAt(row, 0).toString();
+
+                    int confirmResult = JOptionPane.showConfirmDialog(
+                            pnlMain,
+                            "¿Está seguro que desea eliminar el registro?",
+                            "Cerrar",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (confirmResult == JOptionPane.YES_OPTION) {
+                        PrecioController.getInstance().eliminar(codigoItem);
+                        self.items.remove(row);
+                        self.loadTableItems();
+                    }
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionOnClickFiltrarItems() {
+        Productos self = this;
+        this.btnFiltrarItems.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    PrecioController controller = PrecioController.getInstance();
+
+                    Rubro rubro = null;
+
+                    TipoItem tipo = null;
+
+                    Unidad unidad = null;
+
+                    if (self.comboBoxRubroItem.getSelectedIndex() > 0)
+                        rubro = Rubro.valueOf(self.comboBoxRubroItem.getSelectedItem().toString());
+
+                    if (self.comboBoxTipoItem.getSelectedIndex() > 0)
+                        tipo = TipoItem.valueOf(self.comboBoxTipoItem.getSelectedItem().toString());
+
+                    if (self.comboBoxUnidadItem.getSelectedIndex() > 0)
+                        unidad = Unidad.valueOf(self.comboBoxUnidadItem.getSelectedItem().toString());
+
+                    self.items = null;
+
+                    if (rubro != null && tipo == null && unidad == null) {
+                        self.items = controller.listarItems(rubro);
+                    } else if (rubro != null && tipo != null && unidad == null) {
+                        self.items = controller.listarItemsPorTipo(rubro, tipo);
+                    } else if (rubro != null && tipo == null && unidad != null) {
+                        self.items = controller.listarItemsPorUnidad(rubro, unidad);
+                    } else if (rubro != null && tipo != null && unidad != null) {
+                        self.items = controller.listarItems(rubro, tipo, unidad);
+                    } else if (rubro == null && tipo != null && unidad == null) {
+                        self.items = controller.listarItemsPorTipo(tipo);
+                    } else if (rubro == null && tipo != null && unidad != null) {
+                        self.items = controller.listarItems(tipo, unidad);
+                    } else if (rubro == null && tipo == null && unidad != null) {
+                        self.items = controller.listarItemsPorUnidad(unidad);
+                    } else {
+                        self.items = controller.listarItems();
+                    }
+
+                    self.loadTableItems();
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            pnlMain,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+    }
+
+    void actionOnClickLimpiarFiltroItems() {
+        Productos self = this;
+        this.btnLimpiarFiltroItems.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    self.comboBoxRubroItem.setSelectedIndex(0);
+                    self.comboBoxUnidadItem.setSelectedIndex(0);
+                    self.comboBoxTipoItem.setSelectedIndex(0);
+                    self.loadItems();
+                    self.loadTableItems();
+                } catch (Exception ex) {
+
+                }
+            }
+        });
     }
 
     void actionOnClickNuevoPrecio() {

@@ -4,6 +4,8 @@ import dto.*;
 import modelos.Item;
 import modelos.Precio;
 import modelos.enums.Rubro;
+import modelos.enums.TipoItem;
+import modelos.enums.Unidad;
 import servicios.ItemsService;
 import servicios.PrecioService;
 
@@ -173,6 +175,76 @@ public class PrecioController {
         return lista;
     }
 
+    public List<ItemDTO> listarItems(Rubro rubro){
+        List<ItemDTO> lista = new ArrayList<>();
+        for (Item i : this.items) {
+            if(i.getRubro().equals(rubro)){
+                lista.add(i.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<ItemDTO> listarItems(Rubro rubro, TipoItem tipoItem, Unidad unidad){
+        List<ItemDTO> lista = new ArrayList<>();
+        for (Item i : this.items) {
+            if(i.getRubro().equals(rubro) && i.getTipoItem().equals(tipoItem) && i.getUnidad().equals(unidad)){
+                lista.add(i.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<ItemDTO> listarItems(TipoItem tipoItem, Unidad unidad){
+        List<ItemDTO> lista = new ArrayList<>();
+        for (Item i : this.items) {
+            if(i.getTipoItem().equals(tipoItem) && i.getUnidad().equals(unidad)){
+                lista.add(i.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<ItemDTO> listarItemsPorTipo(Rubro rubro, TipoItem tipoItem){
+        List<ItemDTO> lista = new ArrayList<>();
+        for (Item i : this.items) {
+            if(i.getRubro().equals(rubro) && i.getTipoItem().equals(tipoItem)){
+                lista.add(i.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<ItemDTO> listarItemsPorTipo(TipoItem tipoItem){
+        List<ItemDTO> lista = new ArrayList<>();
+        for (Item i : this.items) {
+            if(i.getTipoItem().equals(tipoItem)){
+                lista.add(i.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<ItemDTO> listarItemsPorUnidad(Rubro rubro, Unidad unidad){
+        List<ItemDTO> lista = new ArrayList<>();
+        for (Item i : this.items) {
+            if(i.getRubro().equals(rubro) && i.getUnidad().equals(unidad)){
+                lista.add(i.toDTO());
+            }
+        }
+        return lista;
+    }
+
+    public List<ItemDTO> listarItemsPorUnidad(Unidad unidad){
+        List<ItemDTO> lista = new ArrayList<>();
+        for (Item i : this.items) {
+            if(i.getUnidad().equals(unidad)){
+                lista.add(i.toDTO());
+            }
+        }
+        return lista;
+    }
+
     //region ABM Item-Precio
     public void agregar(ItemDTO item) throws Exception {
         try {
@@ -181,8 +253,10 @@ public class PrecioController {
             }
 
             Item nuevoItem = new Item(item);
+            nuevoItem.setId(this.itemsService.getProximoId());
+
             this.itemsService.save(nuevoItem);
-            Collections.addAll(this.items, nuevoItem);
+            this.items.add(nuevoItem);
         } catch (Exception ex) {
             throw ex;
         }
@@ -213,11 +287,15 @@ public class PrecioController {
         try {
             Item nuevoItem = obtenerItemModelPorCodigo(item.codigo);
 
+            if (nuevoItem == null)
+                throw new Exception("El item que intenta actualizar no se encuentra en la lista de precios.");
+
             nuevoItem.setTitulo(item.titulo);
             nuevoItem.setCodigo(item.codigo);
             nuevoItem.setDescripcion(item.descripcion);
             nuevoItem.setRubro(item.rubro);
             nuevoItem.setUnidad(item.unidad);
+            nuevoItem.setId(this.itemsService.getProximoId());
 
             this.itemsService.update(nuevoItem);
         } catch (Exception ex) {
@@ -243,7 +321,16 @@ public class PrecioController {
         }
     }
 
-    public void eliminar(ItemDTO item) {
+    public void eliminar(String codigo) throws Exception {
+        try {
+            Item item = this.obtenerItemModelPorCodigo(codigo);
+            if(item != null) {
+                this.itemsService.delete(item.getId());
+                this.items.remove(item);
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
 
     }
 
