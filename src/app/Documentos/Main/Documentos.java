@@ -6,6 +6,7 @@ import app.Pagos.Ordenes;
 import controllers.DocumentoController;
 import controllers.OrdenPagoController;
 import controllers.ProveedorController;
+import dto.FacturaDTO;
 import dto.OrdenCompraDTO;
 import dto.ProveedorDTO;
 import helpers.Helpers;
@@ -59,6 +60,7 @@ public class Documentos extends JFrame {
     private JButton modificarFacturaButton;
     private JPanel fechaDesdeFactura;
     private JPanel fechaHastaFactura;
+    private JButton btnMakeFactura;
     private JDatePickerImpl factFechaDesde;
     private JDatePickerImpl factFechaHasta;
     private JDatePickerImpl ocFechaDesde;
@@ -66,7 +68,7 @@ public class Documentos extends JFrame {
     private JDialog frmOrdenCompra;
     private JDialog frmFactura;
     private List<OrdenCompraDTO> ordenes;
-    private List<Factura> facturas;
+    private List<FacturaDTO> facturas;
 
     public Documentos(String title) throws Exception {
 
@@ -80,7 +82,9 @@ public class Documentos extends JFrame {
         this.actionEliminarOrden();
         this.actionOnClickBtnFiltrarOC();
         this.actionLimpiarFiltros();
-
+        this.actionSelectedFactProveedor();
+        this.actionOnClcikBtnFiltrarFacturas();
+        this.actionLimpiarFiltrosFacturas();
         this.actionNuevaFactura();
         //endregion
 
@@ -94,8 +98,10 @@ public class Documentos extends JFrame {
         //endregion
 
         //region Default Values
-        this.textFieldOCFormCUIT.setEnabled(false);
+        this.textFieldOCFormCUIT.setEditable(false);
+        this.cuitDocFactura.setEditable(false);
         this.ordenes = DocumentoController.getInstance().listarOrdenes();
+        this.facturas = DocumentoController.getInstance().listarFacturas();
         //endregion
 
         //region Factory Elements
@@ -115,6 +121,7 @@ public class Documentos extends JFrame {
         //region Populate
         this.populateComboBoxProevedores();
         this.populateOCTable();
+        this.populateFacturasTable();
         //endregion
 
     }
@@ -151,7 +158,8 @@ public class Documentos extends JFrame {
                     "NUMERO",
                     "FECHA",
                     "RAZON SOCIAL",
-                    "CUIT"
+                    "CUIT",
+                    "TOTAL"
             };
 
             DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
@@ -176,6 +184,47 @@ public class Documentos extends JFrame {
             );
         }
     }
+
+    void populateFacturasTable() {
+        try {
+            List<FacturaDTO> facturas = this.facturas;
+
+            String[] columns = new String[]{
+                    "NUMERO",
+                    "FECHA",
+                    "RAZON SOCIAL",
+                    "CUIT",
+                    "TOTAL",
+                    "IVA 21 %",
+                    "IVA 10,5 %"
+            };
+
+            DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
+
+            facturas.stream().forEach(f -> {
+                Object[] o = {
+                        f.numero,
+                        f.fecha,
+                        f.razonSocial.toUpperCase(),
+                        f.cuitProveedor,
+                        f.monto,
+                        f.iva21,
+                        f.iva10,
+
+                };
+                tblModel.addRow(o);
+            });
+
+            this.tableFacturas.setModel(tblModel);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    pnlMain,
+                    ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
     //endregion
 
     //region Actions
@@ -191,6 +240,15 @@ public class Documentos extends JFrame {
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
+            }
+        });
+    }
+
+    void actionOrdenToFactura() {
+        this.btnMakeFactura.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
@@ -246,6 +304,27 @@ public class Documentos extends JFrame {
 
     }
 
+    void actionSelectedFactProveedor() {
+        Documentos self = this;
+        this.comboBoxProveedoresFactura.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String razonSocial = self.comboBoxProveedoresFactura.getSelectedItem().toString();
+                try {
+                    ProveedorDTO dto = ProveedorController.getInstance().obtenerPorRazonSocial(razonSocial);
+
+                    if (dto != null) {
+                        self.cuitDocFactura.setText(dto.cuit);
+                    } else {
+                        self.cuitDocFactura.setText("");
+                    }
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+    }
+
     void actionSelectedOCProveedor() {
         Documentos self = this;
         this.comboBoxOCProveedores.addActionListener(new ActionListener() {
@@ -273,6 +352,70 @@ public class Documentos extends JFrame {
         });
     }
 
+    void actionOnClcikBtnFiltrarFacturas() {
+        Documentos self = this;
+        this.btnFiltrarFacturas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    String cuit = self.cuitDocFactura.getText();
+
+                    LocalDate fechaDesde = null;
+
+                    LocalDate fechaHasta = null;
+
+                    if (self.factFechaDesde.getJFormattedTextField().getValue() != null)
+                        fechaDesde = Helpers.datePickerFormatter(self.factFechaDesde);
+
+                    if (self.factFechaHasta.getJFormattedTextField().getValue() != null)
+                        fechaHasta = Helpers.datePickerFormatter(self.factFechaHasta);
+
+                    if (fechaDesde != null
+                            && fechaHasta != null
+                            && !(fechaDesde.isBefore(fechaHasta) || fechaDesde.equals(fechaHasta))) {
+
+                        throw new Exception("La fecha desde no puede ser mayor que la fecha hasta.");
+                    }
+
+                    DocumentoController controller = DocumentoController.getInstance();
+
+                    self.facturas = null;
+
+                    if (!cuit.equals("") && fechaDesde == null && fechaHasta == null) { // si viene cuit y no vienen fechas
+                        self.facturas = controller.listarFacturas(cuit);
+                    } else if (!cuit.equals("") && fechaDesde == null && fechaHasta != null) { // si viene cuit y fecha hasta
+                        self.facturas = controller.listarFacturas(cuit, LocalDate.MIN, fechaHasta);
+                    } else if (!cuit.equals("") && fechaDesde != null && fechaHasta == null) { // si viene cuit y fecha desde
+                        self.facturas = controller.listarFacturas(cuit, fechaDesde, LocalDate.MAX);
+                    } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null) { // si viene el cuit y las dos fechas
+                        self.facturas = controller.listarFacturas(cuit, fechaDesde, fechaHasta);
+                    } else if (!cuit.equals("") && fechaDesde != null && fechaHasta != null && fechaDesde.equals(fechaHasta)) { // si viene las fechas son iguales
+                        self.facturas = controller.listarFacturas(cuit, fechaDesde);
+                    } else if (cuit.equals("") && fechaDesde != null && fechaHasta != null) { // si viene fecha desde y fecha hasta
+                        self.facturas = controller.listarFacturas(fechaDesde, fechaHasta);
+                    } else if (cuit.equals("") && fechaDesde != null && fechaHasta == null) { // si viene solo fecha desde
+                        self.facturas = controller.listarFacturas(fechaDesde, LocalDate.MAX);
+                    } else if (cuit.equals("") && fechaDesde == null && fechaHasta != null) { // si viene solo fecha hasta
+                        self.facturas = controller.listarFacturas(LocalDate.MIN, fechaHasta);
+                    } else if (cuit.equals("") && fechaDesde != null && fechaHasta != null && fechaDesde.equals(fechaHasta)) {
+                        self.facturas = controller.listarFacturas(fechaDesde);
+                    } else {
+                        self.facturas = controller.listarFacturas(); // no viene nada
+                    }
+
+                    self.populateFacturasTable();
+
+                    self.actionLimpiarFiltros();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+
+
+            }
+        });
+    }
+
     void actionOnClickBtnFiltrarOC() {
         Documentos self = this;
         this.btnFiltrarOC.addActionListener(new ActionListener() {
@@ -296,7 +439,7 @@ public class Documentos extends JFrame {
                             && fechaHasta != null
                             && !(fechaDesde.isBefore(fechaHasta) || fechaDesde.equals(fechaHasta))) {
 
-                        throw new Exception("La fecha desde no puede ser mayor que la fecha hasta.");
+                        throw new Exception("La fecha desde no pued e ser mayor que la fecha hasta.");
                     }
 
                     DocumentoController controller = DocumentoController.getInstance();
@@ -343,7 +486,6 @@ public class Documentos extends JFrame {
 
     void actionLimpiarFiltros() {
         Documentos self = this;
-
         this.btnLimpiarFiltros.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -363,6 +505,28 @@ public class Documentos extends JFrame {
                             JOptionPane.ERROR_MESSAGE
                     );
                 }
+            }
+        });
+    }
+
+    void actionLimpiarFiltrosFacturas() {
+        Documentos self = this;
+        this.btnLimpiarFiltroFacturas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    self.factFechaDesde.getJFormattedTextField().setValue(null);
+                    self.factFechaHasta.getJFormattedTextField().setValue(null);
+                    self.cuitDocFactura.setText("");
+                    self.comboBoxProveedoresFactura.setSelectedItem(0);
+
+                    self.facturas = DocumentoController.getInstance().listarFacturas();
+                    self.populateFacturasTable();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+
             }
         });
     }

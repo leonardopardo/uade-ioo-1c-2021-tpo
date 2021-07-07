@@ -1,14 +1,15 @@
 package dto;
 
-import modelos.Item;
 import modelos.Proveedor;
 import modelos.enums.Rubro;
 
 public class PrecioDTO {
 
-    public Item item;
+    public String itemCodigo;
+    public String itemTitulo;
     public Rubro rubro;
     public Double precio;
-    public Proveedor proveedor;
+    public String razonSocial;
+    public String cuit;
 
 }
