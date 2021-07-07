@@ -101,6 +101,14 @@ public class PrecioController {
         }
     }
 
+    public List<PrecioDTO> listarPrecios(Rubro rubro){
+        for (Precio p:this.precios) {
+            if(p.){
+
+            }
+        }
+    }
+
     //region ABM Item-Precio
     public void agregar(ItemDTO item) throws Exception {
         try {

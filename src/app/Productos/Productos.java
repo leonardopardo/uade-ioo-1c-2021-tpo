@@ -194,6 +194,7 @@ public class Productos extends JFrame {
 
             String[] columns = new String[]{
                     "CÓDIGO",
+                    "RUBRO",
                     "PROVEEDOR",
                     "CUIT",
                     "PRECIO"
@@ -204,6 +205,7 @@ public class Productos extends JFrame {
             this.precios.stream().forEach(x -> {
                 Object[] o = {
                         x.itemCodigo,
+                        x.rubro,
                         x.itemTitulo,
                         x.cuit,
                         x.precio
